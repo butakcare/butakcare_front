@@ -95,7 +95,7 @@ export default function Matching() {
             </div>
             <div className="max-tablet:flex max-tablet:justify-between max-tablet:font-[600] max-tablet:mt-[16px] max-tablet:px-[8px] max-tablet:pb-[9px]">
               <Link
-                href="/guardian/current_matching"
+                href="/guardian/main/matching_info"
                 className="max-tablet:text-[#000000] max-tablet:w-[153px] max-tablet:font-[600] max-tablet:h-[52px] max-tablet:bg-[#FFFFFF] max-tablet:rounded-[10px] max-tablet:flex max-tablet:justify-center max-tablet:items-center max-tablet:cursor-pointer"
               >
                 자세히 보기
