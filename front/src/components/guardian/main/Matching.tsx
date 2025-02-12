@@ -1,6 +1,10 @@
+import Link from "next/link";
+
 export default function Matching() {
   const matching = [
     {
+      id: 1,
+      created_at: "2025년 2월 10일",
       fileter: ["3등급", "이동보조", "배변보조"],
       day: "월~금 (주 5일)",
       time: "09:00~12:00",
@@ -8,6 +12,8 @@ export default function Matching() {
       salary: "시급 15,000원",
     },
     {
+      id: 2,
+      created_at: "2025년 2월 11일",
       fileter: ["3등급", "이동보조", "배변보조"],
       day: "월~금 (주 5일)",
       time: "13:00~16:00",
@@ -15,6 +21,8 @@ export default function Matching() {
       salary: "시급 75,000원",
     },
     {
+      id: 3,
+      created_at: "2025년 2월 12일",
       fileter: ["3등급", "이동보조", "배변보조"],
       day: "월~금 (주 5일)",
       time: "09:00~12:00",
@@ -85,13 +93,21 @@ export default function Matching() {
                 </p>
               </div>
             </div>
-            <div className="max-tablet:flex max-tablet:justify-between max-tablet:mt-[16px] max-tablet:px-[8px] max-tablet:pb-[9px]">
-              <button className="max-tablet:text-[#000000] max-tablet:w-[153px] max-tablet:h-[52px] max-tablet:bg-[#FFFFFF] max-tablet:rounded-[10px] max-tablet:flex max-tablet:justify-center max-tablet:items-center max-tablet:cursor-pointer">
+            <div className="max-tablet:flex max-tablet:justify-between max-tablet:font-[600] max-tablet:mt-[16px] max-tablet:px-[8px] max-tablet:pb-[9px]">
+              <Link
+                href="/guardian/current_matching"
+                className="max-tablet:text-[#000000] max-tablet:w-[153px] max-tablet:font-[600] max-tablet:h-[52px] max-tablet:bg-[#FFFFFF] max-tablet:rounded-[10px] max-tablet:flex max-tablet:justify-center max-tablet:items-center max-tablet:cursor-pointer"
+              >
                 자세히 보기
-              </button>
-              <button className="max-tablet:text-[#FFFFFF] max-tablet:w-[153px] max-tablet:h-[52px] max-tablet:bg-[#CFCFCF] max-tablet:rounded-[10px] max-tablet:flex max-tablet:justify-center max-tablet:items-center max-tablet:cursor-pointer">
+              </Link>
+              <Link
+                href={`/guardian/current_matching?id=${encodeURIComponent(
+                  match.id
+                )}`}
+                className="max-tablet:text-[#FFFFFF] max-tablet:w-[153px] max-tablet:font-[600] max-tablet:h-[52px] max-tablet:bg-[#CFCFCF] max-tablet:rounded-[10px] max-tablet:flex max-tablet:justify-center max-tablet:items-center max-tablet:cursor-pointer"
+              >
                 조율하러 가기
-              </button>
+              </Link>
             </div>
           </div>
         ))}
