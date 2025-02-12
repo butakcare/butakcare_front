@@ -49,7 +49,7 @@ function InnerComponent() {
   const filterMatch = matching.find((match) => match.id === Number(id));
 
   return (
-    <div className="max-tablet:w-screen max-tablet:h-screen max-tablet:flex max-tablet:flex-col">
+    <div className="max-tablet:w-full max-tablet:h-full max-tablet:flex max-tablet:flex-col">
       <TitleHeader name={"매칭 응답하기"} />
 
       {filterMatch ? (
