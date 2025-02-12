@@ -6,8 +6,8 @@ interface TitleTextProps {
 export default function TitleText({ text1, text2, on }: TitleTextProps) {
   return (
     <>
-      <div className="flex flex-row">
-        <div className="w-full pt-[42px] pl-[24px] text-[26px] font-bold leading-[40px]">
+      <div className="flex flex-row w-full">
+        <div className=" pt-[42px] pl-[24px] text-[26px] font-bold leading-[40px]">
           {text1}
           <br /> {text2}
           <span

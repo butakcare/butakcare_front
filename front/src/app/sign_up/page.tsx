@@ -2,7 +2,7 @@
 import Header from "@/components/common/TitleHeader";
 import guardian from "@/../public/assets/icons/guardian.svg";
 import manager from "@/../public/assets/icons/manager.svg";
-import AccountType from "@/components/sign_up/account";
+import AccountType from "@/components/sign_up/Account";
 import LongBtn from "@/components/common/Button";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
