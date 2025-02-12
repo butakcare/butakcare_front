@@ -8,7 +8,7 @@ export default function Header() {
     },
   ];
   return (
-    <div className="flex justify-start max-tablet:bg-[#EDEDED] max-tablet:w-screen max-tablet:h-[153px] max-tablet:rounded-b-[14px]">
+    <div className="max-tablet:flex max-tablet:items-start max-tablet:bg-[#EDEDED] max-tablet:w-screen max-tablet:h-[153px] max-tablet:rounded-b-[14px]">
       <div className="max-tablet:w-[90px] max-tablet:h-[90px] max-tablet:bg-[#FFFFFF] max-tablet:rounded-full max-tablet:flex max-tablet:justify-center max-tablet:items-center max-tablet:ml-[21px] max-tablet:mt-[24px]">
         <Image
           src={profile[0].profile}
