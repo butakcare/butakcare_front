@@ -4,7 +4,7 @@ import { useState } from "react";
 interface matchProps {
   id: number;
   created_at: string;
-  fileter: string[];
+  filters: string[];
   day: string;
   time: string;
   location: string;
@@ -18,6 +18,7 @@ interface MatchingRespondProps {
 export default function MatchingRespond({ match }: MatchingRespondProps) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState(""); // 모달 제목 상태
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isAccepted, setIsAccepted] = useState<string | null>(null); // 수락/거절 상태 관리
 
   const handleOpenModal = (action: "accept" | "reject") => {
@@ -64,7 +65,7 @@ export default function MatchingRespond({ match }: MatchingRespondProps) {
           </p>
           {/* 필터 */}
           <div className="max-tablet:flex max-tablet:gap-[4px] max-tablet:mt-[12px]">
-            {match?.fileter.map((filter, index) => (
+            {match?.filters.map((filter, index) => (
               <div
                 key={index}
                 className="max-tablet:text-[#FFFFFF] max-tablet:h-[31px] max-tablet:flex max-tablet:justify-center max-tablet:items-center max-tablet:px-[10px] max-tablet:py-[5px] max-tablet:bg-[#B3B3B3] max-tablet:rounded-[8px]"
