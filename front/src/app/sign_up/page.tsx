@@ -17,7 +17,7 @@ export default function SignUpPage() {
 
   const handleNext = () => {
     if (selectedType) {
-      router.push(`/sign_up/${selectedType}`);
+      router.push(`/sign_up/${selectedType}/step1`);
     }
   };
   return (
@@ -28,7 +28,7 @@ export default function SignUpPage() {
           부탁케어와 함께할
           <br /> 계정 유형을 선택해주세요.
         </div>
-        <div className="mt-[64px] mb-[200px] flex flex-row items-center justify-center h-[270px] gap-[4px]">
+        <div className="mt-[64px] mb-[164px] flex flex-row items-center justify-center h-[270px] gap-[4px]">
           <AccountType
             text="사회복지사"
             imageSrc={manager}
@@ -44,7 +44,10 @@ export default function SignUpPage() {
             onClick={() => handleSelect("guardian")}
           />
         </div>
-        <div className="flex justify-center">
+        <div className="text-stroke font-semibold text-[18px] text-left w-[354px] pb-[15px]">
+          이미 부탁케어 회원이신가요?
+        </div>
+        <div className="flex justify-center ">
           <LongBtn
             text="로그인"
             disabled={!selectedType}

@@ -19,14 +19,13 @@ export default {
         gray30: "#F0EEE5",
         gray90: "#3B3B3B",
         black: "#000000",
-
+        stroke: "#909090",
       },
       screens: {
         mobile: "360px",
         tablet: "768px",
         desktop: "1100px",
       },
-      
     },
   },
   plugins: [],
