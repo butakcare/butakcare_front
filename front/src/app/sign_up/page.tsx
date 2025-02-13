@@ -3,7 +3,7 @@ import Header from "@/components/common/TitleHeader";
 import guardian from "@/../public/assets/icons/guardian.svg";
 import manager from "@/../public/assets/icons/manager.svg";
 import AccountType from "@/components/sign_up/Account";
-import LongBtn from "@/components/common/Button";
+import { LongBtn } from "@/components/common/Button";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import TitleText from "@/components/common/TitleText";
@@ -18,13 +18,14 @@ export default function SignUpPage() {
 
   const handleNext = () => {
     if (selectedType) {
-      router.push(`/sign_up/${selectedType}/step1`);
+      router.push(`/sign_up/${selectedType}`);
     }
   };
   return (
     <>
       <div className="w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
         <Header name="" />
+        <div className="h-[42px]" />
         <TitleText
           text1="부탁케어와 함께할"
           text2="계정 유형을 선택해주세요."
