@@ -3,19 +3,22 @@ interface LongBtnProps {
   text: string;
   disabled?: boolean;
   onClick?: () => void;
+  type?: "button" | "submit" | "reset";
 }
 
 interface ShortsBtnProps {
   next: string;
   back: string;
   disabled?: boolean;
-  onClick?: () => void;
+  onClickNext?: () => void;
+  onClickBack?: () => void;
 }
 
-export function LongBtn({ text, disabled, onClick }: LongBtnProps) {
+export function LongBtn({ text, disabled, onClick, type }: LongBtnProps) {
   return (
     <div>
       <button
+        type={type}
         className={`w-[354px] h-[52px] rounded-[10px] font-semibold text-[18px] transition-all
         ${
           disabled
@@ -31,12 +34,18 @@ export function LongBtn({ text, disabled, onClick }: LongBtnProps) {
   );
 }
 
-export function ShortsBtn({ next, back, disabled, onClick }: ShortsBtnProps) {
+export function ShortsBtn({
+  next,
+  back,
+  disabled,
+  onClickNext,
+  onClickBack,
+}: ShortsBtnProps) {
   return (
     <div className="flex flex-row gap-[4px]">
       <button
         className="w-[175px] h-[52px] rounded-[10px] font-semibold text-[18px] transition-all border border-stroke"
-        onClick={onClick}
+        onClick={onClickBack}
       >
         {back}
       </button>
@@ -48,7 +57,7 @@ export function ShortsBtn({ next, back, disabled, onClick }: ShortsBtnProps) {
             : "bg-key text-white"
         }`}
         disabled={disabled}
-        onClick={onClick}
+        onClick={onClickNext}
       >
         {next}
       </button>
