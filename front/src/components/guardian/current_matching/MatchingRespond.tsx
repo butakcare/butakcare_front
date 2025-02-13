@@ -130,9 +130,12 @@ export default function MatchingRespond({ match }: MatchingRespondProps) {
         >
           수락하기
         </button>
-        <button className="max-tablet:w-[353px] max-tablet:h-[50px] max-tablet:flex max-tablet:items-center max-tablet:justify-center max-tablet:text-[20px] max-tablet:font-[600] max-tablet:text-[#828282] max-tablet:border max-tablet:border-[1px] max-tablet:border-[#D1D1D1] max-tablet:rounded-[10px]">
+        <Link
+          href="/guardian/current_matching/tuning"
+          className="max-tablet:w-[353px] max-tablet:h-[50px] max-tablet:flex max-tablet:items-center max-tablet:justify-center max-tablet:text-[20px] max-tablet:font-[600] max-tablet:text-[#828282] max-tablet:border max-tablet:border-[1px] max-tablet:border-[#D1D1D1] max-tablet:rounded-[10px]"
+        >
           조율 요청하기
-        </button>
+        </Link>
         <button
           onClick={() => handleOpenModal("reject")}
           className="max-tablet:w-[353px] max-tablet:h-[50px] max-tablet:flex max-tablet:items-center max-tablet:justify-center max-tablet:text-[20px] max-tablet:font-[600] max-tablet:text-[#828282] max-tablet:border max-tablet:border-[1px] max-tablet:border-[#D1D1D1] max-tablet:rounded-[10px]"
