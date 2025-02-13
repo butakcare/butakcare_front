@@ -5,6 +5,7 @@ import ManagerStep1 from "@/components/sign_up/manager/Step1";
 import ManagerStep2 from "@/components/sign_up/manager/Step2";
 import ManagerStep3 from "@/components/sign_up/manager/Step3";
 import ManagerStep4 from "@/components/sign_up/manager/Step4";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 type FormFields =
   | "username"
@@ -15,6 +16,8 @@ type FormFields =
   | "phone";
 
 export default function ManagerSignup() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [form, setForm] = useState({
     username: "",
@@ -25,8 +28,31 @@ export default function ManagerSignup() {
     phone: "",
   });
 
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${process.env.API_URL_KEY}/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      if (!response.ok) throw new Error("회원가입 실패");
+
+      setLoading(false);
+      router.push("/login");
+    } catch (error) {
+      setLoading(false);
+      console.error("회원가입 중 오류가 발생했습니다.", error);
+    }
+  };
+
   const handleNext = () => {
     setStep((prev) => prev + 1);
+  };
+
+  const handleBack = () => {
+    setStep((prev) => prev - 1);
   };
 
   const updateForm = (input: FormFields, value: string) => {
@@ -96,16 +122,22 @@ export default function ManagerSignup() {
       <Header name="센터 관리자 회원가입" />
       <div className="h-[93px]" />
       {showCurrentStep()}
-      {step >= 2 ? (
-        <ShortsBtn
-          next="다음"
-          back="이전"
-          disabled={handleFormbtn()}
+      {step === 1 ? (
+        <LongBtn
+          text="다음"
+          disabled={handleFormbtn() || loading}
           onClick={handleNext}
+          type="button"
         />
       ) : (
-        <LongBtn text="다음" disabled={handleFormbtn()} onClick={handleNext} />
-      )}{" "}
+        <ShortsBtn
+          next={step === 4 && loading ? "저장 중.." : "다음"}
+          back="이전"
+          disabled={handleFormbtn() || loading}
+          onClickNext={step === 4 ? handleSubmit : handleNext}
+          onClickBack={handleBack}
+        />
+      )}
     </div>
   );
 }
