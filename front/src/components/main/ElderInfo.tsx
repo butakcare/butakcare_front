@@ -61,7 +61,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
       schedules: ["월"],
       time: "09:00 ~ 12:00",
       location: "종로구 낙원동",
-      matching: "매칭 조율",
+      matching: "매칭 완료",
     },
     {
       id: 5,
