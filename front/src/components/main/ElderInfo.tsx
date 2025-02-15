@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import ElderModal from "./ElderModal";
+import Link from "next/link";
 
 interface FilterProps {
   schedules: string[];
@@ -211,9 +212,12 @@ export default function ElderInfo({ Filter, setSize }: Props) {
           ))}
         </div>
         <div className="w-[197px] h-[46px] flex justify-center items-center bg-[#E8E8E8] rounded-[10px] ml-[250px]">
-          <button className="text-[22px] font-[600] text-[#454545]">
+          <Link
+            href="/manager/add"
+            className="text-[22px] font-[600] text-[#454545]"
+          >
             + 어르신 추가하기
-          </button>
+          </Link>
         </div>
       </div>
       <div className="w-[980px] h-[520px] grid grid-cols-3 gap-[23px] mt-[15px] p-[0px] overflow-y-auto">

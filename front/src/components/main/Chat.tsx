@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import GuardianProfile from "./GuardianProfile";
+import GuardianTuning from "./GuardianTuning";
 
 interface Prop {
   selectedElder: number;
@@ -8,6 +9,7 @@ interface Prop {
 
 export default function Chat({ selectedElder }: Prop) {
   const [isProfileModal, setIsProfileModal] = useState<boolean>(false);
+  const [isTuningModal, setIsTuningModal] = useState<boolean>(false);
   const data = {
     name: "김요양",
     gender: "여",
@@ -214,9 +216,12 @@ export default function Chat({ selectedElder }: Prop) {
                   </p>
                 </div>
               </div>
-              <div className="mt-[20px] text-[22px] font-[600] text-[#000000] w-[153px] h-[52px] flex items-center justify-center bg-[#FFFFFF] rounded-[10px]">
+              <button
+                onClick={() => setIsTuningModal(true)}
+                className="mt-[20px] text-[22px] font-[600] text-[#000000] w-[153px] h-[52px] flex items-center justify-center bg-[#FFFFFF] rounded-[10px]"
+              >
                 자세히 보기
-              </div>
+              </button>
             </div>
 
             <p className="text-[18px] font-[500] text-[#9A9A9A] mt-[13px]">
@@ -241,6 +246,7 @@ export default function Chat({ selectedElder }: Prop) {
       {isProfileModal && (
         <GuardianProfile setIsProfileModal={setIsProfileModal} />
       )}
+      {isTuningModal && <GuardianTuning setIsTuningModal={setIsTuningModal} />}
     </div>
   );
 }
