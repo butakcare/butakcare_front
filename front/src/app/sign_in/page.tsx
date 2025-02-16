@@ -4,6 +4,7 @@ import Header from "@/components/common/TitleHeader";
 import InputField from "@/components/sign_up/InputField";
 import { LongBtn, XBLBtn } from "@/components/common/Button";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 interface ManagerStep1Props {
   username: string;
@@ -19,7 +20,25 @@ export default function SignUpPage({
   onPasswordChange,
 }: ManagerStep1Props) {
   const router = useRouter();
-  const handleSubmit = () => {};
+  const [loading, setLoading] = useState(false);
+  const handleSubmit = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${process.env.API_URL_KEY}/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!response.ok) throw new Error("로그인 실패");
+
+      setLoading(false);
+      router.push("/"); //어디로보내야하지지
+    } catch (error) {
+      setLoading(false);
+      console.error("로그인 중 오류가 발생했습니다.", error);
+    }
+  };
   const handleNext = () => {
     router.push("/sign_up");
   };
@@ -46,8 +65,8 @@ export default function SignUpPage({
         />
         <div className="h-[25px]" />
         <LongBtn
-          text="로그인"
-          disabled={false}
+          text={loading ? "로그인 중..." : "로그인"}
+          disabled={loading}
           onClick={handleSubmit}
           type="button"
         />
