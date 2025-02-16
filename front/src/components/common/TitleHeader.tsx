@@ -10,18 +10,16 @@ interface nameProps {
 export default function TitleHeader({ name }: nameProps) {
   const router = useRouter();
   return (
-    <div className="max-tablet:w-screen max-tablet:h-[66px] max-tablet:flex max-tablet:items-center max-tablet:justify-center relative">
+    <div className="tablet:w-full w-screen h-[66px] flex items-center justify-center relative">
       <Image
         src="/assets/icons/icon_left_arrow.svg"
         alt="화살표"
         width={24}
         height={24}
         onClick={() => router.back()}
-        className="max-tablet:w-[24px] max-tablet:h-[24px] absolute left-[30px]"
+        className="w-[24px] h-[24px] absolute left-[30px] tablet:left-[-120px]"
       />
-      <p className="max-tablet:text-[22px] max-tablet:font-[600] max-tablet:text-[#000000]">
-        {name}
-      </p>
+      <p className="text-[22px] font-[600] text-[#000000]">{name}</p>
     </div>
   );
 }

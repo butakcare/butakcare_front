@@ -8,31 +8,31 @@ export default function Header() {
     },
   ];
   return (
-    <div className="max-tablet:flex max-tablet:items-start max-tablet:bg-[#EDEDED] max-tablet:w-screen max-tablet:h-[153px] max-tablet:rounded-b-[14px]">
-      <div className="max-tablet:w-[90px] max-tablet:h-[90px] max-tablet:bg-[#FFFFFF] max-tablet:rounded-full max-tablet:flex max-tablet:justify-center max-tablet:items-center max-tablet:ml-[21px] max-tablet:mt-[24px]">
+    <div className="flex items-start bg-[#EDEDED] w-screen h-[153px] rounded-b-[14px]">
+      <div className="w-[90px] h-[90px] bg-[#FFFFFF] rounded-full flex justify-center items-center ml-[21px] mt-[24px]">
         <Image
           src={profile[0].profile}
           alt="logo"
           width={85}
           height={85}
-          className="max-tablet:w-[85px] max-tablet:h-[85px] max-tablet:rounded-full"
+          className="w-[85px] h-[85px] rounded-full"
         />
       </div>
-      <div className="max-tablet:ml-[20px] max-tablet:mt-[24px] max-tablet:flex max-tablet:flex-col max-tablet:gap-[6px]">
-        <p className="max-tablet:text-[22px] max-tablet:font-[500] max-tablet:text-[#A0A0A0] max-tablet:h-[26px]">
+      <div className="ml-[20px] mt-[24px] flex flex-col gap-[6px]">
+        <p className="text-[22px] font-[500] text-[#A0A0A0] h-[26px]">
           요양보호사
         </p>
-        <strong className="max-tablet:text-[32px] max-tablet:font-[700] max-tablet:text-[#000000] max-tablet:leading-[38px]">
+        <strong className="text-[32px] font-[700] text-[#000000] leading-[38px]">
           {profile[0].name}
         </strong>
-        <div className="max-tablet:flex max-tablet:items-start max-tablet:gap-[3px] max-tablet:mt-[5px]">
+        <div className="flex items-start gap-[3px] mt-[5px]">
           <Image
             src="/assets/icons/location.svg"
             alt="위치"
             width={24}
             height={24}
           />
-          <p className="max-tablet:text-[18px] max-tablet:font-[600] max-tablet:text-[#858585] max-tablet:h-[21px]">
+          <p className="text-[18px] font-[600] text-[#858585] h-[21px]">
             서울시 종로구
           </p>
         </div>
