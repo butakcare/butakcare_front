@@ -29,28 +29,28 @@ export default function Tuning() {
             className="w-[24px] h-[24px]"
           />
         </div>
-        <div className="max-tablet:flex max-tablet:flex-col max-tablet:w-[352px] max-tablet:h-[145px] max-tablet:bg-[#F0F0F0] max-tablet:items-start max-tablet:justify-center max-tablet:pl-[22px] max-tablet:gap-[10px] max-tablet:rounded-[14px]">
-          <div className="max-tablet:flex max-tablet:gap-[16px] max-tablet:h-[26px]">
-            <p className="max-tablet:w-[75px] max-tablet:text-[22px] max-tablet:whitespace-nowrap max-tablet:font-[500] max-tablet:text-[#9A9A9A]">
+        <div className="flex flex-col w-[352px] h-[145px] bg-[#F0F0F0] items-start justify-center pl-[22px] gap-[10px] rounded-[14px]">
+          <div className="flex gap-[16px] h-[26px]">
+            <p className="w-[75px] text-[22px] whitespace-nowrap font-[500] text-[#9A9A9A]">
               기간
             </p>
-            <p className="max-tablet:text-[22px] max-tablet:whitespace-nowrap max-tablet:font-[500] max-tablet:text-[#000000]">
+            <p className="text-[22px] whitespace-nowrap font-[500] text-[#000000]">
               월~금 (주 5일)
             </p>
           </div>
-          <div className="max-tablet:flex max-tablet:gap-[16px] max-tablet:h-[26px]">
-            <p className="max-tablet:w-[75px] max-tablet:text-[22px] max-tablet:whitespace-nowrap max-tablet:font-[500] max-tablet:text-[#9A9A9A]">
+          <div className="flex gap-[16px] h-[26px]">
+            <p className="w-[75px] text-[22px] whitespace-nowrap font-[500] text-[#9A9A9A]">
               시간
             </p>
-            <p className="max-tablet:text-[22px] max-tablet:whitespace-nowrap max-tablet:font-[500] max-tablet:text-[#000000]">
+            <p className="text-[22px] whitespace-nowrap font-[500] text-[#000000]">
               09:00~12:00
             </p>
           </div>
-          <div className="max-tablet:flex max-tablet:gap-[16px] max-tablet:h-[26px]">
-            <p className="max-tablet:w-[75px] max-tablet:text-[22px] max-tablet:whitespace-nowrap max-tablet:font-[500] max-tablet:text-[#9A9A9A]">
+          <div className="flex gap-[16px] h-[26px]">
+            <p className="w-[75px] text-[22px] whitespace-nowrap font-[500] text-[#9A9A9A]">
               급여
             </p>
-            <p className="max-tablet:text-[22px] max-tablet:whitespace-nowrap max-tablet:font-[500] max-tablet:text-[#000000]">
+            <p className="text-[22px] whitespace-nowrap font-[500] text-[#000000]">
               시급 15,000원
             </p>
           </div>
@@ -69,38 +69,30 @@ export default function Tuning() {
             className="w-[24px] h-[24px]"
           />
         </div>
-        <div className="max-tablet:flex max-tablet:flex-col max-tablet:w-[352px] max-tablet:h-[235px] max-tablet:bg-[#F0F0F0] max-tablet:pl-[23px] max-tablet:pt-[14px] max-tablet:gap-[10px] max-tablet:rounded-[14px]  max-tablet:inline-flex">
-          <p className="max-tablet:text-[22px] max-tablet:font-[700] max-tablet:text-[#676767] ">
-            이동보조
-          </p>
-          <div className="max-tablet:flex max-tablet:flex-wrap max-tablet:gap-[10px]">
-            <div className="max-tablet:px-[10px] max-tablet:py-[5px] max-tablet:h-[34px] max-tablet:flex max-tablet:justify-center max-tablet:items-center max-tablet:bg-[#B3B3B3] max-tablet:rounded-[8px]">
-              <p className="max-tablet:text-[20px] max-tablet:font-[500] max-tablet:text-[#FFFFFF]">
+        <div className="flex flex-col w-[352px] h-[235px] bg-[#F0F0F0] pl-[23px] pt-[14px] gap-[10px] rounded-[14px]  inline-flex">
+          <p className="text-[22px] font-[700] text-[#676767] ">이동보조</p>
+          <div className="flex flex-wrap gap-[10px]">
+            <div className="px-[10px] py-[5px] h-[34px] flex justify-center items-center bg-[#B3B3B3] rounded-[8px]">
+              <p className="text-[20px] font-[500] text-[#FFFFFF]">
                 휠체어 이동보조
               </p>
             </div>
           </div>
-          <p className="max-tablet:text-[22px] max-tablet:font-[700] max-tablet:text-[#676767]">
-            생활보조
-          </p>
-          <div className="max-tablet:flex max-tablet:flex-wrap max-tablet:gap-[6px]">
-            <div className="max-tablet:px-[10px] max-tablet:py-[5px] max-tablet:h-[34px] max-tablet:flex max-tablet:justify-center max-tablet:items-center max-tablet:bg-[#B3B3B3] max-tablet:rounded-[8px]">
-              <p className="max-tablet:text-[20px] max-tablet:font-[500] max-tablet:text-[#FFFFFF]">
-                청소
-              </p>
+          <p className="text-[22px] font-[700] text-[#676767]">생활보조</p>
+          <div className="flex flex-wrap gap-[6px]">
+            <div className="px-[10px] py-[5px] h-[34px] flex justify-center items-center bg-[#B3B3B3] rounded-[8px]">
+              <p className="text-[20px] font-[500] text-[#FFFFFF]">청소</p>
             </div>
-            <div className="max-tablet:px-[10px] max-tablet:py-[5px] max-tablet:h-[34px] max-tablet:flex max-tablet:justify-center max-tablet:items-center max-tablet:bg-[#B3B3B3] max-tablet:rounded-[8px]">
-              <p className="max-tablet:text-[20px] max-tablet:font-[500] max-tablet:text-[#FFFFFF]">
-                빨래 도움
-              </p>
+            <div className="px-[10px] py-[5px] h-[34px] flex justify-center items-center bg-[#B3B3B3] rounded-[8px]">
+              <p className="text-[20px] font-[500] text-[#FFFFFF]">빨래 도움</p>
             </div>
-            <div className="max-tablet:px-[10px] max-tablet:py-[5px] max-tablet:h-[34px] max-tablet:flex max-tablet:justify-center max-tablet:items-center max-tablet:bg-[#B3B3B3] max-tablet:rounded-[8px]">
-              <p className="max-tablet:text-[20px] max-tablet:font-[500] max-tablet:text-[#FFFFFF]">
+            <div className="px-[10px] py-[5px] h-[34px] flex justify-center items-center bg-[#B3B3B3] rounded-[8px]">
+              <p className="text-[20px] font-[500] text-[#FFFFFF]">
                 말벗 등 정서지원
               </p>
             </div>
-            <div className="max-tablet:px-[10px] max-tablet:py-[5px] max-tablet:h-[34px] max-tablet:flex max-tablet:justify-center max-tablet:items-center max-tablet:bg-[#B3B3B3] max-tablet:rounded-[8px]">
-              <p className="max-tablet:text-[20px] max-tablet:font-[500] max-tablet:text-[#FFFFFF]">
+            <div className="px-[10px] py-[5px] h-[34px] flex justify-center items-center bg-[#B3B3B3] rounded-[8px]">
+              <p className="text-[20px] font-[500] text-[#FFFFFF]">
                 산책 등 간단한 운동
               </p>
             </div>

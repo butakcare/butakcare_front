@@ -32,71 +32,65 @@ export default function Matching() {
   ];
 
   return (
-    <div className="max-tablet:w-[327px] max-tablet:flex max-tablet:flex-col max-tablet:mt-[28px]">
-      <p className="max-tablet:text-[26px] max-tablet:font-[700] max-tablet:text-[#000000] max-tablet:leading-[31px]">
+    <div className="w-[327px] flex flex-col mt-[28px]">
+      <p className="text-[26px] font-[700] text-[#000000] leading-[31px]">
         {`조율 중인 매칭이 ${matching.length}건 있어요`}
       </p>
 
       {/* 터치 슬라이드 컨테이너 */}
-      <div className="max-tablet:flex max-tablet:gap-[10px] max-tablet:overflow-x-auto max-tablet:snap-x max-tablet:snap-mandatory max-tablet:scroll-smooth">
+      <div className="flex gap-[10px] overflow-x-auto snap-x snap-mandatory scroll-smooth">
         {matching.map((match, index) => (
           <div
             key={index}
-            className="max-tablet:w-full max-tablet:shrink-0 max-tablet:bg-[#F0F0F0] max-tablet:rounded-[14px] max-tablet:mt-[18px] max-tablet:snap-center"
+            className="w-full shrink-0 bg-[#F0F0F0] rounded-[14px] mt-[18px] snap-center"
           >
-            <div className="max-tablet:pl-[20px] max-tablet:pt-[17px]">
+            <div className="pl-[20px] pt-[17px]">
               {/* 필터 */}
-              <div className="max-tablet:flex max-tablet:gap-[10px]">
+              <div className="flex gap-[10px]">
                 {match.fileter.map((filter, index) => (
                   <div
                     key={index}
-                    className="max-tablet:text-[#FFFFFF] max-tablet:h-[31px] max-tablet:flex max-tablet:justify-center max-tablet:items-center max-tablet:px-[10px] max-tablet:py-[5px] max-tablet:bg-[#B3B3B3] max-tablet:rounded-[8px]"
+                    className="text-[#FFFFFF] h-[31px] flex justify-center items-center px-[10px] py-[5px] bg-[#B3B3B3] rounded-[8px]"
                   >
                     <p>{filter}</p>
                   </div>
                 ))}
               </div>
               {/* 기간 */}
-              <div className="max-tablet:flex max-tablet:h-[21px] max-tablet:gap-[23px] max-tablet:mt-[15px]">
-                <p className="max-tablet:text-[18px] max-tablet:font-[500] max-tablet:text-[#9A9A9A]">
-                  기간
-                </p>
-                <p className="max-tablet:text-[18px] max-tablet:font-[500] max-tablet:text-[#000000]">
+              <div className="flex h-[21px] gap-[23px] mt-[15px]">
+                <p className="text-[18px] font-[500] text-[#9A9A9A]">기간</p>
+                <p className="text-[18px] font-[500] text-[#000000]">
                   {match.day}
                 </p>
               </div>
               {/* 시간 */}
-              <div className="max-tablet:flex max-tablet:h-[21px] max-tablet:gap-[23px] max-tablet:mt-[12px]">
-                <p className="max-tablet:text-[18px] max-tablet:font-[500] max-tablet:text-[#9A9A9A]">
-                  시간
-                </p>
-                <p className="max-tablet:text-[18px] max-tablet:font-[500] max-tablet:text-[#000000]">
+              <div className="flex h-[21px] gap-[23px] mt-[12px]">
+                <p className="text-[18px] font-[500] text-[#9A9A9A]">시간</p>
+                <p className="text-[18px] font-[500] text-[#000000]">
                   {match.time}
                 </p>
               </div>
               {/* 장소 */}
-              <div className="max-tablet:flex max-tablet:h-[21px] max-tablet:gap-[23px] max-tablet:mt-[12px]">
-                <p className="max-tablet:text-[18px] max-tablet:font-[500] max-tablet:text-[#9A9A9A]">
-                  장소
-                </p>
-                <p className="max-tablet:text-[18px] max-tablet:font-[500] max-tablet:text-[#000000]">
+              <div className="flex h-[21px] gap-[23px] mt-[12px]">
+                <p className="text-[18px] font-[500] text-[#9A9A9A]">장소</p>
+                <p className="text-[18px] font-[500] text-[#000000]">
                   {match.location}
                 </p>
               </div>
               {/* 급여 */}
-              <div className="max-tablet:flex max-tablet:gap-[23px] max-tablet:mt-[14px]">
-                <p className="max-tablet:text-[18px] max-tablet:h-[21px] max-tablet:font-[500] max-tablet:text-[#9A9A9A]">
+              <div className="flex gap-[23px] mt-[14px]">
+                <p className="text-[18px] h-[21px] font-[500] text-[#9A9A9A]">
                   급여
                 </p>
-                <p className="max-tablet:text-[22px] max-tablet:h-[26px] max-tablet:font-[600] max-tablet:text-[#000000] max-tablet:leading-[26px]">
+                <p className="text-[22px] h-[26px] font-[600] text-[#000000] leading-[26px]">
                   {match.salary}
                 </p>
               </div>
             </div>
-            <div className="max-tablet:flex max-tablet:justify-between max-tablet:font-[600] max-tablet:mt-[16px] max-tablet:px-[8px] max-tablet:pb-[9px]">
+            <div className="flex justify-between font-[600] mt-[16px] px-[8px] pb-[9px]">
               <Link
                 href="/guardian/main/matching_info"
-                className="max-tablet:text-[#000000] max-tablet:w-[153px] max-tablet:font-[600] max-tablet:h-[52px] max-tablet:bg-[#FFFFFF] max-tablet:rounded-[10px] max-tablet:flex max-tablet:justify-center max-tablet:items-center max-tablet:cursor-pointer"
+                className="text-[#000000] w-[153px] font-[600] h-[52px] bg-[#FFFFFF] rounded-[10px] flex justify-center items-center cursor-pointer"
               >
                 자세히 보기
               </Link>
@@ -104,7 +98,7 @@ export default function Matching() {
                 href={`/guardian/current_matching?id=${encodeURIComponent(
                   match.id
                 )}`}
-                className="max-tablet:text-[#FFFFFF] max-tablet:w-[153px] max-tablet:font-[600] max-tablet:h-[52px] max-tablet:bg-[#CFCFCF] max-tablet:rounded-[10px] max-tablet:flex max-tablet:justify-center max-tablet:items-center max-tablet:cursor-pointer"
+                className="text-[#FFFFFF] w-[153px] font-[600] h-[52px] bg-[#CFCFCF] rounded-[10px] flex justify-center items-center cursor-pointer"
               >
                 조율하러 가기
               </Link>
