@@ -9,7 +9,7 @@ export default function GuardianStep9() {
   const router = useRouter();
 
   const handleMoveToWork = () => {
-    router.push("/work_condition");
+    router.push("/worksettings");
   };
 
   const handleMoveToMain = () => {
