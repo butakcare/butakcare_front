@@ -9,16 +9,17 @@ import { useState } from "react";
 import TitleText from "@/components/common/TitleText";
 
 export default function SignUpPage() {
-  const [selectedType, setSelectedType] = useState<string>("manager");
+  const [selectedType, setSelectedType] = useState<string>("");
   const router = useRouter();
 
   const handleSelect = (type: string) => {
     setSelectedType(type);
+    router.push(`/sign_up/${type}`);
   };
 
-  const handleNext = () => {
+  const handleSignIn = () => {
     if (selectedType) {
-      router.push(`/sign_up/${selectedType}`);
+      router.push(`/sign_in`);
     }
   };
   return (
@@ -51,11 +52,7 @@ export default function SignUpPage() {
           이미 부탁케어 회원이신가요?
         </div>
         <div className="flex justify-center ">
-          <LongBtn
-            text="로그인"
-            disabled={!selectedType}
-            onClick={handleNext}
-          />
+          <LongBtn text="로그인" disabled={false} onClick={handleSignIn} />
         </div>
       </div>
     </>
