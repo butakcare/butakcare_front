@@ -3,7 +3,7 @@ import Tuning from "@/components/guardian/current_matching/tuning/Tuning";
 
 export default function Home() {
   return (
-    <div className="max-tablet:w-full max-tablet:h-full max-tablet:flex max-tablet:flex-col max-tablet:items-center">
+    <div className="tablet:w-[450px] tablet:overflow-y-auto tablet:border-x tablet:border-[#909090] w-full h-full flex flex-col items-center">
       <div>
         <TitleHeader name="조율 요청하기" />
       </div>

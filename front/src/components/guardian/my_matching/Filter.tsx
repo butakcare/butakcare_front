@@ -12,7 +12,7 @@ export default function Filter({
   const filters = ["신규 매칭", "조율 중인 매칭", "수락한 요청", "거절한 요청"];
   return (
     <div
-      className="max-tablet:h-[31px] max-tablet:flex max-tablet:gap-[6px] max-tablet:ml-[26px] max-tablet:overflow-auto"
+      className="h-[31px] flex gap-[6px] ml-[26px] overflow-auto"
       style={{
         scrollbarWidth: "none",
         msOverflowStyle: "none",
@@ -22,10 +22,10 @@ export default function Filter({
         <button
           key={index}
           onClick={() => setSelectedFilter(filter)}
-          className={`max-tablet:whitespace-nowrap max-tablet:px-[13px] max-tablet:py-[5px] max-tablet:text-[18px] max-tablet:font-[500] max-tablet:rounded-[6px] max-tablet:flex max-tablet:items-center max-tablet:justify-center ${
+          className={`whitespace-nowrap px-[13px] py-[5px] text-[18px] font-[500] rounded-[6px] flex items-center justify-center ${
             selectedFilter === filter
-              ? "max-tablet:bg-[#6A6A6A] max-tablet:text-[#FFFFFF]"
-              : "max-tablet:bg-[#CECECE] max-tablet:text-[#FFFFFF]"
+              ? "bg-[#6A6A6A] text-[#FFFFFF]"
+              : "bg-[#CECECE] text-[#FFFFFF]"
           }`}
         >
           {filter}

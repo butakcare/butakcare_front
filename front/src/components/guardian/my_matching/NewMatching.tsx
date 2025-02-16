@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function NewMatching() {
   const matching = [
     {
@@ -26,66 +28,60 @@ export default function NewMatching() {
     },
   ];
   return (
-    <div className="max-tablet:flex max-tablet:w-full max-tablet:flex-grow max-tablet:flex-col max-tablet:mt-[34px] max-tablet:pb-[30px]">
-      <strong className="max-tablet:block max-tablet:text-left max-tablet:ml-[26px] max-tablet:text-[26px] max-tablet:font-[700] max-tablet:text-[#000000] max-tablet:leading-[31px]">{`신규 매칭이 ${matching.length}건 있어요`}</strong>
+    <div className="flex w-full flex-grow flex-col mt-[34px] pb-[30px]">
+      <strong className="block text-left ml-[26px] text-[26px] font-[700] text-[#000000] leading-[31px]">{`신규 매칭이 ${matching.length}건 있어요`}</strong>
       {matching.map((match, index) => (
-        <div
-          key={index}
-          className="max-tablet:flex max-tablet:flex-col max-tablet:items-center max-tablet:mt-[21px]"
-        >
-          <p className="max-tablet:w-[355px] max-tablet:text-left max-tablet:text-[18px] max-tablet:font-[500] max-tablet:text-[#9A9A9A]">
+        <div key={index} className="flex flex-col items-center mt-[21px]">
+          <p className="w-[355px] text-left text-[18px] font-[500] text-[#9A9A9A]">
             {match.created_at}
           </p>
-          <div className="max-tablet:w-[355px] max-tablet:h-[265px] max-tablet:bg-[#F0F0F0] max-tablet:mt-[14px] max-tablet:rounded-[14px]">
-            <div className="max-tablet:pl-[14px] max-tablet:pt-[12px]">
+          <div className="w-[355px] h-[265px] bg-[#F0F0F0] mt-[14px] rounded-[14px]">
+            <div className="pl-[14px] pt-[12px]">
               {/* 제목 */}
-              <div className="max-tablet:flex">
-                <p className="max-tablet:text-[22px] max-tablet:font-[600] max-tablet:text-[#000000]">
+              <div className="flex">
+                <p className="text-[22px] font-[600] text-[#000000]">
                   {match.title}
                 </p>
               </div>
               {/* 기간 */}
-              <div className="max-tablet:flex max-tablet:h-[21px] max-tablet:gap-[23px] max-tablet:mt-[18px]">
-                <p className="max-tablet:text-[18px] max-tablet:font-[500] max-tablet:text-[#9A9A9A]">
-                  기간
-                </p>
-                <p className="max-tablet:text-[18px] max-tablet:font-[500] max-tablet:text-[#000000]">
+              <div className="flex h-[21px] gap-[23px] mt-[18px]">
+                <p className="text-[18px] font-[500] text-[#9A9A9A]">기간</p>
+                <p className="text-[18px] font-[500] text-[#000000]">
                   {match.day}
                 </p>
               </div>
               {/* 시간 */}
-              <div className="max-tablet:flex max-tablet:h-[21px] max-tablet:gap-[23px] max-tablet:mt-[12px]">
-                <p className="max-tablet:text-[18px] max-tablet:font-[500] max-tablet:text-[#9A9A9A]">
-                  시간
-                </p>
-                <p className="max-tablet:text-[18px] max-tablet:font-[500] max-tablet:text-[#000000]">
+              <div className="flex h-[21px] gap-[23px] mt-[12px]">
+                <p className="text-[18px] font-[500] text-[#9A9A9A]">시간</p>
+                <p className="text-[18px] font-[500] text-[#000000]">
                   {match.time}
                 </p>
               </div>
               {/* 장소 */}
-              <div className="max-tablet:flex max-tablet:h-[21px] max-tablet:gap-[23px] max-tablet:mt-[12px]">
-                <p className="max-tablet:text-[18px] max-tablet:font-[500] max-tablet:text-[#9A9A9A]">
-                  장소
-                </p>
-                <p className="max-tablet:text-[18px] max-tablet:font-[500] max-tablet:text-[#000000]">
+              <div className="flex h-[21px] gap-[23px] mt-[12px]">
+                <p className="text-[18px] font-[500] text-[#9A9A9A]">장소</p>
+                <p className="text-[18px] font-[500] text-[#000000]">
                   {match.location}
                 </p>
               </div>
               {/* 급여 */}
-              <div className="max-tablet:flex max-tablet:gap-[23px] max-tablet:mt-[12px]">
-                <p className="max-tablet:text-[18px] max-tablet:h-[21px] max-tablet:font-[500] max-tablet:text-[#9A9A9A]">
+              <div className="flex gap-[23px] mt-[12px]">
+                <p className="text-[18px] h-[21px] font-[500] text-[#9A9A9A]">
                   급여
                 </p>
-                <p className="max-tablet:text-[22px] max-tablet:h-[26px] max-tablet:font-[600] max-tablet:text-[#000000] max-tablet:leading-[26px]">
+                <p className="text-[22px] h-[26px] font-[600] text-[#000000] leading-[26px]">
                   {match.salary}
                 </p>
               </div>
             </div>
-            <div className="max-tablet:flex max-tablet:justify-center max-tablet:gap-[4px] max-tablet:mt-[16px]">
-              <button className="max-tablet:text-[#000000] max-tablet:text-[18px] max-tablet:font-[600] max-tablet:w-[168px] max-tablet:h-[52px] max-tablet:bg-[#FFFFFF] max-tablet:rounded-[10px] max-tablet:flex max-tablet:justify-center max-tablet:items-center max-tablet:cursor-pointer max-tablet:font-[600] max-tablet:px-[43px] max-tablet:py-[15px] max-tablet:whitespace-nowrap">
+            <div className="flex justify-center gap-[4px] mt-[16px]">
+              <Link
+                href="/guardian/main/matching_info"
+                className="text-[#000000] text-[18px] font-[600] w-[168px] h-[52px] bg-[#FFFFFF] rounded-[10px] flex justify-center items-center cursor-pointer font-[600] px-[43px] py-[15px] whitespace-nowrap"
+              >
                 자세히 보기
-              </button>
-              <button className="max-tablet:text-[#FFFFFF] max-tablet:text-[18px] max-tablet:font-[600] max-tablet:w-[168px] max-tablet:h-[52px] max-tablet:bg-[#CFCFCF] max-tablet:rounded-[10px] max-tablet:flex max-tablet:justify-center max-tablet:items-center max-tablet:cursor-pointer max-tablet:font-[600] max-tablet:px-[43px] max-tablet:py-[15px] max-tablet:whitespace-nowrap">
+              </Link>
+              <button className="text-[#FFFFFF] text-[18px] font-[600] w-[168px] h-[52px] bg-[#CFCFCF] rounded-[10px] flex justify-center items-center cursor-pointer font-[600] px-[43px] py-[15px] whitespace-nowrap">
                 매칭하러 가기
               </button>
             </div>
