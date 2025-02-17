@@ -2,25 +2,17 @@
 import TitleText from "@/components/common/TitleText";
 import Header from "@/components/common/TitleHeader";
 import InputField from "@/components/sign_up/InputField";
-import { LongBtn, XBLBtn } from "@/components/common/Button";
+import { LongBtn } from "@/components/common/Button";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-interface ManagerStep1Props {
-  username: string;
-  password: string;
-  onUsernameChange: (value: string) => void;
-  onPasswordChange: (value: string) => void;
-}
-
-export default function SignUpPage({
-  username,
-  password,
-  onUsernameChange,
-  onPasswordChange,
-}: ManagerStep1Props) {
+export default function SignUpPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const isFormValid = username !== "" && password !== "";
+
   const handleSubmit = async () => {
     setLoading(true);
     try {
@@ -51,7 +43,7 @@ export default function SignUpPage({
         <InputField
           label="아이디"
           value={username}
-          onChange={onUsernameChange}
+          onChange={setUsername}
           placeholder="아이디를 입력해주세요."
           on={true}
         />
@@ -59,16 +51,17 @@ export default function SignUpPage({
         <InputField
           label="비밀번호"
           value={password}
-          onChange={onPasswordChange}
+          onChange={setPassword}
           placeholder="비밀번호를 입력해주세요."
           on={true}
         />
         <div className="h-[25px]" />
         <LongBtn
           text={loading ? "로그인 중..." : "로그인"}
-          disabled={loading}
+          disabled={loading || !isFormValid}
           onClick={handleSubmit}
           type="button"
+          width={354}
         />
       </form>
       <div className="h-[197px]" />
@@ -76,7 +69,7 @@ export default function SignUpPage({
         아직 부탁케어 계정이 없으신가요?
       </div>
       <div className="flex justify-center ">
-        <XBLBtn text="회원가입" onClick={handleNext} />
+        <LongBtn text="회원가입" onClick={handleNext} width={354} />
       </div>
     </div>
   );

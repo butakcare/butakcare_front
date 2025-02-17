@@ -78,6 +78,8 @@ export default function WorkSettings() {
           disabled={handleFormbtn() || loading}
           onClick={handleNext}
           type="button"
+          borderColor="border-key"
+          backgroundColor="border-key"
         />
       ) : (
         <ShortsBtn

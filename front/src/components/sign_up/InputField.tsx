@@ -15,7 +15,7 @@ export default function InputField({
   return (
     <>
       <label
-        htmlFor="username"
+        htmlFor="name"
         className={`text-stroke font-semibold text-[18px] pb-[10px] w-[354px] ${
           on ? "" : "hidden"
         }`}

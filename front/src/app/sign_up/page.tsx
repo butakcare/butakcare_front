@@ -18,9 +18,7 @@ export default function SignUpPage() {
   };
 
   const handleSignIn = () => {
-    if (selectedType) {
-      router.push(`/sign_in`);
-    }
+    router.push(`/sign_in`);
   };
   return (
     <>
@@ -52,7 +50,12 @@ export default function SignUpPage() {
           이미 부탁케어 회원이신가요?
         </div>
         <div className="flex justify-center ">
-          <LongBtn text="로그인" disabled={false} onClick={handleSignIn} />
+          <LongBtn
+            text="로그인"
+            disabled={false}
+            onClick={handleSignIn}
+            width={354}
+          />
         </div>
       </div>
     </>
