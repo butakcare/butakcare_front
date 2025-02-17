@@ -6,7 +6,7 @@ import { LongBtn, XBLBtn } from "@/components/common/Button";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function SignUpPage() {
+export default function SignInPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");

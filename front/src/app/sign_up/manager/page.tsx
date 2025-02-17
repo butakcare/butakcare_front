@@ -27,7 +27,7 @@ export default function ManagerSignup() {
     siteurl: "",
     phone: "",
   });
-
+  const progress = (step / 5) * 100;
   const handleSubmit = async () => {
     setLoading(true);
     try {
@@ -120,7 +120,13 @@ export default function ManagerSignup() {
   return (
     <div className="w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
       <Header name="센터 관리자 회원가입" />
-      <div className="h-[93px]" />
+      <div className="w-[354px] bg-gray-200 h-1">
+        <div
+          className="h-full bg-key transition-all duration-300 ease-in-out"
+          style={{ width: `${progress}%` }}
+        />
+      </div>
+      <div className="h-[78px]" />
       {showCurrentStep()}
       {step === 1 ? (
         <LongBtn
