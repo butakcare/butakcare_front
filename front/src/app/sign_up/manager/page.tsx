@@ -27,7 +27,7 @@ export default function ManagerSignup() {
 
     introduction: "",
   });
-  const progress = (step / 8) * 100;
+  const progress = (step / 4) * 100;
   const handleSubmit = async () => {
     setLoading(true);
     try {
