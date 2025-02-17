@@ -34,17 +34,17 @@ export default function MainLeft() {
         </p>
       </div>
       <button className="max-tablet:hidden w-[163px] h-[66px] flex items-center justify-center bg-[#A4A4A4] rounded-[10px] text-[32px] font-[700] text-[#FFFFFF] mt-[26px]">
-        <Link href="/sign_in">시작하기</Link>
+        <Link href="/sign_in/selected">시작하기</Link>
       </button>
       <div className="flex flex-col w-full items-center gap-[10px] mt-[185px] tablet:hidden">
         <Link
           href="/sign_up"
-          className="w-[354px] h-[52px] flex items-center justify-center bg-[#58C185] rounded-[10px]"
+          className="w-[354px] h-[52px] flex items-center justify-center bg-[#58C185] rounded-[10px] text-[#FFFFFF]"
         >
           회원가입
         </Link>
         <Link
-          href="sign_in"
+          href="/sign_in/selected"
           className="w-[354px] h-[52px] flex items-center justify-center bg-[#FFFFFF] border border-[#666666] rounded-[10px]"
         >
           로그인
