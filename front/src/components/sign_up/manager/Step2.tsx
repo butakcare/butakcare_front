@@ -14,7 +14,7 @@ export default function ManagerStep2({
     <div>
       <TitleText text1="센터 이름을 입력해주세요." text2="" on={true} />
 
-      <form className="flex flex-col justify-center items-center align-center pt-[25px]">
+      <form className="flex flex-col justify-center items-center align-center pt-[21px]">
         <InputField
           label="센터 이름"
           value={center}

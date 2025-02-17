@@ -51,7 +51,7 @@ export default function ManagerStep8({
             className="w-[141px] h-[141px]"
           />
         )}
-        <div className="h-[25px]" />
+        <div className="h-[21px]" />
         <input
           type="file"
           ref={fileInputRef}
@@ -70,7 +70,7 @@ export default function ManagerStep8({
       <div className="h-[49px]" />
 
       <TitleText text1="한줄 소개를 입력해주세요." text2="" on={false} />
-      <div className="h-[25px]" />
+      <div className="h-[21px]" />
 
       <form className="flex flex-col justify-center items-center align-center">
         <div className="relative w-[354px]">

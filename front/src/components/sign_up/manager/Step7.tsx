@@ -50,8 +50,8 @@ export default function ManagerStep7({
         <TitleText text1="센터 등급을 입력해주세요." text2="" on={false} />
       </div>
 
-      <form className="flex flex-col justify-center items-center align-center pt-[25px]">
-        <div className="w-[354px] mb-8">
+      <form className="flex flex-col justify-center items-center align-center pt-[21px]">
+        <div className="w-[354px]">
           <div className="relative">
             <div
               className="w-[105px] h-[51px] px-4 border border-[#666666] rounded-[10px] flex items-center justify-between cursor-pointer"
@@ -85,10 +85,9 @@ export default function ManagerStep7({
             )}
           </div>
         </div>
-        <div className="flex pt-[54px]">
-          <TitleText text1="운영 기간을 입력해주세요." text2="" on={false} />
-        </div>
-        <div className="h-[25px]" />
+        <div className="h-[54px]" />
+        <TitleText text1="운영 기간을 입력해주세요." text2="" on={false} />
+        <div className="h-[21px]" />
         <div className="w-[354px] h-[52px] flex justify-between gap-4">
           <div className="relative flex-1">
             <input

@@ -18,7 +18,7 @@ export default function ManagerStep3({
     <div>
       <TitleText text1="사업자 등록 번호를 입력해주세요." text2="" on={true} />
 
-      <form className="flex flex-col justify-center items-center align-center pt-[25px]">
+      <form className="flex flex-col justify-center items-center align-center pt-[21px]">
         <InputField
           label="사업자 등록 번호"
           value={business}
@@ -32,7 +32,7 @@ export default function ManagerStep3({
           text2=""
           on={true}
         />
-        <div className="h-[25px]" />
+        <div className="h-[21px]" />
 
         <InputField
           label="센터 사이트 주소"
@@ -41,7 +41,7 @@ export default function ManagerStep3({
           placeholder="센터 사이트 주소를 입력해주세요. (선택)"
           on={false}
         />
-        <div className="h-[297px]" />
+        <div className="h-[288px]" />
       </form>
     </div>
   );

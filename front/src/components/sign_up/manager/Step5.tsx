@@ -20,7 +20,9 @@ export default function ManagerStep5({ onVehicleChange }: ManagerStep5Props) {
 
   return (
     <div>
-      <TitleText text1="목욕 차량을 소유하고 계신가요?" text2="" on={true} />
+      <div className="h-[31px]">
+        <TitleText text1="목욕 차량을 소유하고 계신가요?" text2="" on={true} />
+      </div>
 
       <form className="flex flex-col justify-center items-center align-center pt-[25px]">
         <div className="flex flex-row gap-[4px]">

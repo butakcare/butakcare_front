@@ -33,7 +33,7 @@ export default function ManagerStep4({
     <div>
       <TitleText text1="전화번호를 입력해주세요." text2="" on={true} />
 
-      <form className="flex flex-col justify-center items-center align-center pt-[25px]">
+      <form className="flex flex-col justify-center items-center align-center pt-[21px]">
         <InputField
           label="전화번호"
           value={formattedPhone}

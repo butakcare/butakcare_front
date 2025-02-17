@@ -1,7 +1,6 @@
 "use client";
 import { LongBtn, ShortsBtn } from "@/components/common/Button";
 import Header from "@/components/common/TitleHeader";
-import ManagerStep1 from "@/components/sign_up/manager/Step1";
 import ManagerStep2 from "@/components/sign_up/manager/Step2";
 import ManagerStep3 from "@/components/sign_up/manager/Step3";
 import ManagerStep4 from "@/components/sign_up/manager/Step4";
@@ -27,10 +26,8 @@ type FormFields =
 export default function ManagerSignup() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
   const [form, setForm] = useState({
-    username: "",
-    password: "",
     centername: "",
     business: "",
     siteurl: "",
@@ -93,19 +90,6 @@ export default function ManagerSignup() {
   };
 
   const showCurrentStep = () => {
-    if (step === 1) {
-      return (
-        <ManagerStep1
-          username={form.username}
-          password={form.password}
-          onUsernameChange={(value) => updateForm("username", value)}
-          onPasswordChange={(value) => updateForm("password", value)}
-          Centername={form.centername}
-          onCenternameChange={(value) => updateForm("centername", value)}
-        />
-      );
-    }
-
     if (step === 2) {
       return (
         <ManagerStep2
@@ -185,10 +169,6 @@ export default function ManagerSignup() {
   };
 
   const handleFormbtn = () => {
-    if (step === 1) {
-      return !form.username || !form.password;
-      //return !form.username || !form.password || !form.centername;
-    }
     if (step === 2) {
       return !form.centername;
     }
@@ -223,7 +203,7 @@ export default function ManagerSignup() {
       <div className="h-[78px]" />
       {showCurrentStep()}
       <div className="fixed bottom-0 w-full flex justify-center bg-white py-4">
-        {step === 1 ? (
+        {step === 2 ? (
           <LongBtn
             text="다음"
             disabled={handleFormbtn() || loading}

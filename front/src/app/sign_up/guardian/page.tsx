@@ -133,7 +133,7 @@ export default function GuardianSignup() {
       return (
         <GuardianStep3
           phone={form.phone}
-          PhoneChange={(value) => updateForm("phone", value)}
+          onPhoneChange={(value) => updateForm("phone", value)}
         />
       );
     }
