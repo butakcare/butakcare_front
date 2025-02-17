@@ -1,4 +1,5 @@
 "use client";
+
 interface LongBtnProps {
   text: string;
   disabled?: boolean;
@@ -60,6 +61,24 @@ export function ShortsBtn({
         onClick={onClickNext}
       >
         {next}
+      </button>
+    </div>
+  );
+}
+
+export function XBLBtn({ text, onClick, type }: LongBtnProps) {
+  return (
+    <div>
+      <button
+        type={type}
+        className="w-[354px] h-[52px] rounded-[10px] font-semibold text-[18px] transition-all
+      
+            border border-stroke bg-white
+           
+        "
+        onClick={onClick}
+      >
+        {text}
       </button>
     </div>
   );
