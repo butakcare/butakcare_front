@@ -16,7 +16,7 @@ export default function InputField({
     <>
       <label
         htmlFor="name"
-        className={`text-stroke font-semibold text-[18px] pb-[10px] w-[354px] ${
+        className={`text-[#666666] font-semibold text-[18px] pb-[10px] w-[354px] ${
           on ? "" : "hidden"
         }`}
       >
@@ -27,7 +27,7 @@ export default function InputField({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className=" w-[354px] h-[52px] p-[15px_16px] rounded-[10px] border border-stroke focus:outline-none"
+        className=" w-[354px] h-[52px] p-[15px_16px] text-black rounded-[10px] border border-[#666666] focus:outline-none "
       />
     </>
   );

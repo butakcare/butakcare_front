@@ -5,6 +5,10 @@ import ManagerStep1 from "@/components/sign_up/manager/Step1";
 import ManagerStep2 from "@/components/sign_up/manager/Step2";
 import ManagerStep3 from "@/components/sign_up/manager/Step3";
 import ManagerStep4 from "@/components/sign_up/manager/Step4";
+import ManagerStep5 from "@/components/sign_up/manager/Step5";
+import ManagerStep6 from "@/components/sign_up/manager/Step6";
+import ManagerStep7 from "@/components/sign_up/manager/Step7";
+import ManagerStep8 from "@/components/sign_up/manager/Step8";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 type FormFields =
@@ -13,7 +17,12 @@ type FormFields =
   | "centername"
   | "business"
   | "siteurl"
-  | "phone";
+  | "phone"
+  | "vehicle"
+  | "address"
+  | "addressDetail"
+  | "availability"
+  | "introduction";
 
 export default function ManagerSignup() {
   const router = useRouter();
@@ -26,8 +35,19 @@ export default function ManagerSignup() {
     business: "",
     siteurl: "",
     phone: "",
+    vehicle: "",
+    address: {
+      address: "",
+      addressDetail: "",
+    },
+    availability: {
+      years: "",
+      months: "",
+      description: "",
+    },
+    introduction: "",
   });
-  const progress = (step / 5) * 100;
+  const progress = (step / 8) * 100;
   const handleSubmit = async () => {
     setLoading(true);
     try {
@@ -40,7 +60,7 @@ export default function ManagerSignup() {
       if (!response.ok) throw new Error("회원가입 실패");
 
       setLoading(false);
-      router.push("/login");
+      router.push("/manager/success");
     } catch (error) {
       setLoading(false);
       console.error("회원가입 중 오류가 발생했습니다.", error);
@@ -55,8 +75,21 @@ export default function ManagerSignup() {
     setStep((prev) => prev - 1);
   };
 
-  const updateForm = (input: FormFields, value: string) => {
-    setForm({ ...form, [input]: value });
+  const updateForm = (
+    input: FormFields,
+    value: string | { [key: string]: string }
+  ) => {
+    if (input === "address" || input === "addressDetail") {
+      setForm({
+        ...form,
+        address: {
+          ...form.address,
+          [input]: value,
+        },
+      });
+    } else {
+      setForm({ ...form, [input]: value });
+    }
   };
 
   const showCurrentStep = () => {
@@ -99,6 +132,54 @@ export default function ManagerSignup() {
         />
       );
     }
+
+    if (step === 5) {
+      return (
+        <ManagerStep5
+          onVehicleChange={(value) => updateForm("vehicle", value)}
+        />
+      );
+    }
+
+    if (step === 6) {
+      return (
+        <ManagerStep6
+          address={form.address.address}
+          addressDetail={form.address.addressDetail}
+          onAddressChange={(value) => updateForm("address", value)}
+          onAddressDetailChange={(value) => updateForm("addressDetail", value)}
+        />
+      );
+    }
+    if (step === 7) {
+      return (
+        <ManagerStep7
+          years={form.availability.years}
+          months={form.availability.months}
+          description={form.availability.description}
+          onYearsChange={(value) =>
+            updateForm("availability", { ...form.availability, years: value })
+          }
+          onMonthsChange={(value) =>
+            updateForm("availability", { ...form.availability, months: value })
+          }
+          onDescriptionChange={(value) =>
+            updateForm("availability", {
+              ...form.availability,
+              description: value,
+            })
+          }
+        />
+      );
+    }
+    if (step === 8) {
+      return (
+        <ManagerStep8
+          introduction={form.introduction}
+          onIntroductionChange={(value) => updateForm("introduction", value)}
+        />
+      );
+    }
   };
 
   const handleFormbtn = () => {
@@ -114,18 +195,28 @@ export default function ManagerSignup() {
     if (step === 4) {
       return !form.phone;
     }
+    if (step === 5) {
+      return false;
+    }
+    if (step === 6) {
+      return !form.address.address || !form.address.addressDetail;
+    }
+
     return false;
   };
 
   return (
     <div className="w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
-      <Header name="센터 관리자 회원가입" />
-      <div className="w-[354px] bg-gray-200 h-1">
-        <div
-          className="h-full bg-key transition-all duration-300 ease-in-out"
-          style={{ width: `${progress}%` }}
-        />
+      <div className="flex flex-col items-center">
+        <Header name="센터 관리자 회원가입" />
+        <div className="w-[354px] bg-gray-200 h-1">
+          <div
+            className="h-full bg-key transition-all duration-300 ease-in-out"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
       </div>
+
       <div className="h-[78px]" />
       {showCurrentStep()}
       {step === 1 ? (
@@ -138,10 +229,10 @@ export default function ManagerSignup() {
         />
       ) : (
         <ShortsBtn
-          next={step === 4 && loading ? "저장 중.." : "다음"}
+          next={step === 8 && loading ? "저장 중.." : "다음"}
           back="이전"
           disabled={handleFormbtn() || loading}
-          onClickNext={step === 4 ? handleSubmit : handleNext}
+          onClickNext={step === 8 ? handleSubmit : handleNext}
           onClickBack={handleBack}
           width={175}
         />
