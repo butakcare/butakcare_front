@@ -144,7 +144,9 @@ export default function RequestList() {
             <div className="flex w-[330px] justify-start mt-[21px] mb-[21px]">
               <p className="text-[22px] text-[#000000] font-[600]">
                 요청 보낸 어르신 목록
-                <span className="text-[#CCCCCC] ml-[98px]">19명</span>
+                <span className="text-[#CCCCCC] ml-[98px]">
+                  {datas.length}명
+                </span>
               </p>
             </div>
             <div
@@ -163,7 +165,7 @@ export default function RequestList() {
                 <div
                   key={idx + 1}
                   onClick={() => setSelectedElder(idx + 1)}
-                  className={`w-[330px] h-[126px] flex gap-[17px] items-center justify-center hover:bg-[#EFEFEF] rounded-[14px]`}
+                  className={`w-[330px] h-[126px] flex gap-[17px] items-center justify-center hover:bg-[#D7F3D1] group rounded-[14px]`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -183,25 +185,25 @@ export default function RequestList() {
                         {data.gender}성
                       </p>
                     </div>
-                    <p className="text-[22px] text-[#C0C0C0] fon-[500]">
+                    <p className="text-[22px] text-[#C0C0C0] fon-[500] group-hover:text-[#2D8859]">
                       5분 전
                     </p>
                   </div>
                   <div>
-                    <div className="w-[44px] h-[44px] relative flex justify-center items-center bg-[#CDCDCD] rounded-[10px] ml-[13px]">
-                      <p className="text-[22px] font-[700] text-[#FFFFFF]">
+                    <div className="w-[44px] h-[44px] relative flex justify-center items-center bg-[#F7F8FA] group-hover:bg-[#58C185] rounded-[10px] ml-[13px]">
+                      <p className="text-[22px] font-[700] text-[#58C185] group-hover:text-[#FFFFFF]">
                         {data.requests}
                       </p>
                       {data.new && (
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
+                          width="12"
+                          height="12"
+                          viewBox="0 0 12 12"
                           fill="none"
-                          className="absolute bottom-[30px] left-[30px]"
+                          className="absolute top-[-5px] right-[-5px]"
                         >
-                          <circle cx="12" cy="12" r="12" fill="#818181" />
+                          <circle cx="6" cy="6" r="6" fill="#EC544F" />
                         </svg>
                       )}
                     </div>

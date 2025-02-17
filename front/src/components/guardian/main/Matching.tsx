@@ -50,7 +50,7 @@ export default function Matching() {
                 {match.fileter.map((filter, index) => (
                   <div
                     key={index}
-                    className="text-[#FFFFFF] h-[31px] flex justify-center items-center px-[10px] py-[5px] bg-[#B3B3B3] rounded-[8px]"
+                    className="text-[#58C185] h-[31px] flex justify-center items-center px-[10px] py-[5px] bg-[#D7F3D1] rounded-[8px]"
                   >
                     <p>{filter}</p>
                   </div>
@@ -98,7 +98,7 @@ export default function Matching() {
                 href={`/guardian/current_matching?id=${encodeURIComponent(
                   match.id
                 )}`}
-                className="text-[#FFFFFF] w-[153px] font-[600] h-[52px] bg-[#CFCFCF] rounded-[10px] flex justify-center items-center cursor-pointer"
+                className="text-[#FFFFFF] w-[153px] font-[600] h-[52px] bg-[#58C185] rounded-[10px] flex justify-center items-center cursor-pointer"
               >
                 조율하러 가기
               </Link>

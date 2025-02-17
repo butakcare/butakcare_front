@@ -172,7 +172,7 @@ export default function GuardianProfile({ setIsProfileModal }: Prop) {
         <div className="mt-[30px] w-[683px] flex items-center justify-end mb-[32px]">
           <button
             onClick={() => setIsProfileModal(false)}
-            className="w-[196px] h-[84px] bg-[#CFCFCF] rounded-[14px] text-[30px] text-[#FFFFFF] font-[700]"
+            className="w-[196px] h-[84px] bg-[#D7F3D1] rounded-[14px] text-[30px] text-[#000000] font-[700]"
           >
             닫기
           </button>

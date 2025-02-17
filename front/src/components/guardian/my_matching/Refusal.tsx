@@ -77,7 +77,7 @@ export default function Refusal() {
             <div className="flex justify-center gap-[4px] mt-[16px]">
               <Link
                 href="/guardian/main/matching_info"
-                className="text-[#000000] text-[18px] font-[600] w-[168px] h-[52px] bg-[#FFFFFF] rounded-[10px] flex justify-center items-center cursor-pointer font-[600] px-[43px] py-[15px] whitespace-nowrap"
+                className="text-[#FFFFFF] text-[18px] font-[600] w-[168px] h-[52px] bg-[#58C185] rounded-[10px] flex justify-center items-center cursor-pointer font-[600] px-[43px] py-[15px] whitespace-nowrap"
               >
                 자세히 보기
               </Link>

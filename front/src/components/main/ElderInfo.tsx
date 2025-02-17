@@ -194,7 +194,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
   ];
 
   return (
-    <div className="flex flex-col w-[1041px] mt-[25px]">
+    <div className="flex flex-col w-[1061px] pl-[20px] pt-[20px] mt-[25px] bg-[#F7F8FA] ">
       <div className="flex">
         <div className="flex gap-[12px]">
           {buttonData.map((button) => (
@@ -203,7 +203,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
               onClick={() => handleFilter(button.label)}
               className={`w-[158px] h-[46px] rounded-[10px] text-[22px] font-[600] ${
                 activeButton === button.label
-                  ? "bg-[#CCC]"
+                  ? "bg-[#58C185] text-[#FFFFFF]"
                   : "bg-[#DEDEDE] text-[#FFFFFF]"
               }`}
             >
@@ -211,12 +211,15 @@ export default function ElderInfo({ Filter, setSize }: Props) {
             </button>
           ))}
         </div>
-        <div className="w-[197px] h-[46px] flex justify-center items-center bg-[#E8E8E8] rounded-[10px] ml-[250px]">
+        <div className="w-[197px] h-[46px] flex justify-center items-center bg-[#D7F3D1] rounded-[10px] ml-[250px]">
           <Link
             href="/manager/add"
-            className="text-[22px] font-[600] text-[#454545]"
+            className="text-[22px] font-[600] text-[#2D8859] flex items-center gap-[5px]"
           >
-            + 어르신 추가하기
+            <div className="w-[24px] h-[24px] rounded-[48px] bg-[#58C185] text-[#FFFFFF] flex items-center justify-center">
+              +
+            </div>{" "}
+            어르신 추가하기
           </Link>
         </div>
       </div>
@@ -237,7 +240,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
               >
                 <circle cx="39" cy="39" r="39" fill="#D9D9D9" />
               </svg>
-              <div className="w-[67px] h-[34px] mt-[15px] bg-[#B3B3B3] rounded-[8px] flex items-center justify-center text-[20px] font-[500] text-[#FFFFFF]">
+              <div className="w-[67px] h-[34px] mt-[15px] bg-[#D7F3D1] rounded-[8px] flex items-center justify-center text-[20px] font-[500] text-[#58C185]">
                 {data.grade}등급
               </div>
             </div>

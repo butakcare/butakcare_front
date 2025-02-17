@@ -141,13 +141,13 @@ export default function Chat({ selectedElder }: Prop) {
             <div className="flex flex-col gap-[6px]">
               <button
                 onClick={() => setIsProfileModal(true)}
-                className="w-[141px] h-[48px] bg-[#EDEDED] rounded-[10px] text-[22px] text-[#000000] font-[500]"
+                className="w-[141px] h-[48px] bg-[#FFFFFF] border border-[1px] rounded-[10px] text-[22px] text-[#58C185] font-[500]"
               >
                 프로필 보기
               </button>
               <button
                 onClick={() => alert("이 기능은 모바일에서만 가능합니다.")}
-                className="w-[141px] h-[48px] bg-[#EDEDED] rounded-[10px] text-[22px] text-[#000000] font-[500]"
+                className="w-[141px] h-[48px] bg-[#FFFFFF] border border-[1px] rounded-[10px] text-[22px] text-[#58C185] font-[500]"
               >
                 전화 걸기
               </button>
@@ -170,7 +170,7 @@ export default function Chat({ selectedElder }: Prop) {
               <div className="flex gap-[6px] mt-[13px]">
                 {data.tuning.filters.map((filter, idx) => (
                   <div
-                    className="px-[10px] py-[5px] bg-[#B3B3B3] rounded-[8px] text-[22px] text-[#FFFFFF] font-[500]"
+                    className="px-[10px] py-[5px] bg-[#D7F3D1] rounded-[8px] text-[22px] text-[#58C185] font-[500]"
                     key={idx}
                   >
                     {filter}
@@ -230,13 +230,13 @@ export default function Chat({ selectedElder }: Prop) {
           </div>
           <div className="flex justify-end pr-[36px]">
             <div className="flex flex-col gap-[6px]">
-              <button className="text-[22px] text-[#828282] font-[600] w-[353px] h-[50px] border border-[#D1D1D1] rounded-[10px] flex items-center justify-center">
+              <button className="text-[22px] text-[#828282] font-[600] hover:bg-[#58C185] hover:text-[#FFFFFF] w-[353px] h-[50px] border border-[#D1D1D1] rounded-[10px] flex items-center justify-center">
                 수락하기
               </button>
-              <button className="text-[22px] text-[#828282] font-[600] w-[353px] h-[50px] border border-[#D1D1D1] rounded-[10px] flex items-center justify-center">
+              <button className="text-[22px] text-[#828282] font-[600] hover:bg-[#58C185] hover:text-[#FFFFFF] w-[353px] h-[50px] border border-[#D1D1D1] rounded-[10px] flex items-center justify-center">
                 조율 요청하기
               </button>
-              <button className="text-[22px] text-[#828282] font-[600] w-[353px] h-[50px] border border-[#D1D1D1] rounded-[10px] flex items-center justify-center">
+              <button className="text-[22px] text-[#828282] font-[600] hover:bg-[#58C185] hover:text-[#FFFFFF] w-[353px] h-[50px] border border-[#D1D1D1] rounded-[10px] flex items-center justify-center">
                 거절하기
               </button>
             </div>

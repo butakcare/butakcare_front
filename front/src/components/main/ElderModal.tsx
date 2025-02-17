@@ -183,27 +183,27 @@ export default function ElderModal({ data, onClose }: ElderModalProps) {
         <div className="flex flex-col w-[683px] h-auto bg-[#F0F0F0] pl-[23px] pt-[14px] gap-[10px] rounded-[14px] mt-4 pb-[26px]">
           <p className="text-[22px] font-[700] text-[#676767]">이동보조</p>
           <div className="flex flex-wrap gap-[10px]">
-            <div className="px-[10px] py-[5px] h-[34px] flex justify-center items-center bg-[#B3B3B3] rounded-[8px]">
-              <p className="text-[20px] font-[500] text-[#FFFFFF]">
+            <div className="px-[10px] py-[5px] h-[34px] flex justify-center items-center bg-[#B3B3B3] rounded-[8px] bg-[#D7F3D1]">
+              <p className="text-[20px] font-[500] text-[#58C185]">
                 휠체어 이동보조
               </p>
             </div>
           </div>
           <p className="text-[22px] font-[700] text-[#676767]">생활보조</p>
           <div className="flex flex-wrap gap-[6px]">
-            <div className="px-[10px] py-[5px] h-[34px] flex justify-center items-center bg-[#B3B3B3] rounded-[8px]">
-              <p className="text-[20px] font-[500] text-[#FFFFFF]">청소</p>
+            <div className="px-[10px] py-[5px] h-[34px] flex justify-center items-center bg-[#B3B3B3] rounded-[8px] bg-[#D7F3D1]">
+              <p className="text-[20px] font-[500] text-[#58C185]">청소</p>
             </div>
-            <div className="px-[10px] py-[5px] h-[34px] flex justify-center items-center bg-[#B3B3B3] rounded-[8px]">
-              <p className="text-[20px] font-[500] text-[#FFFFFF]">빨래 도움</p>
+            <div className="px-[10px] py-[5px] h-[34px] flex justify-center items-center bg-[#B3B3B3] rounded-[8px] bg-[#D7F3D1]">
+              <p className="text-[20px] font-[500] text-[#58C185]">빨래 도움</p>
             </div>
-            <div className="px-[10px] py-[5px] h-[34px] flex justify-center items-center bg-[#B3B3B3] rounded-[8px]">
-              <p className="text-[20px] font-[500] text-[#FFFFFF]">
+            <div className="px-[10px] py-[5px] h-[34px] flex justify-center items-center bg-[#B3B3B3] rounded-[8px] bg-[#D7F3D1]">
+              <p className="text-[20px] font-[500] text-[#58C185]">
                 말벗 등 정서지원
               </p>
             </div>
-            <div className="px-[10px] py-[5px] h-[34px] flex justify-center items-center bg-[#B3B3B3] rounded-[8px]">
-              <p className="text-[20px] font-[500] text-[#FFFFFF]">
+            <div className="px-[10px] py-[5px] h-[34px] flex justify-center items-center bg-[#B3B3B3] rounded-[8px] bg-[#D7F3D1]">
+              <p className="text-[20px] font-[500] text-[#58C185]">
                 산책 등 간단한 운동
               </p>
             </div>
@@ -212,7 +212,7 @@ export default function ElderModal({ data, onClose }: ElderModalProps) {
         <div className="mt-[30px] w-[683px] flex items-center justify-end mb-[32px]">
           <button
             onClick={() => onClose()}
-            className="w-[248px] h-[84px] bg-[#A4A4A4] rounded-[14px] text-[30px] text-[#FFFFFF] font-[700]"
+            className="w-[248px] h-[84px] bg-[#58C185] rounded-[14px] text-[30px] text-[#FFFFFF] font-[600]"
           >
             매칭하기
           </button>

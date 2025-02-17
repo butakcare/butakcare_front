@@ -7,16 +7,30 @@ import Navigation from "@/components/manager/add/Navigation";
 import { useState, useEffect } from "react";
 
 export default function Home() {
+  //1. 기본 정보
   const [elderName, setElderName] = useState<string>("");
   const [elderBirth, setElderBirth] = useState<string>("");
   const [elderGender, setElderGender] = useState<string>("");
   const [elderGrade, setElderGrade] = useState<number>(0);
   const [elderAddress, setElderAddress] = useState<string>("");
-  const [selected, setSelected] = useState<number>(0);
-  const [selectedOne, setSelectedOne] = useState<number>(0);
+  const [elderAddress2, setElderAddress2] = useState<string>("");
+  const [selected, setSelected] = useState<number>(2);
+
   const [selectedTwo, setSelectedTwo] = useState<number>(0);
-  const [selectedThree, setSelectedThree] = useState<number>(0);
+
   const [image, setImage] = useState<string | null>(null);
+
+  // 2. 일정정보
+  const [selectedDays, setSelectedDays] = useState<string[]>([]);
+  const [startHour, setStartHour] = useState("");
+  const [startMinute, setStartMinute] = useState("");
+  const [endHour, setEndHour] = useState("");
+  const [endMinute, setEndMinute] = useState("");
+  const [selectedOne, setSelectedOne] = useState<number>(0);
+
+  // 3. 케어 필요 항목
+  const [selectedThree, setSelectedThree] = useState<number>(0);
+  const [disease, setDisease] = useState<string>("");
 
   const maxSteps = 2;
 
@@ -30,29 +44,29 @@ export default function Home() {
 
   const progressWidth = `${(getSelectedValue() / maxSteps) * 516}px`;
 
-  const handleGauge = () => {
-    if (selected === 0) {
-      if (selectedOne < maxSteps) {
-        setSelectedOne((prev) => prev + 1);
-      } else {
-        if (
-          elderName &&
-          elderAddress &&
-          elderBirth.length == 10 &&
-          elderGender &&
-          elderGrade
-        ) {
-          setSelected(1);
-        } else {
-          alert("필수 항목을 다 채워주시기 바랍니다.");
-        }
-      }
-    } else if (selected === 1) {
-      setSelected(2);
-    } else if (selected === 2) {
-      setSelected(3);
-    }
-  };
+  // const handleGauge = () => {
+  //   if (selected === 0) {
+  //     if (selectedOne < maxSteps) {
+  //       setSelectedOne((prev) => prev + 1);
+  //     } else {
+  //       if (
+  //         elderName &&
+  //         elderAddress &&
+  //         elderBirth.length == 10 &&
+  //         elderGender &&
+  //         elderGrade
+  //       ) {
+  //         setSelected(1);
+  //       } else {
+  //         alert("필수 항목을 다 채워주시기 바랍니다.");
+  //       }
+  //     }
+  //   } else if (selected === 1) {
+  //     setSelected(2);
+  //   } else if (selected === 2) {
+  //     setSelected(3);
+  //   }
+  // };
 
   // selected가 바뀌면 해당 단계의 게이지 초기화
   useEffect(() => {
@@ -72,7 +86,7 @@ export default function Home() {
             ? "2. 어르신 일정 정보 등록하기"
             : "3. 어르신 케어 필요 항목 등록하기"}
         </strong>
-        {selected == 0 && (
+        {(selected == 0 || selected == 2) && (
           <div className="w-[726px] h-[6px] bg-[#DFE0E3] rounded-[3px] mt-[20px] ml-[20px] [relative overflow-hidden">
             <div
               className="h-full bg-[#65CCB2] transition-all duration-300"
@@ -84,40 +98,47 @@ export default function Home() {
         <div className="flex flex-col items-center justify-between">
           {selected == 0 ? (
             <AddElder
+              setSelected={setSelected}
               selectedOne={selectedOne}
+              setSelectedOne={setSelectedOne}
               elderName={elderName}
               setElderName={setElderName}
               elderBirth={elderBirth}
               setElderBirth={setElderBirth}
+              elderGender={elderGender}
               setElderGender={setElderGender}
+              elderGrade={elderGrade}
               setElderGrade={setElderGrade}
               elderAddress={elderAddress}
               setElderAddress={setElderAddress}
               image={image}
               setImage={setImage}
+              elderAddress2={elderAddress2}
+              setElderAddress2={setElderAddress2}
             />
           ) : selected == 1 ? (
-            <AddElderSchedule />
+            <AddElderSchedule
+              selectedDays={selectedDays}
+              setSelectedDays={setSelectedDays}
+              startHour={startHour}
+              setStartHour={setStartHour}
+              startMinute={startMinute}
+              setStartMinute={setStartMinute}
+              endHour={endHour}
+              setEndHour={setEndHour}
+              endMinute={endMinute}
+              setEndMinute={setEndMinute}
+              setSelected={setSelected}
+            />
           ) : (
-            <AddElderCare />
+            <AddElderCare
+              selectedThree={selectedThree}
+              setSelected={setSelected}
+              setSelectedThree={setSelectedThree}
+              disease={disease}
+              setDisease={setDisease}
+            />
           )}
-          <div className="flex w-[726px] justify-between relative">
-            {selectedOne !== 0 && (
-              <button
-                onClick={() => setSelectedOne((prev) => prev - 1)}
-                className="absolute left-[30px] w-[254px] h-[58px] flex items-center justify-center bg-[#FFFFFF] rounded-[10px] border border-[1px] border-[#000000] text-[22px] text-[#191A1C] font-[600]"
-              >
-                이전
-              </button>
-            )}
-
-            <button
-              onClick={handleGauge}
-              className="absolute right-[0px] w-[254px] h-[58px] flex items-center justify-center bg-[#CFCFCF] rounded-[10px] text-[22px] text-[#FFFFFF] font-[600]"
-            >
-              다음
-            </button>
-          </div>
         </div>
       </div>
     </div>

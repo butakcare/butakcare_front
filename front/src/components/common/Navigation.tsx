@@ -26,7 +26,7 @@ export default function Navigation({ selected, setSelected }: Props) {
                 ${index == 0 ? "mt-[40px]" : ""}
                 ${
                   index == selected
-                    ? "text-[#FFFFFF] bg-[#CCCCCC]"
+                    ? "text-[#2D8859] bg-[#D7F3D1]"
                     : "text-[#9A9A9A]"
                 }  
                 `}

@@ -168,9 +168,9 @@ export default function GuardianList({
           <div
             key={idx + 1}
             onClick={() => setSelectedGuardian(idx + 1)}
-            className={`w-[330px] h-[126px] flex gap-[17px] items-center justify-center ${
-              selectedGuardian == idx + 1 ? "bg-[#EFEFEF]" : "bg-[#FFFFFF]"
-            } hover:bg-[#EFEFEF] rounded-[14px]`}
+            className={`w-[330px] h-[126px] flex gap-[17px] items-center justify-center group ${
+              selectedGuardian == idx + 1 ? "bg-[#D7F3D1]" : "bg-[#FFFFFF]"
+            } rounded-[14px] cursor-pointer`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -193,11 +193,23 @@ export default function GuardianList({
                     {guardian.status}
                   </p>
                 </div>
-                <p className="text-[22px] text-[#C0C0C0] fon-[500]">5분 전</p>
+                <p
+                  className={`text-[22px] fon-[500] ${
+                    selectedGuardian == idx + 1
+                      ? "text-[#2D8859]"
+                      : " text-[#CDCDCD]"
+                  }`}
+                >
+                  5분 전
+                </p>
               </div>
             </div>
             <div>
-              <div className="w-[44px] h-[44px] relative flex justify-center items-center bg-[#CDCDCD] rounded-[60px] ml-[13px]">
+              <div
+                className={`w-[44px] h-[44px] relative flex justify-center items-center rounded-[60px] ml-[13px] ${
+                  selectedGuardian == idx + 1 ? "bg-[#58C185]" : " bg-[#CDCDCD]"
+                }`}
+              >
                 <p className="text-[22px] font-[700] text-[#FFFFFF]">
                   {guardian.new}
                 </p>
