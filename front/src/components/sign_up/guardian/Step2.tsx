@@ -22,7 +22,7 @@ export default function GuardianStep2({
           placeholder="성함을 입력해주세요.(필수)"
           on={false}
         />
-        <div className="h-[267px]" />
+        <div className="h-[455px]" />
       </form>
     </div>
   );

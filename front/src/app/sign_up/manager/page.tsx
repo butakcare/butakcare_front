@@ -128,6 +128,7 @@ export default function ManagerSignup() {
           disabled={handleFormbtn() || loading}
           onClick={handleNext}
           type="button"
+          width={354}
         />
       ) : (
         <ShortsBtn
@@ -136,6 +137,7 @@ export default function ManagerSignup() {
           disabled={handleFormbtn() || loading}
           onClickNext={step === 4 ? handleSubmit : handleNext}
           onClickBack={handleBack}
+          width={175}
         />
       )}
     </div>

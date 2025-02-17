@@ -2,7 +2,7 @@
 import TitleText from "@/components/common/TitleText";
 import Header from "@/components/common/TitleHeader";
 import InputField from "@/components/sign_up/InputField";
-import { LongBtn } from "@/components/common/Button";
+import { LongBtn, XBLBtn } from "@/components/common/Button";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -69,7 +69,7 @@ export default function SignUpPage() {
         아직 부탁케어 계정이 없으신가요?
       </div>
       <div className="flex justify-center ">
-        <LongBtn text="회원가입" onClick={handleNext} width={354} />
+        <XBLBtn text="회원가입" onClick={handleNext} width={354} />
       </div>
     </div>
   );

@@ -32,6 +32,7 @@ export default function GuardianSignup() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
+  const progress = (step / 9) * 100;
   const [form, setForm] = useState({
     username: "",
     password: "",
@@ -263,6 +264,12 @@ export default function GuardianSignup() {
   return (
     <div className="w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
       <Header name="센터 관리자 회원가입" />
+      <div className="w-full bg-gray-200 h-1">
+        <div
+          className="h-full bg-green-500 transition-all duration-300 ease-in-out"
+          style={{ width: `${progress}%` }}
+        />
+      </div>
       <div className="h-[93px]" />
       {showCurrentStep()}
       {step === 1 ? (
@@ -271,6 +278,7 @@ export default function GuardianSignup() {
           disabled={handleFormbtn() || loading}
           onClick={handleNext}
           type="button"
+          width={354}
         />
       ) : (
         <ShortsBtn
@@ -279,6 +287,7 @@ export default function GuardianSignup() {
           disabled={handleFormbtn() || loading}
           onClickNext={step === 9 ? handleSubmit : handleNext}
           onClickBack={handleBack}
+          width={175}
         />
       )}
     </div>
