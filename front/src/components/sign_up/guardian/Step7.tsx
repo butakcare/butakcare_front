@@ -2,8 +2,9 @@
 import TitleText from "@/components/common/TitleText";
 import Script from "next/script";
 import { useEffect, useState } from "react";
-
-interface GuardianStep7Props {
+import SearchIcon from "@/../public/assets/icons/search_black.svg";
+import Image from "next/image";
+interface GuardianStep6Props {
   address: string;
   addressDetail: string;
   onAddressChange: (value: string) => void;
@@ -28,17 +29,17 @@ declare global {
   }
 }
 
-export default function GuardianStep7({
-  address,
-  addressDetail,
+export default function GuardianStep6({
+  address = "",
+  addressDetail = "",
   onAddressChange,
   onAddressDetailChange,
-}: GuardianStep7Props) {
+}: GuardianStep6Props) {
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
   const [showDetailInput, setShowDetailInput] = useState(false);
 
   // Handle address search using Daum Postcode
-  const handleAddressSearch = () => {
+  const handleAddressSearch = async () => {
     if (!isScriptLoaded || !window.daum) {
       alert("주소 검색 서비스를 불러오는 중입니다. 잠시 후 다시 시도해주세요.");
       return;
@@ -101,11 +102,11 @@ export default function GuardianStep7({
         strategy="lazyOnload"
       />
 
-      <form className="flex flex-col justify-center items-center align-center pt-[25px]">
-        <div className="w-full relative mb-4">
+      <form className="flex flex-col justify-center items-center align-center pt-[21px]">
+        <div className="w-full relative font-semibold ">
           <input
             type="text"
-            className="w-full h-12 px-4 border rounded-md pr-12"
+            className="w-full h-[52px] px-4 border rounded-[10px] pr-12 border-[#666666] text-black focus:outline-none"
             placeholder="도로명, 지번 혹은 건물명으로 검색"
             value={address}
             readOnly
@@ -116,34 +117,23 @@ export default function GuardianStep7({
             className="absolute right-3 top-1/2 transform -translate-y-1/2"
             onClick={handleAddressSearch}
           >
-            <svg
-              className="w-6 h-6 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
+            <Image src={SearchIcon} alt="search" className="opacity-60" />
           </button>
         </div>
 
         {showDetailInput && (
-          <div className="w-full mt-4">
-            <p className="text-sm text-gray-600 mb-2">상세 주소</p>
+          <div className="w-full mt-4 font-semibold ">
+            <p className="text-[18px] text-black mb-[10px]">상세 주소</p>
             <input
               type="text"
-              className="w-full h-12 px-4 border rounded-md"
+              className="w-full h-[52px] px-4 border rounded-[10px] border-[#666666] text-black focus:outline-none"
               placeholder="상세 주소를 입력해주세요. (필수)"
               value={addressDetail}
               onChange={handleDetailChange}
             />
           </div>
         )}
+        <div className={`h-[${showDetailInput ? "347px" : "455px"}]`} />
       </form>
     </div>
   );
