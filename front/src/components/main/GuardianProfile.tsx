@@ -27,13 +27,14 @@ export default function GuardianProfile({ setIsProfileModal }: Prop) {
     condition: {
       schedules: ["월", "화", "수", "목", "금"],
       time: ["09:00 ~ 12:00", "12:00 ~ 18:00"],
-      salary: "시급 15,000원",
+      salaryWeek: "12,000 ~ 16,000",
     },
   };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div
-        className="flex flex-col bg-[#FCFCFB] rounded-[20px] w-[742px] max-h-[95vh] overflow-y-auto pl-[30px] pt-[30px]"
+        className="flex flex-col bg-[#FCFCFB] rounded-[20px] w-[774px] max-h-[95vh] overflow-y-auto pl-[30px] pt-[30px]"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
@@ -44,7 +45,7 @@ export default function GuardianProfile({ setIsProfileModal }: Prop) {
             display: none;
           }
         `}</style>
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex flex-col items-start justify-between mb-4 gap-[30px]">
           <div className="flex items-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -59,13 +60,19 @@ export default function GuardianProfile({ setIsProfileModal }: Prop) {
               {data.name}
             </p>
           </div>
+          <div>
+            <p className="text-[26px] font-[700] text-[#191A1C]">한 줄 소개</p>
+            <p className="text-[22px] font-[500] text-[#666666]">
+              부모님을 돌보는 마음으로 정성을 담아 임하겠습니다.
+            </p>
+          </div>
         </div>
         <div className="flex items-start gap-[18px]">
           <div className="flex flex-col">
             <strong className="text-[26px] font-[700] text-[#000000] leading-[31px] mt-[12px]">
               요양보호사 정보
             </strong>
-            <div className="flex flex-col w-[355px] h-auto pt-[18px] bg-[#F0F0F0] items-start pl-[23px] gap-[14px] rounded-[14px] pb-[26px] mt-[12px]">
+            <div className="flex flex-col w-[352px] h-auto pt-[18px] bg-[#F0F0F0] items-start pl-[23px] gap-[14px] rounded-[14px] pb-[26px] mt-[12px]">
               <div className="flex gap-[20px] h-[26px]">
                 <p className="w-[75px] text-[22px] whitespace-nowrap font-[500] text-[#9A9A9A]">
                   자격증
@@ -136,7 +143,7 @@ export default function GuardianProfile({ setIsProfileModal }: Prop) {
             <strong className="text-[26px] font-[700] text-[#000000] leading-[31px] mt-[28px]">
               희망 근무 조건
             </strong>
-            <div className="flex flex-col w-[313px] py-[20px] h-auto bg-[#F0F0F0] items-start justify-center pl-[22px] gap-[10px] rounded-[14px] mt-4">
+            <div className="flex flex-col w-[352px] py-[20px] h-auto bg-[#F0F0F0] items-start justify-center pl-[22px] gap-[10px] rounded-[14px] mt-4">
               <div className="flex gap-[16px] h-[26px]">
                 <p className="w-[75px] text-[22px] whitespace-nowrap font-[500] text-[#9A9A9A]">
                   기간
@@ -163,7 +170,7 @@ export default function GuardianProfile({ setIsProfileModal }: Prop) {
                   희망급여
                 </p>
                 <p className="text-[22px] whitespace-nowrap font-[600] text-[#000000]">
-                  {data.condition.salary}
+                  시급 {data.condition.salaryWeek}원
                 </p>
               </div>
             </div>

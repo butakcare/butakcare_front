@@ -2,12 +2,16 @@ import Image from "next/image";
 import { useState } from "react";
 import GuardianProfile from "./GuardianProfile";
 import GuardianTuning from "./GuardianTuning";
+import AcceptModal from "./AcceptModal";
+import RefusaltModal from "./RefusalModal";
 
 interface Prop {
   selectedElder: number;
 }
 
 export default function Chat({ selectedElder }: Prop) {
+  const [isAcceptModal, setIsAcceptModal] = useState<boolean>(false);
+  const [isRefusalModal, setIsRefusalModal] = useState<boolean>(false);
   const [isProfileModal, setIsProfileModal] = useState<boolean>(false);
   const [isTuningModal, setIsTuningModal] = useState<boolean>(false);
   const data = {
@@ -230,13 +234,19 @@ export default function Chat({ selectedElder }: Prop) {
           </div>
           <div className="flex justify-end pr-[36px]">
             <div className="flex flex-col gap-[6px]">
-              <button className="text-[22px] text-[#828282] font-[600] hover:bg-[#58C185] hover:text-[#FFFFFF] w-[353px] h-[50px] border border-[#D1D1D1] rounded-[10px] flex items-center justify-center">
+              <button
+                onClick={() => setIsAcceptModal(true)}
+                className="text-[22px] text-[#828282] font-[600] hover:bg-[#58C185] hover:text-[#FFFFFF] w-[353px] h-[50px] border border-[#D1D1D1] rounded-[10px] flex items-center justify-center"
+              >
                 수락하기
               </button>
               <button className="text-[22px] text-[#828282] font-[600] hover:bg-[#58C185] hover:text-[#FFFFFF] w-[353px] h-[50px] border border-[#D1D1D1] rounded-[10px] flex items-center justify-center">
                 조율 요청하기
               </button>
-              <button className="text-[22px] text-[#828282] font-[600] hover:bg-[#58C185] hover:text-[#FFFFFF] w-[353px] h-[50px] border border-[#D1D1D1] rounded-[10px] flex items-center justify-center">
+              <button
+                onClick={() => setIsRefusalModal(true)}
+                className="text-[22px] text-[#828282] font-[600] hover:bg-[#58C185] hover:text-[#FFFFFF] w-[353px] h-[50px] border border-[#D1D1D1] rounded-[10px] flex items-center justify-center"
+              >
                 거절하기
               </button>
             </div>
@@ -247,6 +257,10 @@ export default function Chat({ selectedElder }: Prop) {
         <GuardianProfile setIsProfileModal={setIsProfileModal} />
       )}
       {isTuningModal && <GuardianTuning setIsTuningModal={setIsTuningModal} />}
+      {isAcceptModal && <AcceptModal setIsAcceptModal={setIsAcceptModal} />}
+      {isRefusalModal && (
+        <RefusaltModal setIsRefusalModal={setIsRefusalModal} />
+      )}
     </div>
   );
 }

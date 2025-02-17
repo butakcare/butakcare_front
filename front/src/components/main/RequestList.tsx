@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useState } from "react";
 import Chat from "./Chat";
 import GuardianList from "./GuardianList";
+import ChatAccept from "./ChatAccept";
+import ChatRefusal from "./ChatRefusal";
 
 export default function RequestList() {
   const datas = [
@@ -116,6 +118,7 @@ export default function RequestList() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [searchText, setSearchText] = useState<string>("");
   const [selectedElder, setSelectedElder] = useState<number>(0);
+  const [guardianStatus, setGuardianStatus] = useState<string>("");
 
   const handleInput = () => {
     setSearchText(text);
@@ -217,11 +220,18 @@ export default function RequestList() {
             <GuardianList
               selectedElder={selectedElder}
               setSelectedElder={setSelectedElder}
+              setGuardianStatus={setGuardianStatus}
             />
           </div>
         )}
       </div>
-      <Chat selectedElder={selectedElder} />
+      {guardianStatus === "조율 중" ? (
+        <Chat selectedElder={selectedElder} />
+      ) : guardianStatus === "수락" ? (
+        <ChatAccept />
+      ) : (
+        <ChatRefusal />
+      )}
     </div>
   );
 }

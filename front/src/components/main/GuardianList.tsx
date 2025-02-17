@@ -1,15 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 
 interface Prop {
   selectedElder: number;
   setSelectedElder: (selectedEleder: number) => void;
+  setGuardianStatus: React.Dispatch<SetStateAction<string>>;
 }
 
 export default function GuardianList({
   selectedElder,
   setSelectedElder,
+  setGuardianStatus,
 }: Prop) {
   const datas = [
     {
@@ -116,6 +118,11 @@ export default function GuardianList({
   ];
   const elderData = datas.find((select) => selectedElder == select.id);
   const [selectedGuardian, setSelectedGuardian] = useState<number>(0);
+  useEffect(() => {
+    setGuardianStatus(
+      elderData?.guardianList[selectedGuardian]?.status || "조율 중"
+    );
+  }, [elderData, selectedGuardian, setGuardianStatus]);
   return (
     <div className="flex flex-col items-center w-[362px] h-full">
       <div className="mt-[20px] flex w-[318px] pl-[15px] rounded-[10px] h-[44px] flex items-center">
@@ -146,8 +153,8 @@ export default function GuardianList({
       </div>
       <div className="flex w-[330px] justify-start mt-[21px] mb-[21px]">
         <p className="text-[22px] text-[#000000] font-[600]">
-          요청 보낸 어르신 목록
-          <span className="text-[#CCCCCC] ml-[98px]">
+          요청 보낸 요양보호사 목록
+          <span className="text-[#CCCCCC] ml-[70px]">
             {elderData?.guardianList.length}명
           </span>
         </p>
@@ -166,10 +173,10 @@ export default function GuardianList({
         `}</style>
         {elderData?.guardianList.map((guardian, idx) => (
           <div
-            key={idx + 1}
-            onClick={() => setSelectedGuardian(idx + 1)}
+            key={idx}
+            onClick={() => setSelectedGuardian(idx)}
             className={`w-[330px] h-[126px] flex gap-[17px] items-center justify-center group ${
-              selectedGuardian == idx + 1 ? "bg-[#D7F3D1]" : "bg-[#FFFFFF]"
+              selectedGuardian == idx ? "bg-[#D7F3D1]" : "bg-[#FFFFFF]"
             } rounded-[14px] cursor-pointer`}
           >
             <svg
@@ -195,7 +202,7 @@ export default function GuardianList({
                 </div>
                 <p
                   className={`text-[22px] fon-[500] ${
-                    selectedGuardian == idx + 1
+                    selectedGuardian == idx
                       ? "text-[#2D8859]"
                       : " text-[#CDCDCD]"
                   }`}
@@ -207,7 +214,7 @@ export default function GuardianList({
             <div>
               <div
                 className={`w-[44px] h-[44px] relative flex justify-center items-center rounded-[60px] ml-[13px] ${
-                  selectedGuardian == idx + 1 ? "bg-[#58C185]" : " bg-[#CDCDCD]"
+                  selectedGuardian == idx ? "bg-[#58C185]" : " bg-[#CDCDCD]"
                 }`}
               >
                 <p className="text-[22px] font-[700] text-[#FFFFFF]">

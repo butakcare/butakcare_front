@@ -76,7 +76,7 @@ export default function WorkModal({ onClose }: Prop) {
                 className={`w-[354px] h-[52px] px-[16px] py-[15px] border border-[#666666] rounded-[10px] ${
                   selectedTimes.includes(time)
                     ? "bg-[#58C185] text-[#FFFFFF]"
-                    : "bg-[#FFFFFF]"
+                    : "bg-[#FFFFFF] text-[#666666]"
                 }`}
               >
                 {time}

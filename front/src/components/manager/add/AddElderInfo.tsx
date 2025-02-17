@@ -31,6 +31,7 @@ export default function AddElder({
   elderAddress2,
   elderGender,
   elderGrade,
+
   image,
   setElderName,
   setElderBirth,
@@ -174,16 +175,18 @@ export default function AddElder({
               사진등록
             </button>
           </div>
-          <button
-            onClick={() => handleGauge1()}
-            className={`absolute right-[500px] w-[254px] h-[58px] flex items-center justify-center ${
-              elderName
-                ? "bg-[#D7F3D1] text-[#000000]"
-                : "bg-[#CFCFCF]  text-[#FFFFFF]"
-            } rounded-[10px] text-[22px] font-[600]`}
-          >
-            다음
-          </button>
+          <div className="w-[726px] flex justify-end">
+            <button
+              onClick={() => handleGauge1()}
+              className={`w-[254px] h-[58px] flex items-center justify-center ${
+                elderName
+                  ? "bg-[#D7F3D1] text-[#000000]"
+                  : "bg-[#CFCFCF]  text-[#FFFFFF]"
+              } rounded-[10px] text-[22px] font-[600]`}
+            >
+              다음
+            </button>
+          </div>
         </div>
       ) : selectedOne == 1 ? (
         <div>

@@ -14,7 +14,7 @@ export default function Home() {
   const [elderGrade, setElderGrade] = useState<number>(0);
   const [elderAddress, setElderAddress] = useState<string>("");
   const [elderAddress2, setElderAddress2] = useState<string>("");
-  const [selected, setSelected] = useState<number>(2);
+  const [selected, setSelected] = useState<number>(1);
 
   const [selectedTwo, setSelectedTwo] = useState<number>(0);
 
@@ -27,6 +27,8 @@ export default function Home() {
   const [endHour, setEndHour] = useState("");
   const [endMinute, setEndMinute] = useState("");
   const [selectedOne, setSelectedOne] = useState<number>(0);
+  const [salaryWeek, setSalaryWeek] = useState<number>(0);
+  const [salaryMonth, setSalaryMonth] = useState<number>(0);
 
   // 3. 케어 필요 항목
   const [selectedThree, setSelectedThree] = useState<number>(0);
@@ -42,7 +44,7 @@ export default function Home() {
     return 0;
   };
 
-  const progressWidth = `${(getSelectedValue() / maxSteps) * 516}px`;
+  const progressWidth = `${(getSelectedValue() / maxSteps) * 724}px`;
 
   // const handleGauge = () => {
   //   if (selected === 0) {
@@ -72,7 +74,6 @@ export default function Home() {
   useEffect(() => {
     if (selected === 1) setSelectedOne(0);
     if (selected === 2) setSelectedTwo(0);
-    if (selected === 3) setSelectedThree(0);
   }, [selected]);
 
   return (
@@ -83,10 +84,12 @@ export default function Home() {
           {selected == 0
             ? "1. 어르신 기본 정보 등록하기"
             : selected == 1
-            ? "2. 어르신 일정 정보 등록하기"
-            : "3. 어르신 케어 필요 항목 등록하기"}
+            ? "2. 어르신 근무 정보 등록하기"
+            : selected == 2
+            ? "3. 어르신 케어 필요 항목 등록하기"
+            : "어르신 정보 등록 완료"}
         </strong>
-        {(selected == 0 || selected == 2) && (
+        {(selected == 0 || selected == 1 || selected == 2) && (
           <div className="w-[726px] h-[6px] bg-[#DFE0E3] rounded-[3px] mt-[20px] ml-[20px] [relative overflow-hidden">
             <div
               className="h-full bg-[#65CCB2] transition-all duration-300"
@@ -129,6 +132,12 @@ export default function Home() {
               endMinute={endMinute}
               setEndMinute={setEndMinute}
               setSelected={setSelected}
+              salaryWeek={salaryWeek}
+              setSalaryWeek={setSalaryWeek}
+              salaryMonth={salaryMonth}
+              setSalaryMonth={setSalaryMonth}
+              selectedTwo={selectedTwo}
+              setSelectedTwo={setSelectedTwo}
             />
           ) : (
             <AddElderCare
