@@ -19,6 +19,9 @@ export default function SignUpPage() {
   const handleSignIn = () => {
     router.push(`/sign_in`);
   };
+  const handleCreateCenterClick = () => {
+    router.push("/sign_up/manager/center");
+  };
   return (
     <>
       <div className="w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
@@ -33,9 +36,9 @@ export default function SignUpPage() {
             계정 유형을 선택해주세요.
           </div>
         </div>
-        <div className="mt-[64px] mb-[164px] flex flex-row items-center justify-center h-[270px] gap-[4px]">
+        <div className="mt-[64px] mb-[128px] flex flex-row items-center justify-center h-[270px] gap-[4px]">
           <AccountType
-            text="사회복지사"
+            text="센터 관리자"
             imageSrc={manager}
             altText="manager"
             isSelected={selectedType === "manager"}
@@ -48,6 +51,15 @@ export default function SignUpPage() {
             isSelected={selectedType === "guardian"}
             onClick={() => handleSelect("guardian")}
           />
+        </div>
+        <div className="text-stroke font-semibold text-[18px] text-left w-[354px] pb-[15px]">
+          센터를 아직 등록하지 않았나요?{" "}
+          <span
+            className="underline cursor-pointer"
+            onClick={() => handleCreateCenterClick()}
+          >
+            등록하러 가기
+          </span>
         </div>
         <div className="text-stroke font-semibold text-[18px] text-left w-[354px] pb-[15px]">
           이미 부탁케어 회원이신가요?

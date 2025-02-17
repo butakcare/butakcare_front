@@ -9,19 +9,19 @@ import { useRouter } from "next/navigation";
 
 import CenterSearchModal from "@/components/sign_up/manager/CenterSearchModal";
 interface ManagerStep1Props {
-  username: string;
+  id: string;
   password: string;
   Centername: string;
-  onUsernameChange: (value: string) => void;
+  onIdChange: (value: string) => void;
   onPasswordChange: (value: string) => void;
   onCenternameChange: (value: string) => void;
 }
 
 export default function ManagerStep1({
-  username,
+  id,
   password,
   Centername,
-  onUsernameChange,
+  onIdChange,
   onPasswordChange,
   onCenternameChange,
 }: ManagerStep1Props) {
@@ -44,8 +44,8 @@ export default function ManagerStep1({
       <form className="flex flex-col justify-center items-center align-center pt-[25px]">
         <InputField
           label="아이디"
-          value={username}
-          onChange={onUsernameChange}
+          value={id}
+          onChange={onIdChange}
           placeholder="아이디를 입력해주세요."
           on={true}
         />
