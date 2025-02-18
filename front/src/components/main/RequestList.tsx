@@ -225,12 +225,16 @@ export default function RequestList() {
           </div>
         )}
       </div>
-      {guardianStatus === "조율 중" ? (
-        <Chat selectedElder={selectedElder} />
-      ) : guardianStatus === "수락" ? (
-        <ChatAccept />
+      {selectedElder !== 0 ? (
+        guardianStatus === "조율 중" ? (
+          <Chat selectedElder={selectedElder} />
+        ) : guardianStatus === "수락" ? (
+          <ChatAccept />
+        ) : (
+          <ChatRefusal />
+        )
       ) : (
-        <ChatRefusal />
+        <Chat selectedElder={selectedElder} />
       )}
     </div>
   );

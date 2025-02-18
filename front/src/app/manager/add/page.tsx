@@ -14,7 +14,7 @@ export default function Home() {
   const [elderGrade, setElderGrade] = useState<number>(0);
   const [elderAddress, setElderAddress] = useState<string>("");
   const [elderAddress2, setElderAddress2] = useState<string>("");
-  const [selected, setSelected] = useState<number>(1);
+  const [selected, setSelected] = useState<number>(0);
 
   const [selectedTwo, setSelectedTwo] = useState<number>(0);
 

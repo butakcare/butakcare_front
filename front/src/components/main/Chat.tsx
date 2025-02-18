@@ -4,6 +4,7 @@ import GuardianProfile from "./GuardianProfile";
 import GuardianTuning from "./GuardianTuning";
 import AcceptModal from "./AcceptModal";
 import RefusaltModal from "./RefusalModal";
+import CoordinationRequestModal from "./CoordinationRequestModal";
 
 interface Prop {
   selectedElder: number;
@@ -14,6 +15,7 @@ export default function Chat({ selectedElder }: Prop) {
   const [isRefusalModal, setIsRefusalModal] = useState<boolean>(false);
   const [isProfileModal, setIsProfileModal] = useState<boolean>(false);
   const [isTuningModal, setIsTuningModal] = useState<boolean>(false);
+  const [isCoordination, setIsCoordination] = useState<boolean>(false);
   const data = {
     name: "김요양",
     gender: "여",
@@ -240,7 +242,10 @@ export default function Chat({ selectedElder }: Prop) {
               >
                 수락하기
               </button>
-              <button className="text-[22px] text-[#828282] font-[600] hover:bg-[#58C185] hover:text-[#FFFFFF] w-[353px] h-[50px] border border-[#D1D1D1] rounded-[10px] flex items-center justify-center">
+              <button
+                onClick={() => setIsCoordination(true)}
+                className="text-[22px] text-[#828282] font-[600] hover:bg-[#58C185] hover:text-[#FFFFFF] w-[353px] h-[50px] border border-[#D1D1D1] rounded-[10px] flex items-center justify-center"
+              >
                 조율 요청하기
               </button>
               <button
@@ -260,6 +265,9 @@ export default function Chat({ selectedElder }: Prop) {
       {isAcceptModal && <AcceptModal setIsAcceptModal={setIsAcceptModal} />}
       {isRefusalModal && (
         <RefusaltModal setIsRefusalModal={setIsRefusalModal} />
+      )}
+      {isCoordination && (
+        <CoordinationRequestModal setIsCoordination={setIsCoordination} />
       )}
     </div>
   );
