@@ -31,7 +31,7 @@ export default function GuardianStep9() {
 
       <div className="border-t border-b py-4 w-full">
         <p className="text-center text-black mb-2 font-bold text-[20px]">
-          지금 바로 부탁케어어{" "}
+          지금 바로 부탁케어{" "}
           <span className="text-[#2D8859] font-bold">로그인</span>하고,
         </p>
         <p className="text-center text-black font-bold text-[20px]">
