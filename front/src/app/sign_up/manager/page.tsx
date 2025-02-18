@@ -4,6 +4,7 @@ import Header from "@/components/common/TitleHeader";
 import ManagerStep1 from "@/components/sign_up/manager/Step1";
 import ManagerStep10 from "@/components/sign_up/manager/Step10";
 import ManagerStep8 from "@/components/sign_up/manager/Step8";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 type FormFields =
@@ -30,23 +31,31 @@ export default function ManagerSignup() {
   const progress = (step / 4) * 100;
   const handleSubmit = async () => {
     setLoading(true);
-    try {
-      const response = await fetch(`${process.env.API_URL_KEY}/signup`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
+    console.log("전송할 데이터:", form); // 전송 전 데이터 확인
 
-      if (!response.ok) throw new Error("회원가입 실패");
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL_KEY}/api/profiles/social-workers/`,
+        form,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("API 응답:", response.data); // API 응답 확인
 
       setLoading(false);
-      router.push("/manager/success");
+      router.push("/sign_up/guardian/success");
     } catch (error) {
       setLoading(false);
+      if (axios.isAxiosError(error)) {
+        console.error("API 에러:", error.response?.data); // 자세한 에러 정보 확인
+      }
       console.error("회원가입 중 오류가 발생했습니다.", error);
     }
   };
-
   const handleNext = () => {
     setStep((prev) => prev + 1);
   };

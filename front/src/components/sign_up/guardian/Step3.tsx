@@ -2,9 +2,9 @@ import TitleText from "@/components/common/TitleText";
 import InputField from "@/components/sign_up/InputField";
 
 interface GuardianStep3Props {
-  birth: string;
+  birth: string | null;
   onbirthChange: (value: string) => void;
-  sex: string;
+  sex: string | null;
   onsexChange: (value: string) => void;
 }
 
@@ -19,9 +19,9 @@ export default function GuardianStep3({
     let formatted = onlyNums;
 
     if (onlyNums.length > 4 && onlyNums.length <= 6) {
-      formatted = `${onlyNums.slice(0, 4)}.${onlyNums.slice(4)}`;
+      formatted = `${onlyNums.slice(0, 4)}-${onlyNums.slice(4)}`;
     } else if (onlyNums.length > 6) {
-      formatted = `${onlyNums.slice(0, 4)}.${onlyNums.slice(
+      formatted = `${onlyNums.slice(0, 4)}-${onlyNums.slice(
         4,
         6
       )}-${onlyNums.slice(6, 8)}`;
@@ -37,7 +37,7 @@ export default function GuardianStep3({
       <form className="flex flex-col justify-center items-center align-center pt-[21px]">
         <InputField
           label="생년월일"
-          value={birth}
+          value={birth || ""}
           onChange={handlebirthChange}
           placeholder="YYYY.MM.DD (필수)"
           on={false}
@@ -49,9 +49,9 @@ export default function GuardianStep3({
         <div className="flex gap-4 w-[354px]">
           <button
             type="button"
-            onClick={() => onsexChange("Female")}
+            onClick={() => onsexChange("여")}
             className={`flex-1 h-[52px] rounded-[10px] font-semibold text-[18px] ${
-              sex === "Female"
+              sex === "여"
                 ? "bg-sub text-black border-key"
                 : "bg-white text-black border-[#666666]"
             } border`}
@@ -60,9 +60,9 @@ export default function GuardianStep3({
           </button>
           <button
             type="button"
-            onClick={() => onsexChange("Male")}
+            onClick={() => onsexChange("남")}
             className={`flex-1 h-[52px] rounded-[10px] font-semibold text-[18px] ${
-              sex === "Male"
+              sex === "남"
                 ? "bg-sub text-black border-key"
                 : "bg-white text-black border-[#666666]"
             } border`}

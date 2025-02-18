@@ -4,8 +4,8 @@ import DownIcon from "@/../public/assets/icons/DownVector.svg";
 import { useState } from "react";
 
 interface ManagerStep7Props {
-  years: string;
-  months: string;
+  years: number;
+  months: number;
   description: string;
   onYearsChange: (value: string) => void;
   onMonthsChange: (value: string) => void;

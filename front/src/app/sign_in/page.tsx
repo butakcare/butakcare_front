@@ -34,7 +34,7 @@ export default function SignUpPage() {
     }
   };
   const handleNext = () => {
-    router.push("/sign_up");
+    router.push(`/sign_up/${type}`);
   };
   return (
     <div className="w-full h-full">

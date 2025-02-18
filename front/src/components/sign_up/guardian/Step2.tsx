@@ -31,8 +31,9 @@ export default function GuardianStep2({
     }
 
     setFormattedPhone(formatted);
-    onPhoneChange(formatted);
+    onPhoneChange(onlyNums);
   };
+
   return (
     <div>
       <TitleText text1="성함을 입력해주세요." text2="" on={true} />
