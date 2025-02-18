@@ -11,7 +11,7 @@ export default function GuardiunStep5({ onVehicleChange }: GuardianStep5Props) {
 
   const handleClick = () => {
     setDisabled(!disabled);
-    onVehicleChange(disabled ? "no" : "yes");
+    onVehicleChange(disabled ? "yes" : "no");
   };
   return (
     <div>

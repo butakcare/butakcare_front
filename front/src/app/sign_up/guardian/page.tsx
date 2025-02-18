@@ -231,11 +231,12 @@ export default function GuardianSignup() {
       return !form.caregiver_qualification;
     }
     if (step === 5) {
-      return form.vehicle == "yes";
+      return form.vehicle !== "yes";
     }
     if (step === 6) {
-      return form.experience == "yes";
+      return form.experience !== "no" && form.experience !== "yes";
     }
+
     if (step === 7) {
       return !form.address.address || !form.address.addressDetail;
     }

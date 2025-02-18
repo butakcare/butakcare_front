@@ -76,9 +76,7 @@ export default function GuardianStep8({
           <div className="relative w-[354px]">
             <textarea
               className="w-full h-[174px] p-[18px_15px] border rounded-[10px] resize-none focus:outline-none text-black border-[#666666] "
-              placeholder="주요 경력을 간략하게 작성해 주세요.
-예시) 10년 이상 근무, 치매·중증 어르신 케어 
-          전문 "
+              placeholder="주요 경력을 간략하게 작성해 주세요.                            예시) 10년 이상 근무, 치매·중증 어르신 케어  전문 "
               value={description}
               onChange={(e) => onDescriptionChange(e.target.value)}
               maxLength={100}

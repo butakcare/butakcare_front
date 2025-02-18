@@ -29,20 +29,16 @@ export default function GuardianStep4({
     onCaregiverLicenseChange(caregiver_qualification.slice(0, 4) + value);
   };
 
-  const handleQualificationSelect = (type: string, grade: string) => {
-    switch (type) {
-      case "socialWorker":
-        onSocialWorkerChange(
-          social_worker_qualification === grade ? "" : grade
-        );
-        break;
-      case "nursingAssistant":
-        onNursingAssistantChange(
-          nursing_assistant_qualification === grade ? "" : grade
-        );
-        break;
-    }
+  const handleSocialWorkerSelect = (grade: string) => {
+    const newValue = social_worker_qualification === grade ? "" : grade;
+    onSocialWorkerChange(newValue);
   };
+
+  const handleNursingAssistantSelect = (grade: string) => {
+    const newValue = nursing_assistant_qualification === grade ? "" : grade;
+    onNursingAssistantChange(newValue);
+  };
+
   return (
     <div>
       <TitleText text1="자격증 번호를 입력해주세요." text2="" on={true} />
@@ -101,10 +97,10 @@ export default function GuardianStep4({
                 className={`w-[121px] h-[52px] border rounded-[10px] ml-[18.5px] transition-colors duration-200
                   ${
                     social_worker_qualification === "1급"
-                      ? "bg-sub border-key hover:bg-white"
+                      ? "bg-sub border-key"
                       : "bg-white border-key"
                   }`}
-                onClick={() => handleQualificationSelect("socialWorker", "1급")}
+                onClick={() => handleSocialWorkerSelect("1급")}
               >
                 1급
               </button>
@@ -113,10 +109,10 @@ export default function GuardianStep4({
                 className={`w-[121px] h-[52px] border rounded-[10px] transition-colors duration-200
                   ${
                     social_worker_qualification === "2급"
-                      ? "bg-sub border-key hover:bg-white"
+                      ? "bg-sub border-key"
                       : "bg-white border-key"
                   }`}
-                onClick={() => handleQualificationSelect("socialWorker", "2급")}
+                onClick={() => handleSocialWorkerSelect("2급")}
               >
                 2급
               </button>
@@ -133,12 +129,10 @@ export default function GuardianStep4({
                 className={`w-[121px] h-[52px] border rounded-[10px] ml-[18.5px] transition-colors duration-200
                   ${
                     nursing_assistant_qualification === "1급"
-                      ? "bg-sub border-key hover:bg-white"
+                      ? "bg-sub border-key"
                       : "bg-white border-key"
                   }`}
-                onClick={() =>
-                  handleQualificationSelect("nursingAssistant", "1급")
-                }
+                onClick={() => handleNursingAssistantSelect("1급")}
               >
                 1급
               </button>
@@ -147,12 +141,10 @@ export default function GuardianStep4({
                 className={`w-[121px] h-[52px] border rounded-[10px] transition-colors duration-200
                   ${
                     nursing_assistant_qualification === "2급"
-                      ? "bg-sub border-key hover:bg-white"
+                      ? "bg-sub border-key"
                       : "bg-white border-key"
                   }`}
-                onClick={() =>
-                  handleQualificationSelect("nursingAssistant", "2급")
-                }
+                onClick={() => handleNursingAssistantSelect("2급")}
               >
                 2급
               </button>
