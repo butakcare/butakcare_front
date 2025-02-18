@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import { useRouter } from "next/navigation";
 
 interface ElderModalProps {
   data: {
@@ -17,6 +18,7 @@ interface ElderModalProps {
 }
 
 export default function ElderModal({ data, onClose }: ElderModalProps) {
+  const router = useRouter();
   if (!data) return null;
 
   const handleBackgroundClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -211,7 +213,7 @@ export default function ElderModal({ data, onClose }: ElderModalProps) {
         </div>
         <div className="mt-[30px] w-[683px] flex items-center justify-end mb-[32px]">
           <button
-            onClick={() => onClose()}
+            onClick={() => router.push(`/manager/main/matching?id=${data.id}`)}
             className="w-[248px] h-[84px] bg-[#58C185] rounded-[14px] text-[30px] text-[#FFFFFF] font-[600]"
           >
             매칭하기

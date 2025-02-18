@@ -1,5 +1,4 @@
 "use client";
-import TitleText from "@/components/common/TitleText";
 import Header from "@/components/common/TitleHeader";
 import InputField from "@/components/sign_up/InputField";
 import { LongBtn, XBLBtn } from "@/components/common/Button";
@@ -41,8 +40,11 @@ export default function SignUpPage() {
     <div className="w-full h-full">
       <div className="tablet:hidden w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
         <Header name="" />
-        <TitleText text1="부탁케어 로그인" text2="" on={false} />
-
+        <div className="flex flex-row w-[354px]">
+          <div className="text-[26px] font-bold leading-[40px]">
+            부탁케어 로그인
+          </div>
+        </div>
         <form className="flex flex-col justify-center items-center align-center pt-[124px]">
           <InputField
             label="아이디"

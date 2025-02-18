@@ -5,6 +5,7 @@ interface InputFieldProps {
   placeholder: string;
   on: boolean;
 }
+
 export default function InputField({
   label,
   value,
@@ -13,22 +14,24 @@ export default function InputField({
   on,
 }: InputFieldProps) {
   return (
-    <>
+    <div className="flex flex-col">
       <label
-        htmlFor="username"
-        className={`text-stroke font-semibold text-[18px] pb-[10px] w-[354px] ${
+        htmlFor="name"
+        className={`text-[#666666] font-semibold text-[18px] pb-[10px] w-[354px] ${
           on ? "" : "hidden"
         }`}
       >
         {label}
       </label>
-      <input
-        type="text"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        className=" w-[354px] h-[52px] p-[15px_16px] rounded-[10px] border border-stroke focus:outline-none"
-      />
-    </>
+      <div className="relative">
+        <input
+          type="text"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          className="w-[354px] h-[52px] p-[15px_16px] text-black rounded-[10px] border border-[#666666] focus:outline-none"
+        />
+      </div>
+    </div>
   );
 }
