@@ -8,7 +8,7 @@ export default function Header() {
     },
   ];
   return (
-    <div className="flex items-start bg-[#EDEDED] w-screen h-[153px] rounded-b-[14px]">
+    <div className="flex items-start bg-[#58C185] w-screen h-[153px] rounded-b-[14px]">
       <div className="w-[90px] h-[90px] bg-[#FFFFFF] rounded-full flex justify-center items-center ml-[21px] mt-[24px]">
         <Image
           src={profile[0].profile}
