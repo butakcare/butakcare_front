@@ -69,11 +69,14 @@ export default function WorkStep3({
   return (
     <div>
       <div className="flex flex-col w-[354px] ">
-        <TitleText
-          text1="희망 급여(최대~최소)를"
-          text2="입력해주세요."
-          on={true}
-        />
+        <div className="inline">
+          <TitleText
+            text1="희망 급여(최대~최소)를"
+            text2="입력해주세요."
+            on={true}
+          />
+        </div>
+
         <div className="text-[18px] text-key font-bold">
           당사는 &apos;최저임급법&apos;을 준수합니다.
         </div>

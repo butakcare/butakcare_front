@@ -6,7 +6,7 @@ import WorkStep2 from "@/components/guardian/work/Step2";
 import WorkStep3 from "@/components/guardian/work/Step3";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-type FormFields = "available_area" | "schedules" | "min_wage" | "max_wage";
+type FormFields = "available_area" | "min_wage" | "max_wage" | "times" | "days";
 
 export default function WorkSettings() {
   const router = useRouter();
@@ -14,11 +14,10 @@ export default function WorkSettings() {
   const [step, setStep] = useState(1);
   const [form, setForm] = useState({
     available_area: [],
-    schedules: {
-      available_time: "",
-    },
     min_wage: 0,
     max_wage: 0,
+    day: [],
+    time: [],
   });
 
   const handleSubmit = async () => {
@@ -65,8 +64,8 @@ export default function WorkSettings() {
     if (step === 2) {
       return (
         <WorkStep2
-          available_area={form.available_area}
-          available_areaChange={(value) => updateForm("available_area", value)}
+          onDaysChange={(value) => updateForm("days", value)}
+          onTimesChange={(value) => updateForm("times", value)}
         />
       );
     }
@@ -93,7 +92,7 @@ export default function WorkSettings() {
   return (
     <div className="w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
       <Header name="근무 조건 등록" />
-      <div className="h-[93px]" />
+      <div className="h-[78px]" />
       {showCurrentStep()}
       <div className="fixed bottom-0 w-full flex justify-center bg-white py-4">
         {step <= 8 ? (
