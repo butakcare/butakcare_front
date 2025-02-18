@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Navigation from "@/components/sign_in/Navigation";
 import Login from "@/components/sign_in/Login";
+import axios from "axios";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -18,23 +19,34 @@ export default function SignUpPage() {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${process.env.API_URL_KEY}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
-      });
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL_KEY}/api/profiles/caregiverssdf`,
+        { id: username, password: password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      if (!response.ok) throw new Error("로그인 실패");
+      console.log("로그인 응답:", response.data);
 
-      setLoading(false);
-      router.push(`/${type}/main`); //어디로보내야하지지 /main으로 보내야하지지
+      if (response.data.access_token) {
+        localStorage.setItem("access_token", response.data.access_token);
+        setLoading(false);
+        router.push(`/${type}/main`);
+      }
     } catch (error) {
       setLoading(false);
-      console.error("로그인 중 오류가 발생했습니다.", error);
+      if (axios.isAxiosError(error)) {
+        console.error("로그인 에러:", error.response?.data);
+        alert("아이디 또는 비밀번호가 올바르지 않습니다.");
+      }
+      console.error("로그인 실패:", error);
     }
   };
   const handleNext = () => {
-    router.push(`/sign_up/${type}`);
+    router.push("/sign_up");
   };
   return (
     <div className="w-full h-full">
