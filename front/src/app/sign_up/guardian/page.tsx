@@ -13,12 +13,13 @@ import GuardianStep9 from "@/components/sign_up/guardian/Step9";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 type FormFields =
-  | "username"
+  | "id"
   | "password"
   | "name"
   | "phone"
-  | "caregiver_license_first"
-  | "caregiver_license_second"
+  | "sex"
+  | "birth"
+  | "caregiver_qualification"
   | "social_worker_qualification"
   | "nursing_assistant_qualification"
   | "address"
@@ -32,13 +33,15 @@ export default function GuardianSignup() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
+  const progress = (step / 10) * 100;
   const [form, setForm] = useState({
-    username: "",
+    id: "",
     password: "",
     name: "",
     phone: "",
-    caregiver_license_first: "",
-    caregiver_license_second: "",
+    sex: "",
+    birth: "",
+    caregiver_qualification: "",
     social_worker_qualification: "",
     nursing_assistant_qualification: "",
     vehicle: "",
@@ -111,9 +114,9 @@ export default function GuardianSignup() {
     if (step === 1) {
       return (
         <GuardianStep1
-          username={form.username}
+          username={form.id}
           password={form.password}
-          onUsernameChange={(value) => updateForm("username", value)}
+          onUsernameChange={(value) => updateForm("id", value)}
           onPasswordChange={(value) => updateForm("password", value)}
         />
       );
@@ -123,7 +126,9 @@ export default function GuardianSignup() {
       return (
         <GuardianStep2
           name={form.name}
-          NameChange={(value) => updateForm("name", value)}
+          onNameChange={(value) => updateForm("name", value)}
+          phone={form.phone}
+          onPhoneChange={(value) => updateForm("phone", value)}
         />
       );
     }
@@ -131,8 +136,10 @@ export default function GuardianSignup() {
     if (step === 3) {
       return (
         <GuardianStep3
-          phone={form.phone}
-          PhoneChange={(value) => updateForm("phone", value)}
+          sex={form.sex}
+          birth={form.birth}
+          onsexChange={(value) => updateForm("sex", value)}
+          onbirthChange={(value) => updateForm("birth", value)}
         />
       );
     }
@@ -140,15 +147,11 @@ export default function GuardianSignup() {
     if (step === 4) {
       return (
         <GuardianStep4
-          caregiver_license_first={form.caregiver_license_first}
-          caregiver_license_second={form.caregiver_license_second}
+          caregiver_qualification={form.caregiver_qualification}
           social_worker_qualification={form.social_worker_qualification}
           nursing_assistant_qualification={form.nursing_assistant_qualification}
-          onCaregiverLicenseFirstChange={(value) =>
-            updateForm("caregiver_license_first", value)
-          }
-          onCaregiverLicenseSecondChange={(value) =>
-            updateForm("caregiver_license_second", value)
+          onCaregiverLicenseChange={(value) =>
+            updateForm("caregiver_qualification", value)
           }
           onSocialWorkerChange={(value) =>
             updateForm("social_worker_qualification", value)
@@ -216,21 +219,16 @@ export default function GuardianSignup() {
 
   const handleFormbtn = () => {
     if (step === 1) {
-      return !form.username || !form.password;
+      return !form.id || !form.password;
     }
     if (step === 2) {
-      return !form.name;
+      return !form.name || !form.phone;
     }
     if (step === 3) {
-      return !form.phone;
+      return !form.sex || !form.birth;
     }
     if (step === 4) {
-      return (
-        !form.caregiver_license_first ||
-        !form.caregiver_license_second ||
-        !form.social_worker_qualification ||
-        !form.nursing_assistant_qualification
-      );
+      return !form.caregiver_qualification;
     }
     if (step === 5) {
       return form.vehicle == "yes";
@@ -262,25 +260,37 @@ export default function GuardianSignup() {
 
   return (
     <div className="w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
-      <Header name="센터 관리자 회원가입" />
-      <div className="h-[93px]" />
+      <div>
+        <Header name="요양보호사 회원가입" />
+      </div>
+      <div className="w-[354px] bg-gray-200 h-1">
+        <div
+          className="h-full bg-key transition-all duration-300 ease-in-out"
+          style={{ width: `${progress}%` }}
+        />
+      </div>
+      <div className="h-[78px]" />
       {showCurrentStep()}
-      {step === 1 ? (
-        <LongBtn
-          text="다음"
-          disabled={handleFormbtn() || loading}
-          onClick={handleNext}
-          type="button"
-        />
-      ) : (
-        <ShortsBtn
-          next={step === 9 && loading ? "저장 중.." : "다음"}
-          back="이전"
-          disabled={handleFormbtn() || loading}
-          onClickNext={step === 9 ? handleSubmit : handleNext}
-          onClickBack={handleBack}
-        />
-      )}
+      <div className="fixed bottom-0 w-full flex justify-center bg-white py-4">
+        {step === 1 ? (
+          <LongBtn
+            text="다음"
+            disabled={handleFormbtn() || loading}
+            onClick={handleNext}
+            type="button"
+            width={354}
+          />
+        ) : (
+          <ShortsBtn
+            next={step === 9 && loading ? "저장 중.." : "다음"}
+            back="이전"
+            disabled={handleFormbtn() || loading}
+            onClickNext={step === 9 ? handleSubmit : handleNext}
+            onClickBack={handleBack}
+            width={175}
+          />
+        )}
+      </div>
     </div>
   );
 }

@@ -7,7 +7,7 @@ interface GuardianStep6Props {
 export default function GuardiunStep6({
   onExperienceChange,
 }: GuardianStep6Props) {
-  const [disabled, setDisabled] = useState(false);
+  const [disabled, setDisabled] = useState(true);
 
   const handleClick = () => {
     setDisabled(!disabled);

@@ -1,36 +1,32 @@
 import TitleText from "@/components/common/TitleText";
 
-interface GuardiunStep4Props {
-  caregiver_license_first: string;
-  caregiver_license_second: string;
+interface GuardianStep4Props {
+  caregiver_qualification: string;
   social_worker_qualification: string;
   nursing_assistant_qualification: string;
-  onCaregiverLicenseFirstChange: (value: string) => void;
-  onCaregiverLicenseSecondChange: (value: string) => void;
+  onCaregiverLicenseChange: (value: string) => void;
   onSocialWorkerChange: (value: string) => void;
   onNursingAssistantChange: (value: string) => void;
 }
 
-export default function GuardiunStep4({
-  caregiver_license_first,
-  caregiver_license_second,
+export default function GuardianStep4({
+  caregiver_qualification,
   social_worker_qualification,
   nursing_assistant_qualification,
-  onCaregiverLicenseFirstChange,
-  onCaregiverLicenseSecondChange,
+  onCaregiverLicenseChange,
   onSocialWorkerChange,
   onNursingAssistantChange,
-}: GuardiunStep4Props) {
+}: GuardianStep4Props) {
   const handleLicenseFirstChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/[^0-9]/g, "").slice(0, 4);
-    onCaregiverLicenseFirstChange(value);
+    onCaregiverLicenseChange(value + caregiver_qualification.slice(4));
   };
 
   const handleLicenseSecondChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const value = e.target.value.replace(/[^0-9]/g, "").slice(0, 7);
-    onCaregiverLicenseSecondChange(value);
+    onCaregiverLicenseChange(caregiver_qualification.slice(0, 4) + value);
   };
 
   const handleQualificationSelect = (type: string, grade: string) => {
@@ -47,43 +43,47 @@ export default function GuardiunStep4({
         break;
     }
   };
-
   return (
     <div>
       <TitleText text1="자격증 번호를 입력해주세요." text2="" on={true} />
 
-      <form className="flex flex-col justify-center items-center align-center pt-[25px]">
-        <div className="w-full flex items-center mb-8">
-          <span className="mr-2 text-sm">제</span>
+      <form className="font-semibold flex flex-col justify-center items-center align-center pt-[25px]">
+        <div className="w-full flex items-center mb-[54px]">
+          <span className="mr-[15px] text-[18px]">제</span>
           <input
             type="text"
-            className="w-24 h-12 border rounded-md text-center mr-2 focus:outline-none focus:ring-2 focus:ring-green-200"
+            className="w-[137px] h-[52px] border border-[#666666] rounded-[10px] text-center mr-[10px] focus:outline-none "
             maxLength={4}
             placeholder="0000"
-            value={caregiver_license_first}
+            value={caregiver_qualification.slice(0, 4)}
             onChange={handleLicenseFirstChange}
           />
-          <span className="mr-2 text-sm">-</span>
+          <span className="mr-[10px] text-[18px]">-</span>
           <input
             type="text"
-            className="w-32 h-12 border rounded-md text-center mr-2 focus:outline-none focus:ring-2 focus:ring-green-200"
+            className="w-[137px] h-[52px] border border-[#666666] rounded-[10px]  text-center mr-2 focus:outline-none"
             maxLength={7}
             placeholder="0000000"
-            value={caregiver_license_second}
+            value={caregiver_qualification.slice(4)}
             onChange={handleLicenseSecondChange}
           />
-          <span className="text-sm">호</span>
+          <span className="ml-[15px] text-[18px]">호</span>
         </div>
 
         <div className="w-full mb-4">
-          <p className="text-sm mb-4">추가 자격증 (선택사항)</p>
-
-          <div className="flex w-full mb-4">
-            <div className="w-24 text-sm flex items-center">요양보호사</div>
+          <div className="flex flex-row">
+            <p className="text-[26px] font-semibold mr-[5px]">자격증 종류</p>
+            <span className="text-[26px] font-normal">(복수선택 가능)</span>
+          </div>
+          <div className="h-[25px]" />
+          <div className="flex w-full mb-[10px]">
+            <div className="w-[78px] text-[18px] font-semibold flex items-center">
+              요양보호사
+            </div>
             <div className="flex-1">
               <button
                 type="button"
-                className="w-32 h-12 border rounded-md mr-4 bg-green-100 border-green-500 cursor-default"
+                className="w-[244px] h-[52px] border rounded-[10px] ml-[18.5px] bg-sub border-key cursor-default"
                 disabled
               >
                 1급
@@ -92,15 +92,17 @@ export default function GuardiunStep4({
           </div>
 
           <div className="flex w-full mb-4">
-            <div className="w-24 text-sm flex items-center">사회복지사</div>
-            <div className="flex-1">
+            <div className="w-[78px] text-[18px] font-semibold flex items-center">
+              사회복지사
+            </div>
+            <div className="flex-1 flex gap-[2px]">
               <button
                 type="button"
-                className={`w-32 h-12 border rounded-md mr-4 transition-colors duration-200
+                className={`w-[121px] h-[52px] border rounded-[10px] ml-[18.5px] transition-colors duration-200
                   ${
                     social_worker_qualification === "1급"
-                      ? "bg-green-100 border-green-500"
-                      : "hover:bg-gray-50"
+                      ? "bg-sub border-key hover:bg-white"
+                      : "bg-white border-key"
                   }`}
                 onClick={() => handleQualificationSelect("socialWorker", "1급")}
               >
@@ -108,11 +110,11 @@ export default function GuardiunStep4({
               </button>
               <button
                 type="button"
-                className={`w-32 h-12 border rounded-md transition-colors duration-200
+                className={`w-[121px] h-[52px] border rounded-[10px] transition-colors duration-200
                   ${
                     social_worker_qualification === "2급"
-                      ? "bg-green-100 border-green-500"
-                      : "hover:bg-gray-50"
+                      ? "bg-sub border-key hover:bg-white"
+                      : "bg-white border-key"
                   }`}
                 onClick={() => handleQualificationSelect("socialWorker", "2급")}
               >
@@ -122,15 +124,17 @@ export default function GuardiunStep4({
           </div>
 
           <div className="flex w-full">
-            <div className="w-24 text-sm flex items-center">간호조무사</div>
-            <div className="flex-1">
+            <div className="w-[78px] text-[18px] font-semibold flex items-center">
+              간호조무사
+            </div>
+            <div className="flex-1 flex gap-[2px]">
               <button
                 type="button"
-                className={`w-32 h-12 border rounded-md mr-4 transition-colors duration-200
+                className={`w-[121px] h-[52px] border rounded-[10px] ml-[18.5px] transition-colors duration-200
                   ${
                     nursing_assistant_qualification === "1급"
-                      ? "bg-green-100 border-green-500"
-                      : "hover:bg-gray-50"
+                      ? "bg-sub border-key hover:bg-white"
+                      : "bg-white border-key"
                   }`}
                 onClick={() =>
                   handleQualificationSelect("nursingAssistant", "1급")
@@ -140,11 +144,11 @@ export default function GuardiunStep4({
               </button>
               <button
                 type="button"
-                className={`w-32 h-12 border rounded-md transition-colors duration-200
+                className={`w-[121px] h-[52px] border rounded-[10px] transition-colors duration-200
                   ${
                     nursing_assistant_qualification === "2급"
-                      ? "bg-green-100 border-green-500"
-                      : "hover:bg-gray-50"
+                      ? "bg-sub border-key hover:bg-white"
+                      : "bg-white border-key"
                   }`}
                 onClick={() =>
                   handleQualificationSelect("nursingAssistant", "2급")

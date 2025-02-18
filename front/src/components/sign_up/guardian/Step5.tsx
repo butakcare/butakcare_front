@@ -7,7 +7,7 @@ interface GuardianStep5Props {
 }
 
 export default function GuardiunStep5({ onVehicleChange }: GuardianStep5Props) {
-  const [disabled, setDisabled] = useState(false);
+  const [disabled, setDisabled] = useState(true);
 
   const handleClick = () => {
     setDisabled(!disabled);

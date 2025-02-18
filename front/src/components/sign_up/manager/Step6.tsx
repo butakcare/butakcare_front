@@ -4,7 +4,7 @@ import Script from "next/script";
 import { useEffect, useState } from "react";
 import SearchIcon from "@/../public/assets/icons/search_black.svg";
 import Image from "next/image";
-interface GuardianStep6Props {
+interface ManagerStep6Props {
   address: string;
   addressDetail: string;
   onAddressChange: (value: string) => void;
@@ -29,12 +29,12 @@ declare global {
   }
 }
 
-export default function GuardianStep6({
+export default function ManagerStep6({
   address = "",
   addressDetail = "",
   onAddressChange,
   onAddressDetailChange,
-}: GuardianStep6Props) {
+}: ManagerStep6Props) {
   const [isScriptLoaded, setIsScriptLoaded] = useState(false);
   const [showDetailInput, setShowDetailInput] = useState(false);
 

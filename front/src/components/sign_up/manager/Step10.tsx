@@ -2,19 +2,19 @@ import TitleText from "@/components/common/TitleText";
 import InputField from "@/components/sign_up/InputField";
 import { useState } from "react";
 
-interface GuardianStep2Props {
+interface ManagerStep10Props {
   phone: string;
   onPhoneChange: (value: string) => void;
   name: string;
   onNameChange: (value: string) => void;
 }
 
-export default function GuardianStep2({
+export default function ManagerStep10({
   name,
   phone,
   onPhoneChange,
   onNameChange,
-}: GuardianStep2Props) {
+}: ManagerStep10Props) {
   const [formattedPhone, setFormattedPhone] = useState(phone);
 
   const handlePhoneChange = (value: string) => {

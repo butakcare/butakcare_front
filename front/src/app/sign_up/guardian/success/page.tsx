@@ -4,6 +4,7 @@ import CheckIcon from "@/../public/assets/icons/check-one.svg";
 import Image from "next/image";
 import { ShortsBtn } from "@/components/common/Button";
 import { useRouter } from "next/navigation";
+import Header from "@/components/common/TitleHeader";
 
 export default function GuardianStep9() {
   const router = useRouter();
@@ -16,7 +17,9 @@ export default function GuardianStep9() {
     router.push("/");
   };
   return (
-    <div>
+    <div className="w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
+      <Header name="근무 조건 등록" />
+      <div className="h-[93px]" />
       <TitleText text1="회원가입이 완료되었습니다." text2="" on={false} />
       <Image src={CheckIcon} alt="성공" />
       <div>
