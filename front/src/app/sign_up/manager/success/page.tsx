@@ -22,15 +22,16 @@ export default function GuardianStep9() {
           style={{ width: `100%` }}
         />
       </div>
-      <div className="h-[95px]" />
+      <div className="h-[78px]" />
+
       <TitleText text1="회원가입이 완료되었습니다." text2="" on={false} />
       <div className="h-[95px]" />
 
       <Image src={CheckIcon} alt="성공" />
       <div className="h-[94px]" />
 
-      <div className="border-t border-b py-4 w-full">
-        <p className="text-center text-black mb-2 font-bold text-[20px]">
+      <div className="border-t border-b  leading-[40px]  w-full">
+        <p className="text-center text-black font-bold text-[20px]">
           지금 바로 부탁케어{" "}
           <span className="text-[#2D8859] font-bold">로그인</span>하고,
         </p>
