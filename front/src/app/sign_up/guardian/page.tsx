@@ -52,8 +52,8 @@ export default function GuardianSignup() {
     },
     introduction: "",
     availability: {
-      years: 0,
-      months: 0,
+      years: "",
+      months: "",
       description: "",
     },
   });
@@ -87,7 +87,7 @@ export default function GuardianSignup() {
 
   const updateForm = (
     input: FormFields,
-    value: string | number | { [key: string]: string | number }
+    value: string | { [key: string]: string }
   ) => {
     if (input === "address" || input === "addressDetail") {
       setForm({
@@ -109,6 +109,7 @@ export default function GuardianSignup() {
       setForm({ ...form, [input]: value });
     }
   };
+
   const showCurrentStep = () => {
     if (step === 1) {
       return (

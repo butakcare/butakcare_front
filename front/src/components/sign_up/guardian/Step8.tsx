@@ -5,11 +5,11 @@ import GreenCheckIcon from "@/../public/assets/icons/green_check.svg";
 import { useState } from "react";
 
 interface GuardianStep8Props {
-  years: number;
-  months: number;
+  years: string;
+  months: string;
   description: string;
-  onYearsChange: (value: number) => void;
-  onMonthsChange: (value: number) => void;
+  onYearsChange: (value: string) => void;
+  onMonthsChange: (value: string) => void;
   onDescriptionChange: (value: string) => void;
 }
 
@@ -21,26 +21,26 @@ export default function GuardianStep8({
   onMonthsChange,
   onDescriptionChange,
 }: GuardianStep8Props) {
-  const [noPreference, setNoPreference] = useState(false);
+  const [noWagePreference, setNoWagePreference] = useState(false);
 
   const handleYearsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/[^0-9]/g, "");
-    onYearsChange(parseInt(value, 10));
+    onYearsChange(value);
   };
 
   const handleMonthsChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/[^0-9]/g, "");
     if (value === "" || (parseInt(value) >= 0 && parseInt(value) <= 12)) {
-      onMonthsChange(parseInt(value, 10));
+      onMonthsChange(value);
     }
   };
 
-  const handleNoPreferenceChange = () => {
-    const newValue = !noPreference;
-    setNoPreference(newValue);
+  const handleNoWagePreferenceChange = () => {
+    const newValue = !noWagePreference;
+    setNoWagePreference(newValue);
     if (newValue) {
-      onMonthsChange(0);
-      onYearsChange(0);
+      onYearsChange("0");
+      onMonthsChange("0");
     }
   };
 
@@ -51,16 +51,20 @@ export default function GuardianStep8({
         경력을 입력하면 더 많은 기회를 얻을 수 있어요!
       </p>
       <form className=" font-semibold flex flex-col justify-center items-center align-center pt-[25px]">
-        <div className="w-[354px] text-[18px] text-black pb-[10px]">
-          경력 기간
+        <div className="flex flex-row items-center w-[354px] text-[18px] text-black pb-[10px] gap-[10px]">
+          <div>경력 기간</div>
+          <div
+            className="flex flex-row items-center text-[18px] text-[#666666] gap-[5px] cursor-pointer"
+            onClick={handleNoWagePreferenceChange}
+          >
+            <Image
+              src={noWagePreference ? GreenCheckIcon : CheckIcon}
+              alt="check"
+            />{" "}
+            경력력 상관 없음
+          </div>
         </div>
-        <div
-          className="w-[354px] flex flex-row pt-[25px] items-center text-[18px] text-[#666666] gap-[5px] cursor-pointer"
-          onClick={() => handleNoPreferenceChange()}
-        >
-          <Image src={noPreference ? GreenCheckIcon : CheckIcon} alt="check" />{" "}
-          급여 상관 없음
-        </div>
+
         <div className="w-[354px] h-[52px] flex justify-between gap-4">
           <div className="relative flex-1">
             <input
@@ -70,6 +74,7 @@ export default function GuardianStep8({
               placeholder="0(년)"
               className="w-full h-[52px] px-4 border border-[#666666] rounded-[10px] focus:outline-none text-left"
               maxLength={3}
+              disabled={noWagePreference}
             />
           </div>
           <div className="relative flex-1">
@@ -80,11 +85,11 @@ export default function GuardianStep8({
               placeholder="0(개월)"
               className="w-full h-[52px] px-4 border border-[#666666] rounded-[10px] focus:outline-none text-left"
               maxLength={2}
+              disabled={noWagePreference}
             />
           </div>
         </div>
 
-        {/* Main Experience */}
         <div className="pt-[25px]">
           <div className="w-[354px] text-[18px] text-black pb-[10px]">
             주요 경력
