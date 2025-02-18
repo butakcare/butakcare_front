@@ -1,6 +1,9 @@
 "use client";
 import TitleText from "@/components/common/TitleText";
 import React, { useState } from "react";
+import CheckIcon from "@/../public/assets/icons/ei_check.svg";
+import GreenCheckIcon from "@/../public/assets/icons/green_check.svg";
+import Image from "next/image";
 
 interface WorkStep3Props {
   min_wage: number;
@@ -16,6 +19,7 @@ export default function WorkStep3({
   onMaxWageChange,
 }: WorkStep3Props) {
   const [rangeValues, setRangeValues] = useState([min_wage, max_wage]);
+  const [noWagePreference, setNoWagePreference] = useState(false);
 
   const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/[^0-9]/g, "");
@@ -46,14 +50,11 @@ export default function WorkStep3({
   };
 
   const handleRangeChange = (value: number, index: number) => {
-    // 500 단위로 반올림
     const roundedValue = Math.round(value / 500) * 500;
-
-    // 최소값과 최대값 제한
     const constrainedValue =
       index === 0
-        ? Math.max(10030, Math.min(roundedValue, max_wage)) // 최소값은 10030 이상
-        : Math.min(100000, Math.max(roundedValue, min_wage)); // 최대값은 100000 이하
+        ? Math.max(10030, Math.min(roundedValue, max_wage))
+        : Math.min(100000, Math.max(roundedValue, min_wage));
 
     const newValues = [...rangeValues];
     newValues[index] = constrainedValue;
@@ -63,6 +64,16 @@ export default function WorkStep3({
       onMinWageChange(constrainedValue);
     } else {
       onMaxWageChange(constrainedValue);
+    }
+  };
+
+  const handleNoWagePreferenceChange = () => {
+    const newValue = !noWagePreference;
+    setNoWagePreference(newValue);
+    if (newValue) {
+      onMinWageChange(10030);
+      onMaxWageChange(100000);
+      setRangeValues([10030, 100000]);
     }
   };
 
@@ -92,6 +103,7 @@ export default function WorkStep3({
               onChange={handleMinChange}
               className=" w-[105px] p-[15.5px_17.5px] border border-[#666666] rounded-[10px] text-center"
               placeholder="최소"
+              disabled={noWagePreference}
             />
           </div>
           <span className="text-black">~</span>
@@ -102,6 +114,7 @@ export default function WorkStep3({
               onChange={handleMaxChange}
               className="w-[105px] p-[15.5px_17.5px] border border-[#666666] rounded-[10px] text-center"
               placeholder="최대"
+              disabled={noWagePreference}
             />
             <span className="text-black ml-[10px]">원</span>
           </div>
@@ -129,18 +142,20 @@ export default function WorkStep3({
                 min={10030}
                 max={100000}
                 step={500}
-                value={Math.max(10030, Math.min(rangeValues[0], max_wage))} // 최소값 제한
+                value={Math.max(10030, Math.min(rangeValues[0], max_wage))}
                 onChange={(e) => handleRangeChange(parseInt(e.target.value), 0)}
                 className="absolute w-[354px] h-2 appearance-none cursor-pointer bg-transparent z-10"
+                disabled={noWagePreference}
               />
               <input
                 type="range"
                 min={10030}
                 max={100000}
                 step={500}
-                value={Math.max(min_wage, Math.min(rangeValues[1], 100000))} // 최대값 제한
+                value={Math.max(min_wage, Math.min(rangeValues[1], 100000))}
                 onChange={(e) => handleRangeChange(parseInt(e.target.value), 1)}
                 className="absolute w-[354px] h-2 appearance-none cursor-pointer bg-transparent z-10"
+                disabled={noWagePreference}
               />
             </div>
             <style jsx>{`
@@ -173,6 +188,16 @@ export default function WorkStep3({
               }
             `}</style>
           </div>
+        </div>
+        <div
+          className="w-[354px] flex flex-row pt-[25px] items-center text-[18px] text-[#666666] gap-[5px] cursor-pointer"
+          onClick={handleNoWagePreferenceChange}
+        >
+          <Image
+            src={noWagePreference ? GreenCheckIcon : CheckIcon}
+            alt="check"
+          />{" "}
+          급여 상관 없음
         </div>
       </form>
     </div>

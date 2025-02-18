@@ -16,9 +16,10 @@ export default function WorkSettings() {
     available_area: [],
     min_wage: 0,
     max_wage: 0,
-    day: [],
-    time: [],
+    days: [],
+    times: [],
   });
+  const progress = (step / 4) * 100;
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -32,7 +33,7 @@ export default function WorkSettings() {
       if (!response.ok) throw new Error("회원가입 실패");
 
       setLoading(false);
-      router.push("/login");
+      router.push("/guardian/work/success");
     } catch (error) {
       setLoading(false);
       console.error("회원가입 중 오류가 발생했습니다.", error);
@@ -84,7 +85,13 @@ export default function WorkSettings() {
 
   const handleFormbtn = () => {
     if (step === 1) {
-      return !form.available_area;
+      return form.available_area.length === 0;
+    }
+    if (step === 2) {
+      return form.days.length === 0 || form.times.length === 0;
+    }
+    if (step === 3) {
+      return form.min_wage === 0 || form.max_wage === 0;
     }
     return false;
   };
@@ -92,10 +99,16 @@ export default function WorkSettings() {
   return (
     <div className="w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
       <Header name="근무 조건 등록" />
+      <div className="w-[354px] bg-gray-200 h-1">
+        <div
+          className="h-full bg-key transition-all duration-300 ease-in-out"
+          style={{ width: `${progress}%` }}
+        />
+      </div>
       <div className="h-[78px]" />
       {showCurrentStep()}
       <div className="fixed bottom-0 w-full flex justify-center bg-white py-4">
-        {step <= 8 ? (
+        {step <= 2 ? (
           <ShortsBtn
             next="다음"
             back="이전"
@@ -106,7 +119,7 @@ export default function WorkSettings() {
           />
         ) : (
           <ShortsBtn
-            next={step === 9 && loading ? "저장 중.." : "다음"}
+            next={step === 3 && loading ? "저장 중.." : "다음"}
             back="이전"
             disabled={handleFormbtn() || loading}
             onClickNext={handleSubmit}
