@@ -5,7 +5,7 @@ import { LongBtn } from "@/components/common/Button";
 import { useRouter } from "next/navigation";
 import Header from "@/components/common/TitleHeader";
 
-export default function GuardianStep9() {
+export default function GuardianWork() {
   const router = useRouter();
 
   const handleMoveToLogin = () => {
@@ -28,8 +28,10 @@ export default function GuardianStep9() {
           <br /> 완료 되었습니다.
         </div>
       </div>
+      <div className="h-[11px]" />
 
       <Image src={CheckIcon} alt="성공" />
+      <div className="h-[2.44px]" />
 
       <div className="border-t border-b  leading-[40px]  w-full">
         <p className="text-center text-black font-bold text-[20px]">

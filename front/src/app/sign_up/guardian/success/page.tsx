@@ -1,6 +1,5 @@
 "use client";
-import TitleText from "@/components/common/TitleText";
-import CheckIcon from "@/../public/assets/icons/check-one.svg";
+import CheckIcon from "@/../public/assets/images/complete.png";
 import Image from "next/image";
 import { LongBtn } from "@/components/common/Button";
 import { useRouter } from "next/navigation";
@@ -23,12 +22,15 @@ export default function GuardianStep9() {
         />
       </div>
       <div className="h-[78px]" />
-      <TitleText text1="회원가입이 완료되었습니다." text2="" on={false} />
-      <div className="h-[95px]" />
+      <div className="flex flex-row w-[354px] tablet:hidden">
+        <div className="text-[26px] font-bold leading-[40px] flex items-center">
+          회원가입이 완료 되었습니다.
+        </div>
+      </div>
+      <div className="h-[60px]" />
 
       <Image src={CheckIcon} alt="성공" />
-      <div className="h-[94px]" />
-
+      <div className="h-[2.44px]" />
       <div className="border-t border-b  leading-[40px]  w-full">
         <p className="text-center text-black font-bold text-[20px]">
           지금 바로 부탁케어{" "}
