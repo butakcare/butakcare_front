@@ -1,12 +1,18 @@
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface Props {
   selected: number;
 }
 
 export default function Navigation({ selected }: Props) {
-  const menuItems = ["1. 기본 정보", "2. 일정 정보", "3. 케어 필요 항목"];
+  const router = useRouter();
+  const menuItems = ["1. 기본 정보", "2. 근무 정보", "3. 케어 필요 항목"];
+
+  const handleRouter = () => {
+    
+  }
   return (
     <div className="w-[247px] h-full border-r border-[#909090] flex flex-col justify-between pl-[33px] pt-[34px]">
       <div className="flex flex-col gap-[16px]">
@@ -15,9 +21,10 @@ export default function Navigation({ selected }: Props) {
           alt="메인 로고"
           width={127}
           height={27}
+          onClick={() => handleRouter()}
         />
-        <div className="mt-[48px] w-[191px] h-[49px] flex items-center justify-center bg-[#DFDFDF] rounded-[10px]">
-          <strong className="text-[24px] text-[#FFFFFF] font-[700] h-[29px] flex items-center">
+        <div className="mt-[48px] w-[191px] h-[49px] flex items-center justify-center bg-[#D7F3D1] rounded-[10px]">
+          <strong className="text-[24px] text-[#2D8859] font-[700] h-[29px] flex items-center">
             어르신 정보 등록
           </strong>
         </div>

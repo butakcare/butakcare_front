@@ -27,7 +27,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
       grade: 2,
       gender: "여",
       schedules: ["화", "수", "목", "금"],
-      time: "09:00 ~ 12:00",
+      times: ["09:00 ~ 12:00"],
       location: "종로구 낙원동",
       matching: "매칭 완료",
     },
@@ -38,7 +38,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
       grade: 3,
       gender: "여",
       schedules: ["월", "화", "수", "목", "금"],
-      time: "09:00 ~ 12:00",
+      times: ["09:00 ~ 12:00"],
       location: "종로구 낙원동",
       matching: "매칭 완료",
     },
@@ -49,7 +49,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
       grade: 3,
       gender: "여",
       schedules: ["월", "화", "목", "금"],
-      time: "18:00 ~ 21:00",
+      times: ["18:00 ~ 21:00"],
       location: "종로구 낙원동",
       matching: "조율 중",
     },
@@ -60,7 +60,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
       grade: 1,
       gender: "여",
       schedules: ["월"],
-      time: "09:00 ~ 12:00",
+      times: ["09:00 ~ 12:00"],
       location: "종로구 낙원동",
       matching: "매칭 완료",
     },
@@ -71,7 +71,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
       grade: 3,
       gender: "남",
       schedules: ["월", "화", "수", "목", "금"],
-      time: "09:00 ~ 12:00",
+      times: ["09:00 ~ 12:00"],
       location: "종로구 낙원동",
       matching: "조율 중",
     },
@@ -82,7 +82,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
       grade: 3,
       gender: "남",
       schedules: ["월", "화", "수", "목", "금"],
-      time: "09:00 ~ 12:00",
+      times: ["09:00 ~ 12:00"],
       location: "종로구 낙원동",
       matching: "조율 중",
     },
@@ -93,7 +93,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
       grade: 3,
       gender: "여",
       schedules: ["월", "화", "수"],
-      time: "12:00 ~ 18:00",
+      times: ["12:00 ~ 18:00"],
       location: "종로구 낙원동",
       matching: "매칭 전",
     },
@@ -104,7 +104,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
       grade: 2,
       gender: "남",
       schedules: ["월", "화", "수", "목", "금"],
-      time: "12:00 ~ 18:00",
+      times: ["12:00 ~ 18:00"],
       location: "종로구 낙원동",
       matching: "매칭 전",
     },
@@ -123,7 +123,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
     grade: number;
     gender: string;
     schedules: string[];
-    time: string;
+    times: string[];
     location: string;
     matching: string;
   } | null>(null);
@@ -144,7 +144,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
       }
 
       // 3️⃣ time 필터 (Filter.time이 존재할 때만 적용)
-      if (Filter.time && data.time !== Filter.time) {
+      if (Filter.time && !data.times.includes(Filter.time)) {
         return false;
       }
 
@@ -194,7 +194,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
   ];
 
   return (
-    <div className="flex flex-col w-[1041px] mt-[25px]">
+    <div className="flex flex-col w-[1061px] pl-[20px] pt-[20px] mt-[25px] bg-[#F7F8FA] ">
       <div className="flex">
         <div className="flex gap-[12px]">
           {buttonData.map((button) => (
@@ -203,7 +203,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
               onClick={() => handleFilter(button.label)}
               className={`w-[158px] h-[46px] rounded-[10px] text-[22px] font-[600] ${
                 activeButton === button.label
-                  ? "bg-[#CCC]"
+                  ? "bg-[#58C185] text-[#FFFFFF]"
                   : "bg-[#DEDEDE] text-[#FFFFFF]"
               }`}
             >
@@ -211,12 +211,15 @@ export default function ElderInfo({ Filter, setSize }: Props) {
             </button>
           ))}
         </div>
-        <div className="w-[197px] h-[46px] flex justify-center items-center bg-[#E8E8E8] rounded-[10px] ml-[250px]">
+        <div className="w-[197px] h-[46px] flex justify-center items-center bg-[#D7F3D1] rounded-[10px] ml-[250px]">
           <Link
             href="/manager/add"
-            className="text-[22px] font-[600] text-[#454545]"
+            className="text-[22px] font-[600] text-[#2D8859] flex items-center gap-[5px]"
           >
-            + 어르신 추가하기
+            <div className="w-[24px] h-[24px] rounded-[48px] bg-[#58C185] text-[#FFFFFF] flex items-center justify-center">
+              +
+            </div>{" "}
+            어르신 추가하기
           </Link>
         </div>
       </div>
@@ -237,7 +240,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
               >
                 <circle cx="39" cy="39" r="39" fill="#D9D9D9" />
               </svg>
-              <div className="w-[67px] h-[34px] mt-[15px] bg-[#B3B3B3] rounded-[8px] flex items-center justify-center text-[20px] font-[500] text-[#FFFFFF]">
+              <div className="w-[67px] h-[34px] mt-[15px] bg-[#D7F3D1] rounded-[8px] flex items-center justify-center text-[20px] font-[500] text-[#58C185]">
                 {data.grade}등급
               </div>
             </div>
@@ -276,9 +279,14 @@ export default function ElderInfo({ Filter, setSize }: Props) {
                   width={24}
                   height={24}
                 />
-                <p className="whitespace-nowrap text-[22px] text-[#858585] font-[500]">
-                  {data.time}
-                </p>
+                {data.times.map((time, idx) => (
+                  <p
+                    key={idx}
+                    className="whitespace-nowrap text-[22px] text-[#858585] font-[500]"
+                  >
+                    {time}
+                  </p>
+                ))}
               </div>
               <div className="flex items-center gap-[4px]">
                 <Image

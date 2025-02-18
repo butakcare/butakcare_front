@@ -14,13 +14,13 @@ export default function MyMatching() {
             alt="화살표"
             width={20}
             height={20}
-            className="w-[20px] h-[20px] cursor-pointer"
+            className="w-[20px] h-[20px] cursor-pointer "
           />
         </Link>
       </div>
       <div className="h-[24px] flex justify-between items-center mt-[13px]">
         <div className="flex gap-[9px] items-center">
-          <div className="w-[41px] h-[23px] bg-[#8E8E8E] rounded-[10px] flex justify-center items-center">
+          <div className="w-[41px] h-[23px] bg-[#8E8E8E] rounded-[10px] flex justify-center items-center bg-[#58C185]">
             <p className="text-[14px] font-[500] text-[#FFFFFF]">new</p>
           </div>
           <p className="text-[18px] font-[500] text-[#000000]">

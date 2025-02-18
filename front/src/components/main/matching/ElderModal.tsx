@@ -1,6 +1,5 @@
 import Image from "next/image";
-import React from "react";
-import { useRouter } from "next/navigation";
+import React, { SetStateAction } from "react";
 
 interface ElderModalProps {
   data: {
@@ -14,16 +13,15 @@ interface ElderModalProps {
     location: string;
     matching: string;
   } | null;
-  onClose: () => void;
+  onClose: React.Dispatch<SetStateAction<boolean>>;
 }
 
 export default function ElderModal({ data, onClose }: ElderModalProps) {
-  const router = useRouter();
   if (!data) return null;
 
   const handleBackgroundClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
-      onClose();
+      onClose(false);
     }
   };
 
@@ -58,15 +56,6 @@ export default function ElderModal({ data, onClose }: ElderModalProps) {
             <p className="text-[34px] font-[700] text-[#484848] ml-4">
               {data.name}
             </p>
-          </div>
-          <div className="flex items-center mr-[26px] gap-[8px]">
-            <Image
-              src="/assets/icons/icon_tuning.svg"
-              alt="수정"
-              width={24}
-              height={24}
-            />
-            <p className="text-[24px] text-[#AFAFAF] font-[600]">수정하기</p>
           </div>
         </div>
         <div className="flex items-start gap-[18px]">
@@ -218,10 +207,10 @@ export default function ElderModal({ data, onClose }: ElderModalProps) {
         </div>
         <div className="mt-[30px] w-[683px] flex items-center justify-end mb-[32px]">
           <button
-            onClick={() => router.push(`/manager/main/matching?id=${data.id}`)}
+            onClick={() => onClose(false)}
             className="w-[248px] h-[84px] bg-[#58C185] rounded-[14px] text-[30px] text-[#FFFFFF] font-[600]"
           >
-            매칭하기
+            닫기
           </button>
         </div>
       </div>

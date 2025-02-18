@@ -68,7 +68,7 @@ export default function MatchingRespond({ match }: MatchingRespondProps) {
             {match?.filters.map((filter, index) => (
               <div
                 key={index}
-                className="text-[#FFFFFF] h-[31px] flex justify-center items-center px-[10px] py-[5px] bg-[#B3B3B3] rounded-[8px]"
+                className="text-[#58C185] h-[31px] flex justify-center items-center px-[10px] py-[5px] bg-[#D7F3D1] rounded-[8px]"
               >
                 <p>{filter}</p>
               </div>
@@ -120,19 +120,19 @@ export default function MatchingRespond({ match }: MatchingRespondProps) {
       <div className="flex flex-col items-center gap-[6px] mt-[20px]">
         <button
           onClick={() => handleOpenModal("accept")}
-          className="w-[353px] h-[50px] flex items-center justify-center text-[20px] font-[600] text-[#828282] border border-[1px] border-[#D1D1D1] rounded-[10px]"
+          className="w-[353px] h-[50px] flex items-center justify-center text-[20px] font-[600] text-[#828282] border border-[1px] border-[#D1D1D1] rounded-[10px] hover:bg-[#58C185] hover:text-[#FFFFFF]"
         >
           수락하기
         </button>
         <Link
           href="/guardian/current_matching/tuning"
-          className="w-[353px] h-[50px] flex items-center justify-center text-[20px] font-[600] text-[#828282] border border-[1px] border-[#D1D1D1] rounded-[10px]"
+          className="w-[353px] h-[50px] flex items-center justify-center text-[20px] font-[600] text-[#828282] border border-[1px] border-[#D1D1D1] rounded-[10px] hover:bg-[#58C185] hover:text-[#FFFFFF]"
         >
           조율 요청하기
         </Link>
         <button
           onClick={() => handleOpenModal("reject")}
-          className="w-[353px] h-[50px] flex items-center justify-center text-[20px] font-[600] text-[#828282] border border-[1px] border-[#D1D1D1] rounded-[10px]"
+          className="w-[353px] h-[50px] flex items-center justify-center text-[20px] font-[600] text-[#828282] border border-[1px] border-[#D1D1D1] rounded-[10px] hover:bg-[#58C185] hover:text-[#FFFFFF]"
         >
           거절하기
         </button>
@@ -195,7 +195,7 @@ export default function MatchingRespond({ match }: MatchingRespondProps) {
                     ? "/guardian/matching_info"
                     : "/guardian/my_matching"
                 }
-                className="px-[42px] py-[11px] whitespace-nowrap w-[142px] h-[50px] bg-[#C3C3C3] text-[#FFFFFF] border border-[#D1D1D1] rounded-[10px] text-[18px] font-[600]"
+                className="px-[42px] py-[11px] whitespace-nowrap w-[142px] h-[50px] bg-[#C3C3C3] text-[#FFFFFF] border border-[#D1D1D1] rounded-[10px] text-[18px] font-[600] hover:bg-[#58C185] hover:text-[#FFFFFF]"
                 onClick={modalTitle === "수락" ? handleAccept : handleReject}
               >
                 {modalTitle === "수락" ? "수락하기" : "거절하기"}

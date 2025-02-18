@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function MainRight() {
   return (
-    <div className="w-[580px] h-[358px] relative ml-[194px]">
+    <div className="w-[580px] h-[358px] relative ml-[194px] max-tablet:hidden">
       <Image
         src="/assets/images/sample_back.png"
         alt="뒷 배경"

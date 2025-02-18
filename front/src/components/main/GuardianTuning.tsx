@@ -126,11 +126,11 @@ export default function GuardianTuning({ setIsTuningModal }: Prop) {
                   이동보조
                 </p>
                 <div className="flex flex-wrap gap-[10px]">
-                  <div className="px-[10px]  h-[36px] flex justify-center items-center bg-[#B3B3B3] rounded-[8px]">
+                  <div className="px-[10px]  h-[36px] flex justify-center items-center bg-[#D7F3D1] rounded-[8px]">
                     {data.assistance.walk.map((w, idx) => (
                       <p
                         key={idx}
-                        className="text-[20px] font-[500] text-[#FFFFFF]"
+                        className="text-[20px] font-[500] text-[#58C185]"
                       >
                         {w}
                       </p>
@@ -144,9 +144,9 @@ export default function GuardianTuning({ setIsTuningModal }: Prop) {
                   {data.assistance.daily.map((d, idx) => (
                     <div
                       key={idx}
-                      className="px-[10px] py-[5px] h-[36px] flex justify-center items-center bg-[#B3B3B3] rounded-[8px]"
+                      className="px-[10px] py-[5px] h-[36px] flex justify-center items-center bg-[#D7F3D1] rounded-[8px]"
                     >
-                      <p className="text-[20px] font-[500] text-[#FFFFFF]">
+                      <p className="text-[20px] font-[500] text-[#58C185]">
                         {d}
                       </p>
                     </div>
@@ -159,7 +159,7 @@ export default function GuardianTuning({ setIsTuningModal }: Prop) {
         <div className="mt-[30px] w-[683px] flex items-center justify-end mb-[32px]">
           <button
             onClick={() => setIsTuningModal(false)}
-            className="w-[196px] h-[84px] bg-[#CFCFCF] rounded-[14px] text-[30px] text-[#FFFFFF] font-[700]"
+            className="w-[196px] h-[84px] bg-[#D7F3D1] rounded-[14px] text-[30px] text-[#000000] font-[700]"
           >
             닫기
           </button>

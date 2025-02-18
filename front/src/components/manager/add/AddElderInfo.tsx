@@ -8,6 +8,9 @@ interface Props {
   elderName: string;
   elderBirth: string;
   elderAddress: string;
+  elderGender: string;
+  elderGrade: number;
+  elderAddress2: string;
   image: string | null;
   setElderName: React.Dispatch<React.SetStateAction<string>>;
   setElderBirth: React.Dispatch<React.SetStateAction<string>>;
@@ -15,6 +18,9 @@ interface Props {
   setElderGrade: React.Dispatch<React.SetStateAction<number>>;
   setElderAddress: React.Dispatch<React.SetStateAction<string>>;
   setImage: React.Dispatch<React.SetStateAction<string | null>>;
+  setSelectedOne: React.Dispatch<React.SetStateAction<number>>;
+  setSelected: React.Dispatch<React.SetStateAction<number>>;
+  setElderAddress2: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function AddElder({
@@ -22,17 +28,55 @@ export default function AddElder({
   elderName,
   elderBirth,
   elderAddress,
+  elderAddress2,
+  elderGender,
+  elderGrade,
+
   image,
   setElderName,
   setElderBirth,
   setElderGender,
   setElderGrade,
   setElderAddress,
+  setElderAddress2,
   setImage,
+  setSelectedOne,
+  setSelected,
 }: Props) {
   const [showCareGradeDropdown, setShowCareGradeDropdown] = useState(false);
   const [selectedGender, setSelectedGender] = useState<string | null>(null);
   const [careGrade, setCareGrade] = useState<number>(0);
+
+  const maxSteps = 2;
+  const handleGauge1 = () => {
+    if (selectedOne < maxSteps) {
+      if (elderName) {
+        setSelectedOne((prev) => prev + 1);
+      }
+    } else {
+      setSelected(1);
+    }
+  };
+
+  const handleGauge2 = () => {
+    if (selectedOne < maxSteps) {
+      if (elderBirth && elderGender) {
+        setSelectedOne((prev) => prev + 1);
+      }
+    } else {
+      setSelected(1);
+    }
+  };
+
+  const handleGauge3 = () => {
+    if (selectedOne < maxSteps) {
+      if (elderAddress && elderGrade) {
+        setSelectedOne((prev) => prev + 1);
+      }
+    } else {
+      setSelected(1);
+    }
+  };
 
   const careGrades = ["1", "2", "3", "4", "5", "인지자원"];
 
@@ -131,6 +175,18 @@ export default function AddElder({
               사진등록
             </button>
           </div>
+          <div className="w-[726px] flex justify-end">
+            <button
+              onClick={() => handleGauge1()}
+              className={`w-[254px] h-[58px] flex items-center justify-center ${
+                elderName
+                  ? "bg-[#D7F3D1] text-[#000000]"
+                  : "bg-[#CFCFCF]  text-[#FFFFFF]"
+              } rounded-[10px] text-[22px] font-[600]`}
+            >
+              다음
+            </button>
+          </div>
         </div>
       ) : selectedOne == 1 ? (
         <div>
@@ -157,7 +213,7 @@ export default function AddElder({
               onClick={() => handleGenderSelect("여")}
               className={`text-[22px] font-[600] w-[254px] h-[58px] flex justify-center items-center rounded-[10px] border border-[#909090] transition-all duration-200 ${
                 selectedGender === "여"
-                  ? "bg-[#CFCFCF] text-[#FFFFFF]"
+                  ? "bg-[#58C185] text-[#FFFFFF]"
                   : "bg-[#FFFFFF] text-[#909090]"
               }`}
             >
@@ -167,11 +223,30 @@ export default function AddElder({
               onClick={() => handleGenderSelect("남")}
               className={`text-[22px] font-[600] w-[254px] h-[58px] flex justify-center items-center rounded-[10px] border border-[#909090] transition-all duration-200 ${
                 selectedGender === "남"
-                  ? "bg-[#CFCFCF] text-[#FFFFFF]"
+                  ? "bg-[#58C185] text-[#FFFFFF]"
                   : "bg-[#FFFFFF] text-[#909090]"
               }`}
             >
               남성
+            </button>
+          </div>
+          <div className="flex w-[726px] justify-between relative">
+            <button
+              onClick={() => setSelectedOne((prev) => prev - 1)}
+              className="absolute bottom-[-250px] w-[254px] h-[58px] flex items-center justify-center bg-[#FFFFFF] rounded-[10px] border border-[1px] border-[#000000] text-[22px] text-[#191A1C] font-[600]"
+            >
+              이전
+            </button>
+
+            <button
+              onClick={handleGauge2}
+              className={`absolute bottom-[-250px] right-[0px] w-[254px] h-[58px] flex items-center justify-center ${
+                elderBirth.length == 10 && elderGender
+                  ? "bg-[#D7F3D1] text-[#000000]"
+                  : "bg-[#CFCFCF]  text-[#FFFFFF]"
+              } rounded-[10px] text-[22px] font-[600]`}
+            >
+              다음
             </button>
           </div>
         </div>
@@ -226,6 +301,7 @@ export default function AddElder({
               onChange={(e) => setElderAddress(e.target.value)}
               className="placeholder:text-[#909090] placeholder:text-[22px] text-[22px] font-[600] placeholder:font-[600] mt-[25px] w-[516px] p-[16px] rounded-[10px] bg-[#FFFFFF] border border-[#909090]"
             />
+
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="26"
@@ -239,11 +315,55 @@ export default function AddElder({
                 fill="#909090"
               />
             </svg>
+            {elderAddress && (
+              <input
+                placeholder="도로명, 지번 혹은 건물명으로 검색"
+                value={elderAddress2}
+                onChange={(e) => setElderAddress2(e.target.value)}
+                className="placeholder:text-[#909090] placeholder:text-[22px] text-[22px] font-[600] placeholder:font-[600] mt-[25px] w-[516px] p-[16px] rounded-[10px] bg-[#FFFFFF] border border-[#909090]"
+              />
+            )}
+          </div>
+          <div className="flex w-[726px] justify-between relative">
+            <button
+              onClick={() => setSelectedOne((prev) => prev - 1)}
+              className="absolute bottom-[-350px] w-[254px] h-[58px] flex items-center justify-center bg-[#FFFFFF] rounded-[10px] border border-[1px] border-[#000000] text-[22px] text-[#191A1C] font-[600]"
+            >
+              이전
+            </button>
+
+            <button
+              onClick={handleGauge3}
+              className={`absolute bottom-[-350px] right-[0px] w-[254px] h-[58px] flex items-center justify-center ${
+                elderGrade && elderAddress
+                  ? "bg-[#D7F3D1] text-[#000000]"
+                  : "bg-[#CFCFCF]  text-[#FFFFFF]"
+              } rounded-[10px] text-[22px] font-[600]`}
+            >
+              다음
+            </button>
           </div>
         </div>
       ) : (
         <></>
       )}
+      {/* <div className="flex w-[726px] justify-between relative">
+        {selectedOne !== 0 && (
+          <button
+            onClick={() => setSelectedOne((prev) => prev - 1)}
+            className="absolute left-[30px] w-[254px] h-[58px] flex items-center justify-center bg-[#FFFFFF] rounded-[10px] border border-[1px] border-[#000000] text-[22px] text-[#191A1C] font-[600]"
+          >
+            이전
+          </button>
+        )}
+
+        <button
+          onClick={handleGauge}
+          className="absolute right-[0px] w-[254px] h-[58px] flex items-center justify-center bg-[#CFCFCF] rounded-[10px] text-[22px] text-[#FFFFFF] font-[600]"
+        >
+          다음
+        </button>
+      </div> */}
     </div>
   );
 }
