@@ -20,20 +20,13 @@ export default function AccountType({
     <>
       <button
         className={`flex flex-col items-center justify-center w-[175px] h-[270px] rounded-[14px] cursor-pointer transition-all
-        ${isSelected ? "bg-key text-white" : "bg-sub text-black"}`}
+        ${isSelected ? "bg-sub text-[#2D8859]" : "bg-sub text-[#2D8859]"}`}
         onClick={onClick}
       >
-        <p className="font-semibold text-[20px] text-center">
+        <Image src={imageSrc} alt={altText} />
+        <p className="font-semibold text-[20px] text-center p-[15.5px_27px] mt-[32px] text-[#2D8859] bg-white rounded-[10px] ">
           {text}
-          <br /> 가입
         </p>
-        <Image
-          className="pt-[22px]"
-          src={imageSrc}
-          alt={altText}
-          width={80}
-          height={80}
-        />
       </button>
     </>
   );
