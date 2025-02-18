@@ -36,28 +36,12 @@ export default function ManagerStep1({
   return (
     <div>
       <TitleText
-        text1="로그인에서 사용하실"
-        text2="아이디/비밀번호를 입력해주세요."
+        text1="근무하는 센터를 찾은 후"
+        text2="로그인 회원정보를 입력해주세요."
         on={true}
       />
 
       <form className="flex flex-col justify-center items-center align-center pt-[25px]">
-        <InputField
-          label="아이디"
-          value={id}
-          onChange={onIdChange}
-          placeholder="아이디를 입력해주세요."
-          on={true}
-        />
-        <div className="h-[25px]" />
-        <InputField
-          label="비밀번호"
-          value={password}
-          onChange={onPasswordChange}
-          placeholder="비밀번호를 입력해주세요."
-          on={true}
-        />
-        <div className="h-[25px]" />
         <div className="relative w-full">
           <InputField
             label="센터 이름으로 찾기"
@@ -83,9 +67,26 @@ export default function ManagerStep1({
             >
               이 곳
             </span>
-            을 클릭해서 센터를 생성해보세요
+            을 클릭해서 센터를 생성해보세요.
           </div>
         </div>
+
+        <div className="h-[25px]" />
+        <InputField
+          label="아이디"
+          value={id}
+          onChange={onIdChange}
+          placeholder="아이디를 입력해주세요."
+          on={true}
+        />
+        <div className="h-[25px]" />
+        <InputField
+          label="비밀번호"
+          value={password}
+          onChange={onPasswordChange}
+          placeholder="비밀번호를 입력해주세요."
+          on={true}
+        />
 
         <div className="h-[96px]" />
       </form>

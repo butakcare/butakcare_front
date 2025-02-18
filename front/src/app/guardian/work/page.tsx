@@ -1,10 +1,12 @@
 "use client";
-import { LongBtn, ShortsBtn } from "@/components/common/Button";
+import { ShortsBtn } from "@/components/common/Button";
 import Header from "@/components/common/TitleHeader";
 import WorkStep1 from "@/components/guardian/work/Step1";
+import WorkStep2 from "@/components/guardian/work/Step2";
+import WorkStep3 from "@/components/guardian/work/Step3";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-type FormFields = "available_area" | "schedules" | "wage";
+type FormFields = "available_area" | "schedules" | "min_wage" | "max_wage";
 
 export default function WorkSettings() {
   const router = useRouter();
@@ -15,7 +17,8 @@ export default function WorkSettings() {
     schedules: {
       available_time: "",
     },
-    wage: "",
+    min_wage: 0,
+    max_wage: 0,
   });
 
   const handleSubmit = async () => {
@@ -45,7 +48,7 @@ export default function WorkSettings() {
     setStep((prev) => prev - 1);
   };
 
-  const updateForm = (input: FormFields, value: string | string[]) => {
+  const updateForm = (input: FormFields, value: string | number | string[]) => {
     setForm({ ...form, [input]: value });
   };
 
@@ -55,6 +58,26 @@ export default function WorkSettings() {
         <WorkStep1
           available_area={form.available_area}
           available_areaChange={(value) => updateForm("available_area", value)}
+        />
+      );
+    }
+
+    if (step === 2) {
+      return (
+        <WorkStep2
+          available_area={form.available_area}
+          available_areaChange={(value) => updateForm("available_area", value)}
+        />
+      );
+    }
+
+    if (step === 3) {
+      return (
+        <WorkStep3
+          min_wage={form.min_wage}
+          max_wage={form.max_wage}
+          onMinWageChange={(value) => updateForm("min_wage", value)}
+          onMaxWageChange={(value) => updateForm("max_wage", value)}
         />
       );
     }
@@ -72,24 +95,27 @@ export default function WorkSettings() {
       <Header name="근무 조건 등록" />
       <div className="h-[93px]" />
       {showCurrentStep()}
-      {step === 1 ? (
-        <LongBtn
-          text="다음"
-          disabled={handleFormbtn() || loading}
-          onClick={handleNext}
-          type="button"
-          borderColor="border-key"
-          backgroundColor="border-key"
-        />
-      ) : (
-        <ShortsBtn
-          next={step === 4 && loading ? "저장 중.." : "다음"}
-          back="이전"
-          disabled={handleFormbtn() || loading}
-          onClickNext={step === 4 ? handleSubmit : handleNext}
-          onClickBack={handleBack}
-        />
-      )}
+      <div className="fixed bottom-0 w-full flex justify-center bg-white py-4">
+        {step <= 8 ? (
+          <ShortsBtn
+            next="다음"
+            back="이전"
+            disabled={handleFormbtn() || loading}
+            onClickNext={handleNext}
+            onClickBack={handleBack}
+            width={175}
+          />
+        ) : (
+          <ShortsBtn
+            next={step === 9 && loading ? "저장 중.." : "다음"}
+            back="이전"
+            disabled={handleFormbtn() || loading}
+            onClickNext={handleSubmit}
+            onClickBack={handleBack}
+            width={175}
+          />
+        )}
+      </div>
     </div>
   );
 }
