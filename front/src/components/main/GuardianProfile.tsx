@@ -32,9 +32,9 @@ export default function GuardianProfile({ setIsProfileModal }: Prop) {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[5]">
       <div
-        className="flex flex-col bg-[#FCFCFB] rounded-[20px] w-[774px] max-h-[95vh] overflow-y-auto pl-[30px] pt-[30px]"
+        className="flex flex-col bg-[#FCFCFB] rounded-[20px] w-[774px] max-h-[90vh] overflow-y-auto pl-[30px] pt-[30px]"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",

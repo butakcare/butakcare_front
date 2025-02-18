@@ -28,7 +28,7 @@ export default function ElderModal({ data, onClose }: ElderModalProps) {
   return (
     <div
       onClick={handleBackgroundClick}
-      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[5]"
     >
       <div
         className="flex flex-col bg-[#FCFCFB] rounded-[20px] w-[742px] max-h-[95vh] overflow-y-auto pl-[30px] pt-[30px]"

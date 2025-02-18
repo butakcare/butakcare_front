@@ -15,6 +15,7 @@ export default function ElderSearch({ size, setSearchText }: Props) {
     setSearchText(text);
     setText("");
   };
+
   return (
     <div className="w-[1033px] h-[73px] flex justify-start mt-[43px]">
       <div className="flex gap-[15px]">

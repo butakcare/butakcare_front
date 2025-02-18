@@ -9,7 +9,7 @@ export default function Filter({
   selectedFilter,
   setSelectedFilter,
 }: FilterProps) {
-  const filters = ["신규 매칭", "조율 중인 매칭", "수락한 요청", "거절한 요청"];
+  const filters = ["신규 매칭", "조율 중인 매칭", "수락한 매칭", "거절한 매칭"];
   return (
     <div
       className="h-[31px] flex gap-[6px] ml-[26px] overflow-auto"

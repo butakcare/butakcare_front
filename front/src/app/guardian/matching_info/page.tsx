@@ -6,9 +6,23 @@ export default function Home() {
   return (
     <div className="tablet:w-[450px] tablet:overflow-y-auto tablet:border-x tablet:border-[#909090] w-full h-full flex flex-col tablet:items-center">
       <div>
-        <TitleHeader name="매칭을 수락했어요" />
+        <TitleHeader name="자세히 보기" />
       </div>
-      <div className="flex flex-col items-center gap-[10px] mt-[20px]">
+      <div className="w-full flex flex-col items-center mt-[10px]">
+        <p className="text-[26px] font-[700] text-[#191A1C]">
+          매칭을 수락했어요.
+        </p>
+        <Image
+          src="/assets/images/AcceptImg.svg"
+          alt="추카"
+          width={127}
+          height={111}
+        />
+        <p className="text-[18px] font-[600] text-[#58C185]">
+          * 관리자와 연락하여 근무를 진행해 주세요.
+        </p>
+      </div>
+      <div className="flex flex-col items-center gap-[10px] mt-[36px]">
         <strong className="w-[313px] text-[26px] font-[700] text-[#000000] leading-[31px]">
           관리자 연락처
         </strong>

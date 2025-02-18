@@ -7,9 +7,8 @@ import Link from "next/link";
 
 interface FilterProps {
   schedules: string[];
-  time: string;
   grade: number;
-  address: string;
+  gender: string;
 }
 
 interface Props {
@@ -23,86 +22,166 @@ export default function ElderInfo({ Filter, setSize }: Props) {
     {
       id: 1,
       profile: "",
-      name: "김복순",
-      grade: 2,
+      name: "한정자",
+      grade: 3,
       gender: "여",
-      schedules: ["화", "수", "목", "금"],
-      times: ["09:00 ~ 12:00"],
-      location: "종로구 낙원동",
+      birth: "1944.05.20",
+      schedules: ["월", "수", "금"],
+      times: ["09:00 ~ 13:00"],
+      location: "은평구 불광동",
       matching: "매칭 완료",
     },
     {
       id: 2,
       profile: "",
-      name: "김복순",
-      grade: 3,
-      gender: "여",
-      schedules: ["월", "화", "수", "목", "금"],
-      times: ["09:00 ~ 12:00"],
-      location: "종로구 낙원동",
+      name: "박영호",
+      grade: 2,
+      gender: "남",
+      birth: "1942.02.03",
+      schedules: ["화", "목"],
+      times: ["14:00 ~ 18:00"],
+      location: "강서구 등촌동",
       matching: "매칭 완료",
     },
     {
       id: 3,
       profile: "",
-      name: "김복순",
-      grade: 3,
+      name: "김순자",
+      grade: 4,
       gender: "여",
-      schedules: ["월", "화", "목", "금"],
-      times: ["18:00 ~ 21:00"],
-      location: "종로구 낙원동",
+      birth: "1942.02.03",
+      schedules: ["월", "화", "수"],
+      times: ["10:00 ~ 14:00"],
+      location: "송파구 잠실동",
       matching: "조율 중",
     },
     {
       id: 4,
       profile: "",
-      name: "김복순",
+      name: "이대철",
       grade: 1,
       gender: "여",
-      schedules: ["월"],
-      times: ["09:00 ~ 12:00"],
-      location: "종로구 낙원동",
+      birth: "1942.11.25",
+      schedules: ["월", "화", "수", "목", "금"],
+      times: ["13:00 ~ 17:00"],
+      location: "노원구 중계동",
       matching: "매칭 완료",
     },
     {
       id: 5,
       profile: "",
-      name: "김복순",
+      name: "정영희",
       grade: 3,
       gender: "남",
+      birth: "1950.07.01",
       schedules: ["월", "화", "수", "목", "금"],
-      times: ["09:00 ~ 12:00"],
-      location: "종로구 낙원동",
+      times: ["08:00 ~ 12:00"],
+      location: "관악구 봉천동",
       matching: "조율 중",
     },
     {
       id: 6,
       profile: "",
-      name: "김복순",
-      grade: 3,
+      name: "최병철",
+      grade: 2,
       gender: "남",
-      schedules: ["월", "화", "수", "목", "금"],
+      birth: "1938.12.05",
+      schedules: ["월", "수", "금"],
       times: ["09:00 ~ 12:00"],
-      location: "종로구 낙원동",
+      location: "마포구 아현동",
       matching: "조율 중",
     },
     {
       id: 7,
       profile: "",
-      name: "김복순",
+      name: "박정숙",
       grade: 3,
       gender: "여",
-      schedules: ["월", "화", "수"],
-      times: ["12:00 ~ 18:00"],
-      location: "종로구 낙원동",
+      birth: "1945.9.15",
+      schedules: ["월", "수", "금"],
+      times: ["14:00 ~ 18:00"],
+      location: "성북구 길음동",
       matching: "매칭 전",
     },
     {
       id: 8,
       profile: "",
-      name: "김복순",
+      name: "이민수",
       grade: 2,
       gender: "남",
+      birth: "1942.02.03",
+      schedules: ["월", "화", "수", "목", "금"],
+      times: ["12:00 ~ 18:00"],
+      location: "광진구 구의동",
+      matching: "매칭 전",
+    },
+    {
+      id: 9,
+      profile: "",
+      name: "김미경",
+      grade: 4,
+      gender: "여",
+      birth: "1948.02.28",
+      schedules: ["수", "목", "금"],
+      times: ["10:00 ~ 14:00"],
+      location: "중랑구 상봉동",
+      matching: "매칭 전",
+    },
+    {
+      id: 10,
+      profile: "",
+      name: "강동원",
+      grade: 1,
+      gender: "남",
+      birth: "1937.11.11",
+      schedules: ["월", "화", "수", "목", "금"],
+      times: ["09:00 ~ 13:00"],
+      location: "구로구 개봉동",
+      matching: "매칭 전",
+    },
+    {
+      id: 11,
+      profile: "",
+      name: "윤혜숙",
+      grade: 3,
+      gender: "여",
+      birth: "1943.08.08",
+      schedules: ["화", "목"],
+      times: ["12:00 ~ 18:00"],
+      location: "강북구 미아동",
+      matching: "매칭 전",
+    },
+    {
+      id: 12,
+      profile: "",
+      name: "임철호",
+      grade: 2,
+      gender: "남",
+      birth: "1939.04.15",
+      schedules: ["월", "수", "금"],
+      times: ["14:00 ~ 18:00"],
+      location: "서초구 서초동",
+      matching: "매칭 전",
+    },
+    {
+      id: 13,
+      profile: "",
+      name: "송영자",
+      grade: 4,
+      gender: "여",
+      birth: "1942.2.3",
+      schedules: ["월", "화", "수", "목", "금"],
+      times: ["12:00 ~ 18:00"],
+      location: "종로구 낙원동",
+      matching: "매칭 전",
+    },
+    {
+      id: 14,
+      profile: "",
+      name: "오정수",
+      grade: 2,
+      gender: "남",
+      birth: "1942.2.3",
       schedules: ["월", "화", "수", "목", "금"],
       times: ["12:00 ~ 18:00"],
       location: "종로구 낙원동",
@@ -122,6 +201,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
     name: string;
     grade: number;
     gender: string;
+    birth: string;
     schedules: string[];
     times: string[];
     location: string;
@@ -143,8 +223,8 @@ export default function ElderInfo({ Filter, setSize }: Props) {
         return false;
       }
 
-      // 3️⃣ time 필터 (Filter.time이 존재할 때만 적용)
-      if (Filter.time && !data.times.includes(Filter.time)) {
+      // 3️⃣ gender 필터 (Filter.gender가 존재할 때만 적용)
+      if (Filter.gender && data.gender !== Filter.gender) {
         return false;
       }
 
@@ -153,21 +233,9 @@ export default function ElderInfo({ Filter, setSize }: Props) {
         return false;
       }
 
-      // 5️⃣ address 필터 (Filter.address가 존재할 때만 적용)
-      if (Filter.address && !data.location.includes(Filter.address)) {
-        return false;
-      }
-
       return true;
     });
-  }, [
-    datas,
-    filter,
-    Filter.schedules,
-    Filter.time,
-    Filter.grade,
-    Filter.address,
-  ]);
+  }, [datas, filter, Filter.schedules, Filter.gender, Filter.grade]);
 
   const matchingCounts = useMemo(() => {
     return {

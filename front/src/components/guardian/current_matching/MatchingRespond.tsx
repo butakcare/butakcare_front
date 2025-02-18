@@ -5,8 +5,8 @@ interface matchProps {
   id: number;
   created_at: string;
   filters: string[];
-  day: string;
-  time: string;
+  schedules: string[];
+  times: string[];
   location: string;
   salary: string;
 }
@@ -57,7 +57,7 @@ export default function MatchingRespond({ match }: MatchingRespondProps) {
         </p>
         <div className="w-[103px] h-[2px] bg-[#CFCFCF]"></div>
       </div>
-      <div className="w-[281px] h-[322px] max-tablet:ml-[24px] bg-[#F0F0F0] rounded-[14px] mt-[27px]">
+      <div className="w-[281px] h-[322px] max-tablet:ml-[24px] bg-[#F7F8FA] rounded-[14px] mt-[27px]">
         <div className="pl-[19px] pt-[17px]">
           {/* 요청 제목 */}
           <p className="text-[22px] font-[600] text-[#000000]">
@@ -78,15 +78,17 @@ export default function MatchingRespond({ match }: MatchingRespondProps) {
           <div className="flex h-[21px] gap-[23px] mt-[15px]">
             <p className="text-[18px] font-[500] text-[#9A9A9A]">기간</p>
             <p className="text-[18px] font-[500] text-[#000000]">
-              {match?.day}
+              {match?.schedules.join(", ")}
             </p>
           </div>
           {/* 시간 */}
           <div className="flex h-[21px] gap-[23px] mt-[12px]">
             <p className="text-[18px] font-[500] text-[#9A9A9A]">시간</p>
-            <p className="text-[18px] font-[500] text-[#000000]">
-              {match?.time}
-            </p>
+            {match.times.map((time, idx) => (
+              <p key={idx} className="text-[18px] font-[500] text-[#000000]">
+                {time}
+              </p>
+            ))}
           </div>
           {/* 장소 */}
           <div className="flex h-[21px] gap-[23px] mt-[12px]">
@@ -139,50 +141,74 @@ export default function MatchingRespond({ match }: MatchingRespondProps) {
       </div>
       {isModalOpen && (
         <div className="fixed inset-0 flex justify-center items-center z-50 bg-black bg-opacity-50">
-          <div className="w-[305px] h-[341px] bg-[#F0F0F0] rounded-[14px] flex flex-col gap-[11px] items-center">
+          <div className="w-[305px] h-[468px] bg-[#F7F8FA] rounded-[14px] flex flex-col gap-[11px] items-center">
             <div className="flex mt-[19px]">
               <p className="text-[22px] font-[600] text-[#000000]">
                 {`매칭을 ${modalTitle}할까요?`}
               </p>
             </div>
-            <div className="w-[228px] h-[149px] rounded-[14px] bg-[#FFFFFF] pl-[24px] py-[12px]">
-              {/* 기간 */}
+            <p className="text-[18px] w-[281px] text-center font-[600] text-[#58C185]">
+              {modalTitle == "수락"
+                ? `* 매칭 수락시 조율 요청이 불가능하며,
+관리자에게 근무 확정 알림이 가요.`
+                : `* 매칭 거절시 요청이 성사되지 않으며,
+관리자에게 근무 거절 알림이 가요.`}
+            </p>
+            <div className="w-[262px] h-[239px] rounded-[14px] bg-[#FFFFFF] px-[16px] py-[12px]">
+              {/* 시작날짜 */}
               <div className="flex h-[21px] gap-[23px]">
-                <p className="text-[18px] font-[500] text-[#9A9A9A]">기간</p>
+                <p className="text-[18px] w-[68px] font-[500] text-[#9A9A9A]">
+                  시작 날짜
+                </p>
                 <p className="text-[18px] font-[500] text-[#000000]">
-                  {match?.day}
+                  2023.03.02
+                </p>
+              </div>
+              {/* 기간 */}
+              <div className="flex  gap-[23px] mt-[15px]">
+                <p className="text-[18px] w-[68px] font-[500] text-[#9A9A9A]">
+                  기간
+                </p>
+                <p className="text-[18px] font-[500] text-[#000000]">
+                  {match?.schedules.join(", ")}
                 </p>
               </div>
               {/* 시간 */}
-              <div className="flex h-[21px] gap-[23px] mt-[12px]">
-                <p className="text-[18px] font-[500] text-[#9A9A9A]">시간</p>
-                <p className="text-[18px] font-[500] text-[#000000]">
-                  {match?.time}
+              <div className="flex  gap-[23px] mt-[12px]">
+                <p className="text-[18px] w-[68px] font-[500] text-[#9A9A9A]">
+                  시간
                 </p>
+                {match.times.map((time, idx) => (
+                  <p
+                    key={idx}
+                    className="text-[18px] font-[500] text-[#000000]"
+                  >
+                    {time}
+                  </p>
+                ))}
               </div>
               {/* 장소 */}
-              <div className="flex h-[21px] gap-[23px] mt-[12px]">
-                <p className="text-[18px] font-[500] text-[#9A9A9A]">장소</p>
+              <div className="flex gap-[23px] mt-[12px]">
+                <p className="text-[18px] w-[68px] font-[500] text-[#9A9A9A]">
+                  장소
+                </p>
                 <p className="text-[18px] font-[500] text-[#000000]">
                   {match?.location}
                 </p>
               </div>
               {/* 급여 */}
               <div className="flex gap-[23px] mt-[14px]">
-                <p className="text-[18px] h-[21px] font-[500] text-[#9A9A9A]">
+                <p className="text-[18px] w-[68px] font-[500] text-[#9A9A9A]">
                   급여
                 </p>
                 <p className="text-[18px] font-[500] text-[#000000]">
-                  {match?.salary}
+                  {match?.salary} <br />
+                  월급 1,500,000원
                 </p>
               </div>
             </div>
-            <p className="text-center text-[18px] font-[500] text-[#A5A5A5]">
-              {`${modalTitle === "수락" ? "수락하기" : "거절하기"}`}를 누르시면
-              <br />
-              관리자에게 바로 알림이 가요.
-            </p>
-            <div className="flex gap-[4px] items-center">
+
+            <div className="flex gap-[4px] items-center mt-[27px]">
               <button
                 className="max-table:flex max-table:justify-center items-center w-[142px] h-[50px] bg-[#FFFFFF] text-[#787878] border border-[#D1D1D1] rounded-[10px] text-[18px] font-[600]"
                 onClick={handleCloseModal}

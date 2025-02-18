@@ -1,9 +1,9 @@
 "use client";
 
 import ElderSearch from "./ElderSearch";
-import { useState } from "react";
 import Filter from "./Filter";
 import ElderInfo from "./ElderInfo";
+import { useState } from "react";
 
 export default function ElderCare() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -11,9 +11,8 @@ export default function ElderCare() {
   const [size, setSize] = useState<number>(0);
   const [filter, setFilter] = useState({
     schedules: [] as string[], // 근무 요일
-    time: "", // 근무 시간
+    gender: "",
     grade: 0, // 장기요양등급
-    address: "", //주소
   });
 
   return (
