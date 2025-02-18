@@ -27,7 +27,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
       grade: 2,
       gender: "여",
       schedules: ["화", "수", "목", "금"],
-      time: "09:00 ~ 12:00",
+      times: ["09:00 ~ 12:00"],
       location: "종로구 낙원동",
       matching: "매칭 완료",
     },
@@ -38,7 +38,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
       grade: 3,
       gender: "여",
       schedules: ["월", "화", "수", "목", "금"],
-      time: "09:00 ~ 12:00",
+      times: ["09:00 ~ 12:00"],
       location: "종로구 낙원동",
       matching: "매칭 완료",
     },
@@ -49,7 +49,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
       grade: 3,
       gender: "여",
       schedules: ["월", "화", "목", "금"],
-      time: "18:00 ~ 21:00",
+      times: ["18:00 ~ 21:00"],
       location: "종로구 낙원동",
       matching: "조율 중",
     },
@@ -60,7 +60,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
       grade: 1,
       gender: "여",
       schedules: ["월"],
-      time: "09:00 ~ 12:00",
+      times: ["09:00 ~ 12:00"],
       location: "종로구 낙원동",
       matching: "매칭 완료",
     },
@@ -71,7 +71,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
       grade: 3,
       gender: "남",
       schedules: ["월", "화", "수", "목", "금"],
-      time: "09:00 ~ 12:00",
+      times: ["09:00 ~ 12:00"],
       location: "종로구 낙원동",
       matching: "조율 중",
     },
@@ -82,7 +82,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
       grade: 3,
       gender: "남",
       schedules: ["월", "화", "수", "목", "금"],
-      time: "09:00 ~ 12:00",
+      times: ["09:00 ~ 12:00"],
       location: "종로구 낙원동",
       matching: "조율 중",
     },
@@ -93,7 +93,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
       grade: 3,
       gender: "여",
       schedules: ["월", "화", "수"],
-      time: "12:00 ~ 18:00",
+      times: ["12:00 ~ 18:00"],
       location: "종로구 낙원동",
       matching: "매칭 전",
     },
@@ -104,7 +104,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
       grade: 2,
       gender: "남",
       schedules: ["월", "화", "수", "목", "금"],
-      time: "12:00 ~ 18:00",
+      times: ["12:00 ~ 18:00"],
       location: "종로구 낙원동",
       matching: "매칭 전",
     },
@@ -123,7 +123,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
     grade: number;
     gender: string;
     schedules: string[];
-    time: string;
+    times: string[];
     location: string;
     matching: string;
   } | null>(null);
@@ -144,7 +144,7 @@ export default function ElderInfo({ Filter, setSize }: Props) {
       }
 
       // 3️⃣ time 필터 (Filter.time이 존재할 때만 적용)
-      if (Filter.time && data.time !== Filter.time) {
+      if (Filter.time && !data.times.includes(Filter.time)) {
         return false;
       }
 
@@ -279,9 +279,14 @@ export default function ElderInfo({ Filter, setSize }: Props) {
                   width={24}
                   height={24}
                 />
-                <p className="whitespace-nowrap text-[22px] text-[#858585] font-[500]">
-                  {data.time}
-                </p>
+                {data.times.map((time, idx) => (
+                  <p
+                    key={idx}
+                    className="whitespace-nowrap text-[22px] text-[#858585] font-[500]"
+                  >
+                    {time}
+                  </p>
+                ))}
               </div>
               <div className="flex items-center gap-[4px]">
                 <Image
