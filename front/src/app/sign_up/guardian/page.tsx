@@ -52,8 +52,8 @@ export default function GuardianSignup() {
     },
     introduction: "",
     availability: {
-      years: "",
-      months: "",
+      years: 0,
+      months: 0,
       description: "",
     },
   });
@@ -87,7 +87,7 @@ export default function GuardianSignup() {
 
   const updateForm = (
     input: FormFields,
-    value: string | { [key: string]: string }
+    value: string | number | { [key: string]: string | number }
   ) => {
     if (input === "address" || input === "addressDetail") {
       setForm({
@@ -109,7 +109,6 @@ export default function GuardianSignup() {
       setForm({ ...form, [input]: value });
     }
   };
-
   const showCurrentStep = () => {
     if (step === 1) {
       return (
@@ -231,7 +230,7 @@ export default function GuardianSignup() {
       return !form.caregiver_qualification;
     }
     if (step === 5) {
-      return form.vehicle !== "yes";
+      return form.vehicle !== "yes" && form.vehicle !== "no";
     }
     if (step === 6) {
       return form.experience !== "no" && form.experience !== "yes";

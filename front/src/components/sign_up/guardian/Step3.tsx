@@ -19,9 +19,9 @@ export default function GuardianStep3({
     let formatted = onlyNums;
 
     if (onlyNums.length > 4 && onlyNums.length <= 6) {
-      formatted = `${onlyNums.slice(0, 4)}-${onlyNums.slice(4)}`;
+      formatted = `${onlyNums.slice(0, 4)}.${onlyNums.slice(4)}`;
     } else if (onlyNums.length > 6) {
-      formatted = `${onlyNums.slice(0, 4)}-${onlyNums.slice(
+      formatted = `${onlyNums.slice(0, 4)}.${onlyNums.slice(
         4,
         6
       )}-${onlyNums.slice(6, 8)}`;
@@ -39,7 +39,7 @@ export default function GuardianStep3({
           label="생년월일"
           value={birth}
           onChange={handlebirthChange}
-          placeholder="YYYY-MM-DD (필수)"
+          placeholder="YYYY.MM.DD (필수)"
           on={false}
         />
         <div className="h-[50px]" />
