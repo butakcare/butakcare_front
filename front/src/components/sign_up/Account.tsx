@@ -20,7 +20,7 @@ export default function AccountType({
     <>
       <button
         className={`flex flex-col items-center justify-center w-[175px] h-[270px] rounded-[14px] cursor-pointer transition-all
-        ${isSelected ? "bg-key text-white" : "bg-[#f0f0f0] text-black"}`}
+        ${isSelected ? "bg-key text-white" : "bg-sub text-black"}`}
         onClick={onClick}
       >
         <p className="font-semibold text-[20px] text-center">

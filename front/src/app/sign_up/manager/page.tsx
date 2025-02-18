@@ -2,32 +2,32 @@
 import { LongBtn, ShortsBtn } from "@/components/common/Button";
 import Header from "@/components/common/TitleHeader";
 import ManagerStep1 from "@/components/sign_up/manager/Step1";
-import ManagerStep2 from "@/components/sign_up/manager/Step2";
-import ManagerStep3 from "@/components/sign_up/manager/Step3";
-import ManagerStep4 from "@/components/sign_up/manager/Step4";
+import ManagerStep10 from "@/components/sign_up/manager/Step10";
+import ManagerStep8 from "@/components/sign_up/manager/Step8";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 type FormFields =
+  | "id"
   | "username"
   | "password"
+  | "phone"
   | "centername"
-  | "business"
-  | "siteurl"
-  | "phone";
+  | "introduction";
 
 export default function ManagerSignup() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [form, setForm] = useState({
+    id: "",
+    phone: "",
     username: "",
     password: "",
     centername: "",
-    business: "",
-    siteurl: "",
-    phone: "",
-  });
 
+    introduction: "",
+  });
+  const progress = (step / 4) * 100;
   const handleSubmit = async () => {
     setLoading(true);
     try {
@@ -40,7 +40,7 @@ export default function ManagerSignup() {
       if (!response.ok) throw new Error("회원가입 실패");
 
       setLoading(false);
-      router.push("/login");
+      router.push("/manager/success");
     } catch (error) {
       setLoading(false);
       console.error("회원가입 중 오류가 발생했습니다.", error);
@@ -63,39 +63,32 @@ export default function ManagerSignup() {
     if (step === 1) {
       return (
         <ManagerStep1
-          username={form.username}
+          id={form.id}
           password={form.password}
-          onUsernameChange={(value) => updateForm("username", value)}
+          onIdChange={(value) => updateForm("id", value)}
           onPasswordChange={(value) => updateForm("password", value)}
+          Centername={form.centername}
+          onCenternameChange={(value) => updateForm("centername", value)}
         />
       );
     }
 
     if (step === 2) {
       return (
-        <ManagerStep2
-          center={form.centername}
-          onCenterChange={(value) => updateForm("centername", value)}
+        <ManagerStep10
+          name={form.username}
+          phone={form.phone}
+          onPhoneChange={(value) => updateForm("phone", value)}
+          onNameChange={(value) => updateForm("username", value)}
         />
       );
     }
 
     if (step === 3) {
       return (
-        <ManagerStep3
-          business={form.business}
-          siteurl={form.siteurl}
-          onBusinessChange={(value) => updateForm("business", value)}
-          onSiteurlChange={(value) => updateForm("siteurl", value)}
-        />
-      );
-    }
-
-    if (step === 4) {
-      return (
-        <ManagerStep4
-          phone={form.phone}
-          onPhoneChange={(value) => updateForm("phone", value)}
+        <ManagerStep8
+          introduction={form.introduction}
+          onIntroductionChange={(value) => updateForm("introduction", value)}
         />
       );
     }
@@ -103,41 +96,50 @@ export default function ManagerSignup() {
 
   const handleFormbtn = () => {
     if (step === 1) {
-      return !form.username || !form.password;
+      return !form.id || !form.password;
+      //return !form.username || !form.password || !form.centername;
     }
     if (step === 2) {
-      return !form.centername;
+      return !form.phone || !form.username;
     }
-    if (step === 3) {
-      return !form.business || !form.siteurl;
-    }
-    if (step === 4) {
-      return !form.phone;
-    }
+
     return false;
   };
 
   return (
     <div className="w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
-      <Header name="센터 관리자 회원가입" />
-      <div className="h-[93px]" />
+      <div className="flex flex-col items-center">
+        <Header name="센터 관리자 회원가입" />
+        <div className="w-[354px] bg-gray-200 h-1">
+          <div
+            className="h-full bg-key transition-all duration-300 ease-in-out"
+            style={{ width: `${progress}%` }}
+          />
+        </div>
+      </div>
+
+      <div className="h-[78px]" />
       {showCurrentStep()}
-      {step === 1 ? (
-        <LongBtn
-          text="다음"
-          disabled={handleFormbtn() || loading}
-          onClick={handleNext}
-          type="button"
-        />
-      ) : (
-        <ShortsBtn
-          next={step === 4 && loading ? "저장 중.." : "다음"}
-          back="이전"
-          disabled={handleFormbtn() || loading}
-          onClickNext={step === 4 ? handleSubmit : handleNext}
-          onClickBack={handleBack}
-        />
-      )}
+      <div className="fixed bottom-0 w-full flex justify-center bg-white py-4">
+        {step === 1 ? (
+          <LongBtn
+            text="다음"
+            disabled={handleFormbtn() || loading}
+            onClick={handleNext}
+            type="button"
+            width={354}
+          />
+        ) : (
+          <ShortsBtn
+            next={step === 3 && loading ? "저장 중.." : "다음"}
+            back="이전"
+            disabled={handleFormbtn() || loading}
+            onClickNext={step === 3 ? handleSubmit : handleNext}
+            onClickBack={handleBack}
+            width={175}
+          />
+        )}
+      </div>
     </div>
   );
 }

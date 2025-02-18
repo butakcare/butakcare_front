@@ -35,11 +35,6 @@ export default function Navigation({ selected }: Props) {
             </div>
           ))}
         </div>
-        <div className="mt-[26px] w-[191px] h-[49px] flex items-center justify-center bg-[#DFDFDF] rounded-[10px]">
-          <strong className="text-[24px] text-[#FFFFFF] font-[700] h-[29px] flex items-center">
-            근무 조건 등록
-          </strong>
-        </div>
       </div>
       <div className="mb-[50px] flex flex-col gap-[23px] text-[22px] items-center mr-[50px] font-bold text-[#9A9A9A]">
         <Link href="/manager/main" className="underline">
