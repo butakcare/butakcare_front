@@ -1,15 +1,18 @@
 "use client";
 import CheckIcon from "@/../public/assets/images/complete.png";
 import Image from "next/image";
-import { LongBtn } from "@/components/common/Button";
 import { useRouter } from "next/navigation";
 import Header from "@/components/common/TitleHeader";
 
 export default function GuardianWork() {
   const router = useRouter();
 
-  const handleMoveToLogin = () => {
-    router.push("/sign_up");
+  const handleBack = () => {
+    router.push("/guardian/work");
+  };
+
+  const handleNext = () => {
+    router.push("/guardian/matching");
   };
 
   return (
@@ -44,12 +47,22 @@ export default function GuardianWork() {
       </div>
       <div className="h-[93px]" />
 
-      <LongBtn
-        text="로그인"
-        width={354}
-        disabled={false}
-        onClick={handleMoveToLogin}
-      />
+      <div className="flex flex-row gap-[4px]">
+        <button
+          className="w-[175px] h-[52px] rounded-[10px] font-semibold text-[18px] transition-all
+        border border-key text-black"
+          onClick={handleBack}
+        >
+          근무 조건 수정
+        </button>
+        <button
+          className="w-[175px] h-[52px] rounded-[10px] font-semibold text-[18px] transition-all
+            bg-key text-white"
+          onClick={handleNext}
+        >
+          매칭 관리
+        </button>
+      </div>
     </div>
   );
 }
