@@ -1,7 +1,6 @@
 "use client";
 
 import TitleText from "@/components/common/TitleText";
-import InputField from "@/components/sign_up/InputField";
 import Image from "next/image";
 import SearchIcon from "@/../public/assets/icons/icon_search.svg";
 import { useState } from "react";
@@ -9,20 +8,12 @@ import { useRouter } from "next/navigation";
 
 import CenterSearchModal from "@/components/sign_up/manager/CenterSearchModal";
 interface ManagerStep1Props {
-  id: string;
-  password: string;
   Centername: string;
-  onIdChange: (value: string) => void;
-  onPasswordChange: (value: string) => void;
   onCenternameChange: (value: string) => void;
 }
 
 export default function ManagerStep1({
-  id,
-  password,
   Centername,
-  onIdChange,
-  onPasswordChange,
   onCenternameChange,
 }: ManagerStep1Props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -37,21 +28,24 @@ export default function ManagerStep1({
     <div className="w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
       <div>
         <TitleText
-          text1="근무하는 센터를 찾은 후"
-          text2="로그인 회원정보를 입력해주세요."
+          text1="근무하시는 센터 이름을"
+          text2="입력해주세요."
           on={true}
         />
       </div>
 
       <form className="flex flex-col justify-center items-center align-center pt-[25px]">
         <div className="relative w-full">
-          <InputField
-            label="센터 이름으로 찾기"
-            value={Centername}
-            onChange={() => setIsModalOpen(true)}
-            placeholder="검색"
-            on={true}
-          />
+          <div className="flex flex-col">
+            <input
+              type="text"
+              value={Centername}
+              onClick={() => setIsModalOpen(true)}
+              placeholder="센터명으로 검색"
+              className="w-[354px] h-[52px] p-[15px_16px] text-black rounded-[10px] border border-[#666666] focus:outline-none"
+            />
+          </div>
+
           <button
             type="button"
             onClick={() => setIsModalOpen(true)}
@@ -72,25 +66,6 @@ export default function ManagerStep1({
             을 클릭해서 센터를 생성해보세요.
           </div>
         </div>
-
-        <div className="h-[25px]" />
-        <InputField
-          label="아이디"
-          value={id}
-          onChange={onIdChange}
-          placeholder="아이디를 입력해주세요."
-          on={true}
-        />
-        <div className="h-[25px]" />
-        <InputField
-          label="비밀번호"
-          value={password}
-          onChange={onPasswordChange}
-          placeholder="비밀번호를 입력해주세요."
-          on={true}
-        />
-
-        <div className="h-[96px]" />
       </form>
 
       <CenterSearchModal

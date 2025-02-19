@@ -3,6 +3,8 @@ import { LongBtn, ShortsBtn } from "@/components/common/Button";
 import Header from "@/components/common/TitleHeader";
 import ManagerStep1 from "@/components/sign_up/manager/Step1";
 import ManagerStep10 from "@/components/sign_up/manager/Step10";
+import ManagerStep1_5 from "@/components/sign_up/manager/Step1_5";
+import ManagerStep1_6 from "@/components/sign_up/manager/Step1_6";
 import ManagerStep8 from "@/components/sign_up/manager/Step8";
 import Navi from "@/components/sign_up/manager/tablet/Navi";
 import axios from "axios";
@@ -15,7 +17,8 @@ type FormFields =
   | "password"
   | "phone"
   | "centername"
-  | "introduction";
+  | "introduction"
+  | "role";
 
 export default function ManagerSignup() {
   const [selected, setSelected] = useState<number>(1);
@@ -29,10 +32,11 @@ export default function ManagerSignup() {
     username: "",
     password: "",
     centername: "",
+    role: "",
 
     introduction: "",
   });
-  const progress = (step / 4) * 100;
+  const progress = (step / 6) * 100;
   const handleSubmit = async () => {
     setLoading(true);
     console.log("전송할 데이터:", form); // 전송 전 데이터 확인
@@ -76,10 +80,6 @@ export default function ManagerSignup() {
     if (step === 1) {
       return (
         <ManagerStep1
-          id={form.id}
-          password={form.password}
-          onIdChange={(value) => updateForm("id", value)}
-          onPasswordChange={(value) => updateForm("password", value)}
           Centername={form.centername}
           onCenternameChange={(value) => updateForm("centername", value)}
         />
@@ -87,6 +87,26 @@ export default function ManagerSignup() {
     }
 
     if (step === 2) {
+      return (
+        <ManagerStep1_5
+          role={form.role}
+          onRoleChange={(value) => updateForm("role", value)}
+        />
+      );
+    }
+
+    if (step === 3) {
+      return (
+        <ManagerStep1_6
+          id={form.id}
+          onIdChange={(value) => updateForm("id", value)}
+          password={form.password}
+          onPasswordChange={(value) => updateForm("password", value)}
+        />
+      );
+    }
+
+    if (step === 4) {
       return (
         <ManagerStep10
           name={form.username}
@@ -97,7 +117,7 @@ export default function ManagerSignup() {
       );
     }
 
-    if (step === 3) {
+    if (step === 5) {
       return (
         <ManagerStep8
           introduction={form.introduction}
@@ -106,16 +126,22 @@ export default function ManagerSignup() {
       );
     }
   };
-
   const handleFormbtn = () => {
     if (step === 1) {
-      return !form.id || !form.password;
-      //return !form.username || !form.password || !form.centername;
+      return !form.centername;
     }
     if (step === 2) {
-      return !form.phone || !form.username;
+      return !form.role;
     }
-
+    if (step === 3) {
+      return !form.id || !form.password;
+    }
+    if (step === 4) {
+      return !form.username || !form.phone;
+    }
+    if (step === 5) {
+      return false;
+    }
     return false;
   };
 
@@ -173,10 +199,10 @@ export default function ManagerSignup() {
             />
           ) : (
             <ShortsBtn
-              next={step === 3 && loading ? "저장 중.." : "다음"}
+              next={step === 5 && loading ? "저장 중.." : "다음"}
               back="이전"
               disabled={handleFormbtn() || loading}
-              onClickNext={step === 3 ? handleSubmit : handleNext}
+              onClickNext={step === 5 ? handleSubmit : handleNext}
               onClickBack={handleBack}
               width={175}
             />

@@ -76,7 +76,7 @@ export default function ManagerStep8({
         <div className="relative w-[354px]">
           <textarea
             className="w-full h-[138px] p-4 border rounded-lg resize-none focus:outline-none text-semibold text-black font-semibold border-[#666666]"
-            placeholder="예시) 세심한 전문성으로 돌봄을 실천합니다.&#13;&#10; 어르신의 일상을 위해 최선을 다합니다."
+            placeholder="예시) 세심한 전문성으로 돌봄을 실천합니다.         어르신의 일상을 위해 최선을 다합니다."
             value={introduction}
             onChange={(e) => onIntroductionChange(e.target.value)}
             maxLength={50}
