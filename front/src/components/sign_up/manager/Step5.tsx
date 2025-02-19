@@ -10,12 +10,12 @@ export default function ManagerStep5({ onVehicleChange }: ManagerStep5Props) {
 
   const handleNoClick = () => {
     setSelected(false);
-    onVehicleChange("no");
+    onVehicleChange("false");
   };
 
   const handleYesClick = () => {
     setSelected(true);
-    onVehicleChange("yes");
+    onVehicleChange("true");
   };
 
   return (

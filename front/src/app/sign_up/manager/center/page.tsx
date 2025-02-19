@@ -7,59 +7,83 @@ import ManagerStep4 from "@/components/sign_up/manager/Step4";
 import ManagerStep5 from "@/components/sign_up/manager/Step5";
 import ManagerStep6 from "@/components/sign_up/manager/Step6";
 import ManagerStep7 from "@/components/sign_up/manager/Step7";
-import ManagerStep8 from "@/components/sign_up/manager/Step8";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import axios from "axios";
+interface ManagerForm {
+  name: string;
+  photo: null;
+  phone: string;
+  has_bathing_vehicle: boolean;
+  address: string;
+  address_detail: string;
+  description: string;
+  center_site: string;
+  business_registration_number: string;
+  center_rank: string;
+  center_period_year: number;
+  center_period_month: number;
+}
 type FormFields =
-  | "username"
-  | "password"
-  | "centername"
-  | "business"
-  | "siteurl"
+  | "name"
+  | "photo"
   | "phone"
-  | "vehicle"
+  | "has_bathing_vehicle"
   | "address"
-  | "addressDetail"
-  | "availability"
-  | "introduction";
+  | "address_detail"
+  | "description"
+  | "center_site"
+  | "business_registration_number"
+  | "center_rank"
+  | "center_period_year"
+  | "center_period_month";
 
 export default function ManagerSignup() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(2);
-  const [form, setForm] = useState({
-    centername: "",
-    business: "",
-    siteurl: "",
+  const [form, setForm] = useState<ManagerForm>({
+    name: "",
+    photo: null,
     phone: "",
-    vehicle: "",
-    address: {
-      address: "",
-      addressDetail: "",
-    },
-    availability: {
-      years: "",
-      months: "",
-      description: "",
-    },
-    introduction: "",
+    has_bathing_vehicle: false,
+    address: "",
+    address_detail: "",
+    description: "",
+    center_site: "",
+    business_registration_number: "",
+    center_rank: "",
+    center_period_year: 0,
+    center_period_month: 0,
   });
+
   const progress = (step / 8) * 100;
+
   const handleSubmit = async () => {
     setLoading(true);
-    try {
-      const response = await fetch(`${process.env.API_URL_KEY}/signup`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
+    console.log("전송할 데이터:", form); // 전송 전 데이터 확인
 
-      if (!response.ok) throw new Error("회원가입 실패");
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL_KEY}/api/profiles/care-centers/`,
+        form,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("API 응답:", response.data); // API 응답 확인
 
       setLoading(false);
-      router.push("/manager/success");
+      router.push("/sign_up/manager/center/success");
     } catch (error) {
       setLoading(false);
+      if (axios.isAxiosError(error)) {
+        console.error("API 에러:", error.response?.data);
+        console.error(); // 자세한 에러 정보 확인
+      }
       console.error("회원가입 중 오류가 발생했습니다.", error);
     }
   };
@@ -74,27 +98,24 @@ export default function ManagerSignup() {
 
   const updateForm = (
     input: FormFields,
-    value: string | { [key: string]: string }
+    value:
+      | string
+      | number
+      | boolean
+      | { [key: string]: string | number | boolean }
   ) => {
-    if (input === "address" || input === "addressDetail") {
-      setForm({
-        ...form,
-        address: {
-          ...form.address,
-          [input]: value,
-        },
-      });
-    } else {
-      setForm({ ...form, [input]: value });
-    }
+    setForm((prevForm) => ({
+      ...prevForm,
+      [input]: value,
+    }));
   };
 
   const showCurrentStep = () => {
     if (step === 2) {
       return (
         <ManagerStep2
-          center={form.centername}
-          onCenterChange={(value) => updateForm("centername", value)}
+          center={form.name}
+          onCenterChange={(value) => updateForm("name", value)}
         />
       );
     }
@@ -102,10 +123,12 @@ export default function ManagerSignup() {
     if (step === 3) {
       return (
         <ManagerStep3
-          business={form.business}
-          siteurl={form.siteurl}
-          onBusinessChange={(value) => updateForm("business", value)}
-          onSiteurlChange={(value) => updateForm("siteurl", value)}
+          business={form.business_registration_number}
+          siteurl={form.center_site}
+          onBusinessChange={(value) =>
+            updateForm("business_registration_number", value)
+          }
+          onSiteurlChange={(value) => updateForm("center_site", value)}
         />
       );
     }
@@ -122,7 +145,9 @@ export default function ManagerSignup() {
     if (step === 5) {
       return (
         <ManagerStep5
-          onVehicleChange={(value) => updateForm("vehicle", value)}
+          onVehicleChange={(value) =>
+            updateForm("has_bathing_vehicle", value === "true")
+          }
         />
       );
     }
@@ -130,39 +155,26 @@ export default function ManagerSignup() {
     if (step === 6) {
       return (
         <ManagerStep6
-          address={form.address.address}
-          addressDetail={form.address.addressDetail}
+          address={form.address}
+          addressDetail={form.address_detail}
           onAddressChange={(value) => updateForm("address", value)}
-          onAddressDetailChange={(value) => updateForm("addressDetail", value)}
+          onAddressDetailChange={(value) => updateForm("address_detail", value)}
         />
       );
     }
     if (step === 7) {
       return (
         <ManagerStep7
-          years={form.availability.years}
-          months={form.availability.months}
-          description={form.availability.description}
+          years={form.center_period_year}
+          months={form.center_period_month}
+          description={form.center_rank}
           onYearsChange={(value) =>
-            updateForm("availability", { ...form.availability, years: value })
+            updateForm("center_period_year", Number(value))
           }
           onMonthsChange={(value) =>
-            updateForm("availability", { ...form.availability, months: value })
+            updateForm("center_period_month", Number(value))
           }
-          onDescriptionChange={(value) =>
-            updateForm("availability", {
-              ...form.availability,
-              description: value,
-            })
-          }
-        />
-      );
-    }
-    if (step === 8) {
-      return (
-        <ManagerStep8
-          introduction={form.introduction}
-          onIntroductionChange={(value) => updateForm("introduction", value)}
+          onDescriptionChange={(value) => updateForm("center_rank", value)}
         />
       );
     }
@@ -170,10 +182,10 @@ export default function ManagerSignup() {
 
   const handleFormbtn = () => {
     if (step === 2) {
-      return !form.centername;
+      return !form.name;
     }
     if (step === 3) {
-      return !form.business || !form.siteurl;
+      return !form.business_registration_number || !form.center_site;
     }
     if (step === 4) {
       return !form.phone;
@@ -182,7 +194,7 @@ export default function ManagerSignup() {
       return false;
     }
     if (step === 6) {
-      return !form.address.address || !form.address.addressDetail;
+      return !form.address || !form.address_detail;
     }
 
     return false;
@@ -191,7 +203,7 @@ export default function ManagerSignup() {
   return (
     <div className="w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
       <div className="flex flex-col items-center">
-        <Header name="센터 관리자 회원가입" />
+        <Header name="센터 등록" />
         <div className="w-[354px] bg-gray-200 h-1">
           <div
             className="h-full bg-key transition-all duration-300 ease-in-out"
@@ -213,10 +225,10 @@ export default function ManagerSignup() {
           />
         ) : (
           <ShortsBtn
-            next={step === 8 && loading ? "저장 중.." : "다음"}
+            next={step === 7 && loading ? "저장 중.." : "다음"}
             back="이전"
             disabled={handleFormbtn() || loading}
-            onClickNext={step === 8 ? handleSubmit : handleNext}
+            onClickNext={step === 7 ? handleSubmit : handleNext}
             onClickBack={handleBack}
             width={175}
           />

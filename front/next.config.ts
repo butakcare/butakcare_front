@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
               "frame-ancestors 'self' *.daumcdn.net https://* http://*;",
               "style-src 'self' 'unsafe-inline' *.daumcdn.net;",
               "img-src 'self' data: *.daumcdn.net;",
+              "default-src 'self'; connect-src 'self' http://43.201.162.49; img-src 'self' *.daumcdn.net; script-src 'self'; style-src 'self';",
               "connect-src 'self' *.daumcdn.net;",
               "font-src 'self' *.daumcdn.net;",
               "object-src 'none';",
