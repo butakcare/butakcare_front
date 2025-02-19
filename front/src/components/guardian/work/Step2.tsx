@@ -15,11 +15,7 @@ export default function WorkStep2({
   const [selectedTimes, setSelectedTimes] = useState<string[]>([]);
 
   const days = ["월", "화", "수", "목", "금", "토", "일"];
-  const times = [
-    "오전 (09:00~12:00)",
-    "오후(12:00~18:00)",
-    "저녁(18:00~21:00)",
-  ];
+  const times = ["오전(09:00~12:00)", "오후(12:00~18:00)", "저녁(18:00~21:00)"];
 
   const toggleSelection = (
     item: string,
