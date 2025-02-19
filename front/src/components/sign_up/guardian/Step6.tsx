@@ -13,6 +13,7 @@ export default function GuardianStep6({
 
   const handleClick = (value: boolean) => {
     setSelected(value);
+    console.log("Selected value:", value);
     onExperienceChange(value);
   };
 

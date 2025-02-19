@@ -8,11 +8,11 @@ export default function GuardianWork() {
   const router = useRouter();
 
   const handleBack = () => {
-    router.push("/guardian/work");
+    router.push("/guardian/main");
   };
 
   const handleNext = () => {
-    router.push("/guardian/matching");
+    router.push("/guardian/my_matching");
   };
 
   return (

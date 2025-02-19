@@ -29,10 +29,12 @@ export default function WorkStep2({
 
   useEffect(() => {
     onDaysChange(selectedDays);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedDays]);
 
   useEffect(() => {
     onTimesChange(selectedTimes);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTimes]);
 
   return (

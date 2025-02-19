@@ -168,7 +168,7 @@ export default function GuardianSignup() {
     if (step === 5) {
       return (
         <GuardianStep5
-          onVehicleChange={(value) => updateForm("has_car", value === "yes")}
+          onVehicleChange={(value) => updateForm("has_car", value)}
         />
       );
     }
@@ -234,8 +234,8 @@ export default function GuardianSignup() {
     }
     if (step === 6) {
       return (
-        form.has_dementia_training === true ||
-        form.has_dementia_training === false
+        form.has_dementia_training === null ||
+        form.has_dementia_training === undefined
       );
     }
 
