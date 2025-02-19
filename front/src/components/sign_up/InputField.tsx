@@ -14,7 +14,7 @@ export default function InputField({
   on,
 }: InputFieldProps) {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col tablet:items-start">
       <label
         htmlFor="name"
         className={`tablet:text-[24px] text-[#666666] font-semibold text-[18px] pb-[10px] w-[354px] ${

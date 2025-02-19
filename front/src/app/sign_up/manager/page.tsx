@@ -149,7 +149,7 @@ export default function ManagerSignup() {
     <div className="w-screen h-screen">
       {/*테블릿릿 */}
       <div className="w-full h-screen flex max-tablet:hidden">
-        <Navi selected={selected} setSelected={setSelected} />
+        <Navi selected={selected} setSelected={setSelected} step={2} />
         <div className="m-[30px]  flex-1">
           <strong className="text-[30px] font-[700] text-[#2E2E2E]">
             센터 관리자 회원가입

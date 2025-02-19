@@ -14,12 +14,12 @@ export default function GuardianStep9() {
   const [selected, setSelected] = useState<number>(1);
 
   const handleMoveToLogin = () => {
-    router.push("/sign_up");
+    router.push("sign_in?type=manager");
   };
 
   return (
     <div className="w-full h-screen flex max-tablet:hidden">
-      <Navi selected={selected} setSelected={setSelected} />
+      <Navi selected={selected} setSelected={setSelected} step={2} />
       <div className="m-[30px]  flex-1">
         <strong className="text-[30px] font-[700] text-[#2E2E2E]">
           센터 관리자 회원가입
@@ -31,8 +31,8 @@ export default function GuardianStep9() {
           />
         </div>
         <div className=" w-[726px] flex flex-col items-center">
-          <p className="text-[30px] font-[600] text-[#0000000] mt-[76px]">
-            어르신 정보 등록이 완료되었습니다.
+          <p className="text-[30px] font-[600] text-[#0000000] mt-[76px] mb-[30px]">
+            관리자 회원가입이 완료되었습니다.
           </p>
           <Image src={Complete} alt="사진" width={341} height={296} />
           <p className="text-[24px] font-[700] text-[#000000] mt-[20px] text-center">
@@ -47,7 +47,7 @@ export default function GuardianStep9() {
               나중에
             </Link>
             <Link
-              href="manager/add"
+              href="/manager/add"
               className="w-[254px] mt-[76px] h-[58px] flex items-center justify-center bg-[#58C185] rounded-[10px] text-[22px] font-[600] text-[#FFFFFF]"
             >
               어르신 정보 등록

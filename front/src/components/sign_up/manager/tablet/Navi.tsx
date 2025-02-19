@@ -3,11 +3,12 @@ import { SetStateAction } from "react";
 import { useRouter } from "next/navigation";
 
 interface Props {
+  step: number;
   selected: number;
   setSelected: React.Dispatch<SetStateAction<number>>;
 }
 
-export default function Navi({ selected, setSelected }: Props) {
+export default function Navi({ selected, setSelected, step }: Props) {
   const menuItems = ["로그인", "회원가입"];
   const router = useRouter();
 
@@ -45,10 +46,20 @@ export default function Navi({ selected, setSelected }: Props) {
           ))}
         </div>
         <div className="pt-[15px] pl-[27px] gap-[16px] flex flex-col">
-          <div className="text-[#A7ABA5] text-[24px] font-bold">
+          <div
+            className={`text-[24px] font-bold ${
+              step === 1 ? "text-key" : "text-[#A7ABA5]"
+            }`}
+          >
             1. 센터 등록
           </div>
-          <div className="text-key text-[24px] font-bold">2. 관리자 가입</div>
+          <div
+            className={`text-[24px] font-bold ${
+              step === 2 ? "text-key" : "text-[#A7ABA5]"
+            }`}
+          >
+            2. 관리자 가입
+          </div>
         </div>
       </div>
     </div>

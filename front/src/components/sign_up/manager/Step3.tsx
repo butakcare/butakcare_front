@@ -37,8 +37,15 @@ export default function ManagerStep3({
   return (
     <div>
       <TitleText text1="사업자 등록 번호를 입력해주세요." text2="" on={true} />
-
-      <form className="flex flex-col justify-center items-center align-center pt-[21px]">
+      <div className="flex flex-row">
+        <div className="text-[30px] leading-[50px] font-bold flex items-center">
+          사업자 등록 번호를 입력해주세요.
+          <div className="flex items-end">
+            <span className="font-semibold text-[#FF602B] text-[26px]">*</span>
+          </div>
+        </div>
+      </div>
+      <form className="flex flex-col  tablet:items-start justify-center items-center align-center pt-[21px]">
         <InputField
           label="사업자 등록 번호"
           value={formattedBusiness}
@@ -46,12 +53,23 @@ export default function ManagerStep3({
           placeholder="00-000-00000"
           on={false}
         />
+
         <div className="h-[50px]" />
         <TitleText
           text1="센터 사이트 주소를 입력해주세요."
           text2=""
           on={true}
         />
+        <div className="flex flex-row">
+          <div className="text-[30px] leading-[50px] font-bold flex items-center">
+            센터 사이트 주소를 입력해주세요.
+            <div className="flex items-end">
+              <span className="font-semibold text-[#FF602B] text-[26px]">
+                *
+              </span>
+            </div>
+          </div>
+        </div>
         <div className="h-[21px]" />
 
         <InputField

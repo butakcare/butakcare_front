@@ -13,8 +13,16 @@ export default function ManagerStep2({
   return (
     <div>
       <TitleText text1="센터 이름을 입력해주세요." text2="" on={true} />
+      <div className="flex flex-row">
+        <div className="text-[30px] leading-[50px] font-bold flex items-center">
+          센터 이름을 입력해주세요.
+          <div className="flex items-end">
+            <span className="font-semibold text-[#FF602B] text-[26px]">*</span>
+          </div>
+        </div>
+      </div>
 
-      <form className="flex flex-col justify-center items-center align-center pt-[21px]">
+      <form className="flex flex-col tablet:items-start justify-center items-center align-center pt-[21px]">
         <InputField
           label="센터 이름"
           value={center}
