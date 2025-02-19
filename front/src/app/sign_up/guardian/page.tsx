@@ -12,22 +12,26 @@ import GuardianStep8 from "@/components/sign_up/guardian/Step8";
 import GuardianStep9 from "@/components/sign_up/guardian/Step9";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import axios from "axios";
 type FormFields =
   | "id"
   | "password"
   | "name"
   | "phone"
-  | "sex"
+  | "gender"
   | "birth"
   | "caregiver_qualification"
   | "social_worker_qualification"
   | "nursing_assistant_qualification"
   | "address"
-  | "vehicle"
-  | "experience"
   | "availability"
-  | "addressDetail"
-  | "introduction";
+  | "address_detail"
+  | "description"
+  | "has_car"
+  | "career_year"
+  | "career_month"
+  | "career_content"
+  | "has_dementia_training";
 
 export default function GuardianSignup() {
   const router = useRouter();
@@ -36,43 +40,54 @@ export default function GuardianSignup() {
   const progress = (step / 10) * 100;
   const [form, setForm] = useState({
     id: "",
+    times: [],
+    days: [],
     password: "",
     name: "",
+    gender: null,
+    photo: null,
     phone: "",
-    sex: "",
-    birth: "",
+    has_car: false,
+    has_dementia_training: false,
+    address: "",
+    address_detail: "",
+    min_wage: 0,
+    max_wage: 0,
     caregiver_qualification: "",
     social_worker_qualification: "",
     nursing_assistant_qualification: "",
-    vehicle: "",
-    experience: "",
-    address: {
-      address: "",
-      addressDetail: "",
-    },
-    introduction: "",
-    availability: {
-      years: "",
-      months: "",
-      description: "",
-    },
+    birth: "",
+    career_year: null,
+    career_month: null,
+    career_content: "",
+    description: "",
+    available_area: [],
   });
 
   const handleSubmit = async () => {
     setLoading(true);
-    try {
-      const response = await fetch(`${process.env.API_URL_KEY}/signup`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
+    console.log("전송할 데이터:", form); // 전송 전 데이터 확인
 
-      if (!response.ok) throw new Error("회원가입 실패");
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL_KEY}/api/profiles/caregivers/`,
+        form,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("API 응답:", response.data); // API 응답 확인
 
       setLoading(false);
       router.push("/sign_up/guardian/success");
     } catch (error) {
       setLoading(false);
+      if (axios.isAxiosError(error)) {
+        console.error("API 에러:", error.response?.data); // 자세한 에러 정보 확인
+      }
       console.error("회원가입 중 오류가 발생했습니다.", error);
     }
   };
@@ -87,29 +102,17 @@ export default function GuardianSignup() {
 
   const updateForm = (
     input: FormFields,
-    value: string | { [key: string]: string }
+    value:
+      | string
+      | number
+      | boolean
+      | { [key: string]: string | number | boolean }
   ) => {
-    if (input === "address" || input === "addressDetail") {
-      setForm({
-        ...form,
-        address: {
-          ...form.address,
-          [input]: value,
-        },
-      });
-    } else if (input === "availability") {
-      setForm({
-        ...form,
-        availability: {
-          ...form.availability,
-          ...(typeof value === "object" ? value : {}),
-        },
-      });
-    } else {
-      setForm({ ...form, [input]: value });
-    }
+    setForm((prevForm) => ({
+      ...prevForm,
+      [input]: value,
+    }));
   };
-
   const showCurrentStep = () => {
     if (step === 1) {
       return (
@@ -136,9 +139,9 @@ export default function GuardianSignup() {
     if (step === 3) {
       return (
         <GuardianStep3
-          sex={form.sex}
+          sex={form.gender}
           birth={form.birth}
-          onsexChange={(value) => updateForm("sex", value)}
+          onsexChange={(value) => updateForm("gender", value)}
           onbirthChange={(value) => updateForm("birth", value)}
         />
       );
@@ -165,7 +168,7 @@ export default function GuardianSignup() {
     if (step === 5) {
       return (
         <GuardianStep5
-          onVehicleChange={(value) => updateForm("vehicle", value)}
+          onVehicleChange={(value) => updateForm("has_car", value)}
         />
       );
     }
@@ -173,7 +176,9 @@ export default function GuardianSignup() {
     if (step === 6) {
       return (
         <GuardianStep6
-          onExperienceChange={(value) => updateForm("experience", value)}
+          onExperienceChange={(value) =>
+            updateForm("has_dementia_training", value)
+          }
         />
       );
     }
@@ -181,10 +186,10 @@ export default function GuardianSignup() {
     if (step === 7) {
       return (
         <GuardianStep7
-          address={form.address.address}
-          addressDetail={form.address.addressDetail}
+          address={form.address}
+          addressDetail={form.address_detail}
           onAddressChange={(value) => updateForm("address", value)}
-          onAddressDetailChange={(value) => updateForm("addressDetail", value)}
+          onAddressDetailChange={(value) => updateForm("address_detail", value)}
         />
       );
     }
@@ -192,26 +197,20 @@ export default function GuardianSignup() {
     if (step === 8) {
       return (
         <GuardianStep8
-          years={form.availability.years}
-          months={form.availability.months}
-          description={form.availability.description}
-          onYearsChange={(value) =>
-            updateForm("availability", { years: value })
-          }
-          onMonthsChange={(value) =>
-            updateForm("availability", { months: value })
-          }
-          onDescriptionChange={(value) =>
-            updateForm("availability", { description: value })
-          }
+          years={form.career_year}
+          months={form.career_month}
+          description={form.career_content}
+          onYearsChange={(value) => updateForm("career_year", Number(value))}
+          onMonthsChange={(value) => updateForm("career_month", Number(value))}
+          onDescriptionChange={(value) => updateForm("career_content", value)}
         />
       );
     }
     if (step === 9) {
       return (
         <GuardianStep9
-          introduction={form.introduction}
-          onIntroductionChange={(value) => updateForm("introduction", value)}
+          introduction={form.description}
+          onIntroductionChange={(value) => updateForm("description", value)}
         />
       );
     }
@@ -225,30 +224,30 @@ export default function GuardianSignup() {
       return !form.name || !form.phone;
     }
     if (step === 3) {
-      return !form.sex || !form.birth;
+      return !form.gender || !form.birth;
     }
     if (step === 4) {
       return !form.caregiver_qualification;
     }
     if (step === 5) {
-      return form.vehicle == "yes";
+      return form.has_car === true || form.has_car === false;
     }
     if (step === 6) {
-      return form.experience == "yes";
-    }
-    if (step === 7) {
-      return !form.address.address || !form.address.addressDetail;
-    }
-    if (step === 8) {
       return (
-        !form.availability.years ||
-        !form.availability.months ||
-        !form.availability.description
+        form.has_dementia_training === null ||
+        form.has_dementia_training === undefined
       );
     }
 
+    if (step === 7) {
+      return !form.address || !form.address_detail;
+    }
     if (step === 8) {
-      return !form.availability;
+      return (
+        form.career_year === -1 ||
+        form.career_month === null ||
+        !form.career_content
+      );
     }
 
     if (step === 9) {

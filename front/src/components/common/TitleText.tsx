@@ -7,7 +7,7 @@ export default function TitleText({ text1, text2, on }: TitleTextProps) {
   return (
     <>
       <div className="flex flex-row w-[354px] tablet:hidden">
-        <div className="text-[26px] font-bold leading-[40px]">
+        <div className="text-[26px] font-bold leading-[40px] flex items-center">
           {text1}
           {text2 && (
             <>

@@ -1,21 +1,23 @@
 "use client";
 import CheckIcon from "@/../public/assets/images/complete.png";
-
 import Image from "next/image";
-import { LongBtn } from "@/components/common/Button";
 import { useRouter } from "next/navigation";
 import Header from "@/components/common/TitleHeader";
 
-export default function GuardianStep9() {
+export default function GuardianWork() {
   const router = useRouter();
 
-  const handleMoveToLogin = () => {
-    router.push("/sign_up");
+  const handleBack = () => {
+    router.push("/guardian/main");
+  };
+
+  const handleNext = () => {
+    router.push("/guardian/my_matching");
   };
 
   return (
     <div className="w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
-      <Header name="센터 관리자 회원가입" />
+      <Header name="근무 조건 등록" />
       <div className="w-[354px] bg-gray-200 h-1">
         <div
           className="h-full bg-key transition-all duration-300 ease-in-out"
@@ -23,13 +25,13 @@ export default function GuardianStep9() {
         />
       </div>
       <div className="h-[78px]" />
-
       <div className="flex flex-row w-[354px] tablet:hidden">
         <div className="text-[26px] font-bold leading-[40px] flex items-center">
-          회원가입이 완료 되었습니다.
+          근무 조건 등록이
+          <br /> 완료 되었습니다.
         </div>
       </div>
-      <div className="h-[60px]" />
+      <div className="h-[11px]" />
 
       <Image src={CheckIcon} alt="성공" />
       <div className="h-[2.44px]" />
@@ -40,17 +42,27 @@ export default function GuardianStep9() {
           <span className="text-[#2D8859] font-bold">로그인</span>하고,
         </p>
         <p className="text-center text-black font-bold text-[20px]">
-          쉽고 간편한 맞춤형 매칭을 만나보세요!
+          나에게 딱 맞는 일자리 매칭을 만나보세요!
         </p>
       </div>
       <div className="h-[93px]" />
 
-      <LongBtn
-        text="로그인"
-        width={354}
-        disabled={false}
-        onClick={handleMoveToLogin}
-      />
+      <div className="flex flex-row gap-[4px]">
+        <button
+          className="w-[175px] h-[52px] rounded-[10px] font-semibold text-[18px] transition-all
+        border border-key text-black"
+          onClick={handleBack}
+        >
+          근무 조건 수정
+        </button>
+        <button
+          className="w-[175px] h-[52px] rounded-[10px] font-semibold text-[18px] transition-all
+            bg-key text-white"
+          onClick={handleNext}
+        >
+          매칭 관리
+        </button>
+      </div>
     </div>
   );
 }

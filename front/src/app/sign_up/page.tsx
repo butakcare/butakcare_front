@@ -31,12 +31,12 @@ export default function SignUpPage() {
         <div className="h-[42px]" />
         <div className="flex flex-row w-[354px]">
           <div className="text-[26px] font-bold leading-[40px]">
-            부탁케어와 함께할
+            부탁케어에 <span className="text-key">회원가입</span>할
             <br />
             계정 유형을 선택해주세요.
           </div>
         </div>
-        <div className="mt-[64px] mb-[128px] flex flex-row items-center justify-center h-[270px] gap-[4px]">
+        <div className="mt-[15px] mb-[128px] flex flex-row items-center justify-center h-[270px] gap-[4px]">
           <AccountType
             text="센터 관리자"
             imageSrc={manager}
