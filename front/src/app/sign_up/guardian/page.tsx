@@ -230,10 +230,13 @@ export default function GuardianSignup() {
       return !form.caregiver_qualification;
     }
     if (step === 5) {
-      return form.has_car === null;
+      return form.has_car === true || form.has_car === false;
     }
     if (step === 6) {
-      return form.has_dementia_training === null;
+      return (
+        form.has_dementia_training === true ||
+        form.has_dementia_training === false
+      );
     }
 
     if (step === 7) {

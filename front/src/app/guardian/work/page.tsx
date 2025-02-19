@@ -4,9 +4,11 @@ import Header from "@/components/common/TitleHeader";
 import WorkStep1 from "@/components/guardian/work/Step1";
 import WorkStep2 from "@/components/guardian/work/Step2";
 import WorkStep3 from "@/components/guardian/work/Step3";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 type FormFields = "available_area" | "min_wage" | "max_wage" | "times" | "days";
+type FormValues = string | number | string[] | number[];
 
 export default function WorkSettings() {
   const router = useRouter();
@@ -23,19 +25,27 @@ export default function WorkSettings() {
 
   const handleSubmit = async () => {
     setLoading(true);
+    console.log("전송할 데이터:", form);
+
     try {
-      const response = await fetch(`${process.env.API_URL_KEY}/signup`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
+      const response = await axios.patch(
+        `${process.env.NEXT_PUBLIC_API_URL_KEY}/api/profiles/caregivers/sjh121476/`,
+        form,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      if (!response.ok) throw new Error("회원가입 실패");
-
+      console.log("API 응답:", response.data);
       setLoading(false);
       router.push("/guardian/work/success");
     } catch (error) {
       setLoading(false);
+      if (axios.isAxiosError(error)) {
+        console.error("API 에러:", error.response?.data);
+      }
       console.error("회원가입 중 오류가 발생했습니다.", error);
     }
   };
@@ -47,9 +57,11 @@ export default function WorkSettings() {
   const handleBack = () => {
     setStep((prev) => prev - 1);
   };
-
-  const updateForm = (input: FormFields, value: string | number | string[]) => {
-    setForm({ ...form, [input]: value });
+  const updateForm = (input: FormFields, value: FormValues) => {
+    setForm((prevForm) => ({
+      ...prevForm,
+      [input]: value,
+    }));
   };
 
   const showCurrentStep = () => {

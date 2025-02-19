@@ -7,10 +7,9 @@ import BorderX from "@/../public/assets/icons/ic_round-cancel.svg";
 
 interface AreaSelectModalProps {
   onClose: () => void;
-  onConfirm: (selectedAreas: string[]) => void;
-  initialSelected: string[];
+  onConfirm: (selectedAreaIds: number[], selectedAreaNames: string[]) => void;
+  initialSelected: number[];
 }
-
 interface RegionData {
   id: number;
   name: string;
@@ -19,14 +18,18 @@ interface RegionData {
 export default function AreaSelectModal({
   onClose,
   onConfirm,
+  initialSelected,
 }: AreaSelectModalProps) {
   const [selectedSido, setSelectedSido] = useState<string>("");
   const [selectedSigungu, setSelectedSigungu] = useState<string>("");
-  const [selectedDong, setSelectedDong] = useState<string>("");
-  const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
+  const [selectedDong, setSelectedDong] = useState<number | null>(null);
+  const [selectedAreaIds, setSelectedAreaIds] =
+    useState<number[]>(initialSelected);
+  const [selectedAreaNames, setSelectedAreaNames] = useState<string[]>([]);
   const [regions, setRegions] = useState<RegionData[]>([]);
-  const [sigugunData, setSigugunData] = useState<RegionData[]>([]);
+  const [sigugunData, setSigugunData] = useState<RegionData[]>([]); // 시/군/구
   const [dongData, setDongData] = useState<RegionData[]>([]);
+
   useEffect(() => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API_URL_KEY}/api/location/sigudong`)
@@ -43,10 +46,7 @@ export default function AreaSelectModal({
           `${process.env.NEXT_PUBLIC_API_URL_KEY}/api/location/sigudong?si=${selectedSido}`
         )
         .then((res) => {
-          const nameList = res.data.map((item: { name: string }) => ({
-            name: item.name,
-          }));
-          setSigugunData(nameList);
+          setSigugunData(res.data);
         })
         .catch((error) => console.error("Error fetching sigungu:", error));
     } else {
@@ -61,10 +61,7 @@ export default function AreaSelectModal({
           `${process.env.NEXT_PUBLIC_API_URL_KEY}/api/location/sigudong?si=${selectedSido}&gu=${selectedSigungu}`
         )
         .then((res) => {
-          const nameList = res.data.map((item: { name: string }) => ({
-            name: item.name,
-          }));
-          setDongData(nameList);
+          setDongData(res.data);
         })
         .catch((error) => console.error("Error fetching dong:", error));
     } else {
@@ -72,20 +69,24 @@ export default function AreaSelectModal({
     }
   }, [selectedSido, selectedSigungu]);
 
-  const handleAreaSelect = (dong: string) => {
-    if (selectedAreas.length >= 10) {
+  const handleAreaSelect = (dongId: number, dongName: string) => {
+    if (selectedAreaIds.length >= 10) {
       alert("최대 10개까지 선택할 수 있습니다.");
       return;
     }
-    setSelectedDong(dong);
-    const fullAddress = `${selectedSido} ${selectedSigungu} ${dong}`;
-    if (!selectedAreas.includes(fullAddress)) {
-      setSelectedAreas([...selectedAreas, fullAddress]);
+    setSelectedDong(dongId);
+    if (!selectedAreaIds.includes(dongId)) {
+      setSelectedAreaIds([...selectedAreaIds, dongId]);
+      setSelectedAreaNames([...selectedAreaNames, dongName]);
     }
   };
 
-  const handleRemoveArea = (area: string) => {
-    setSelectedAreas(selectedAreas.filter((a) => a !== area));
+  const handleRemoveArea = (areaId: number) => {
+    const index = selectedAreaIds.indexOf(areaId);
+    const updatedIds = selectedAreaIds.filter((id) => id !== areaId);
+    const updatedNames = selectedAreaNames.filter((_, i) => i !== index);
+    setSelectedAreaIds(updatedIds);
+    setSelectedAreaNames(updatedNames);
   };
 
   return (
@@ -140,7 +141,7 @@ export default function AreaSelectModal({
 
           {sigugunData.map((gu: RegionData) => (
             <div
-              key={gu.name}
+              key={gu.id}
               className={`p-3 cursor-pointer ${
                 selectedSigungu === gu.name ? "bg-key text-white" : ""
               }`}
@@ -156,11 +157,11 @@ export default function AreaSelectModal({
           </div>
           {dongData.map((dong: RegionData) => (
             <div
-              key={dong.name}
+              key={dong.id}
               className={`p-3 cursor-pointer ${
-                selectedDong === dong.name ? "bg-key text-white" : ""
+                selectedDong === dong.id ? "bg-key text-white" : ""
               }`}
-              onClick={() => handleAreaSelect(dong.name)}
+              onClick={() => handleAreaSelect(dong.id, dong.name)}
             >
               {dong.name}
             </div>
@@ -175,14 +176,16 @@ export default function AreaSelectModal({
           </p>
           <div className="w-full overflow-x-auto no-scrollbar scrollbar-hide  pt-[15px]">
             <div className="inline-flex gap-1 pb-2">
-              {selectedAreas.map((area) => (
+              {selectedAreaIds.map((id, index) => (
                 <div
-                  key={area}
+                  key={id}
                   className="flex-none px-5 py-3.5 bg-sub rounded-lg flex items-center whitespace-nowrap"
                 >
-                  <span className="text-[#2D8859] text-lg">{selectedDong}</span>
+                  <span className="text-[#2D8859] text-lg">
+                    {selectedAreaNames[index]}
+                  </span>
                   <button
-                    onClick={() => handleRemoveArea(area)}
+                    onClick={() => handleRemoveArea(id)}
                     className="ml-2 text-sub hover:text-green-700"
                   >
                     <Image src={BorderX} alt="X" />
@@ -194,13 +197,16 @@ export default function AreaSelectModal({
         </div>
         <div className="flex flex-row pt-[15px] border-t border-[#666666] p-[15px_24px] gap-[4px] ">
           <button
-            onClick={() => setSelectedAreas([])}
+            onClick={() => {
+              setSelectedAreaIds([]);
+              setSelectedAreaNames([]);
+            }}
             className=" font-semibold flex w-[86px] h-[52px] border  rounded-[10px] justify-center items-center border border-[#666666]"
           >
             초기화
           </button>
           <button
-            onClick={() => onConfirm(selectedAreas)}
+            onClick={() => onConfirm(selectedAreaIds, selectedAreaNames)}
             className="flex-1 h-[52px] bg-key w-[264px] text-white rounded-[10px]"
           >
             확인

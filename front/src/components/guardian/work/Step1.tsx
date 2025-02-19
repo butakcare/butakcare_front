@@ -6,8 +6,8 @@ import Image from "next/image";
 import BorderX from "@/../public/assets/icons/ic_round-cancel.svg";
 
 interface WorkStep1Props {
-  available_area: string[];
-  available_areaChange: (value: string[]) => void;
+  available_area: number[];
+  available_areaChange: (value: number[]) => void;
 }
 
 export default function WorkStep1({
@@ -15,7 +15,7 @@ export default function WorkStep1({
   available_areaChange,
 }: WorkStep1Props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [areaNames, setAreaNames] = useState<string[]>([]);
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -24,21 +24,24 @@ export default function WorkStep1({
     setIsModalOpen(false);
   };
 
-  const handleConfirm = (selectedAreas: string[]) => {
-    available_areaChange(selectedAreas);
+  const handleConfirm = (
+    selectedAreaIds: number[],
+    selectedNames: string[]
+  ) => {
+    available_areaChange(selectedAreaIds);
+    setAreaNames(selectedNames);
     setIsModalOpen(false);
   };
 
-  // 전체 주소에서 동/읍/면만 추출하는 함수
-  const getLastRegion = (fullAddress: string) => {
-    const parts = fullAddress.split(" ");
-    return parts[parts.length - 1];
-  };
-
-  // 선택된 지역 삭제
-  const handleRemoveArea = (areaToRemove: string) => {
-    const updatedAreas = available_area.filter((area) => area !== areaToRemove);
-    available_areaChange(updatedAreas);
+  const handleRemoveArea = (indexToRemove: number) => {
+    const updatedIds = available_area.filter(
+      (_, index) => index !== indexToRemove
+    );
+    const updatedNames = areaNames.filter(
+      (_, index) => index !== indexToRemove
+    );
+    available_areaChange(updatedIds);
+    setAreaNames(updatedNames);
   };
 
   return (
@@ -85,18 +88,16 @@ export default function WorkStep1({
 
         {/* 선택된 지역 태그 목록 */}
         {available_area.length > 0 && (
-          <div className="w-full overflow-x-auto no-scrollbar scrollbar-hide  pt-[15px]">
+          <div className="w-full overflow-x-auto no-scrollbar scrollbar-hide pt-[15px]">
             <div className="font-semibold inline-flex gap-1 pb-2">
-              {available_area.map((area) => (
+              {areaNames.map((name, index) => (
                 <div
-                  key={area}
+                  key={available_area[index]}
                   className="flex-none px-5 py-3.5 bg-sub rounded-lg flex items-center whitespace-nowrap"
                 >
-                  <span className="text-[#2D8859] text-lg">
-                    {getLastRegion(area)}
-                  </span>
+                  <span className="text-[#2D8859] text-lg">{name}</span>
                   <button
-                    onClick={() => handleRemoveArea(area)}
+                    onClick={() => handleRemoveArea(index)}
                     className="ml-2 text-sub hover:text-green-700"
                   >
                     <Image src={BorderX} alt="X" />
