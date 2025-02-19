@@ -1,4 +1,6 @@
+import Image from "next/image";
 import Link from "next/link";
+import Refusal from "@/../public/assets/icons/icon_refusal.svg";
 
 export default function ChatRefusal() {
   return (
@@ -12,6 +14,9 @@ export default function ChatRefusal() {
       <p className="text-[24px] font-[600] text-[#666666] mt-[13px]">
         어르신 관리에서 다시 매칭을 시도할 수 있어요
       </p>
+      <div className="flex w-full justify-center mt-[80px]">
+        <Image src={Refusal} alt="거절" width={262} height={272} />
+      </div>
       <div className="w-full flex justify-end pr-[30px] mt-[130px]">
         <Link
           href="/manager/main"

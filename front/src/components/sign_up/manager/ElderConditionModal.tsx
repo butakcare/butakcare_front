@@ -4,19 +4,46 @@ import React, { SetStateAction, useState, useEffect } from "react";
 import Checked from "@/../public/assets/icons/icon_check.svg";
 
 interface Prop {
-  setIsCoordination: React.Dispatch<SetStateAction<boolean>>;
+  setIsElderConditionModal: React.Dispatch<SetStateAction<boolean>>;
+  selectedDays: string[];
+  setSelectedDays: React.Dispatch<React.SetStateAction<string[]>>;
+  startHour: string;
+  setStartHour: React.Dispatch<React.SetStateAction<string>>;
+  startMinute: string;
+  setStartMinute: React.Dispatch<React.SetStateAction<string>>;
+  endHour: string;
+  setEndHour: React.Dispatch<React.SetStateAction<string>>;
+  endMinute: string;
+  setEndMinute: React.Dispatch<React.SetStateAction<string>>;
+  salaryWeek: number;
+  salaryMonth: number;
+  setSalaryWeek: React.Dispatch<React.SetStateAction<number>>;
+  setSalaryMonth: React.Dispatch<React.SetStateAction<number>>;
+  startDay: string;
+  setStartDay: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function CoordinationRequestModal({ setIsCoordination }: Prop) {
-  const [selectedDays, setSelectedDays] = useState<string[]>([]);
-  const [salaryWeek, setSalaryWeek] = useState<number>(0);
-  const [salaryMonth, setSalaryMonth] = useState<number>(0);
+export default function ElderConditionModal({
+  setIsElderConditionModal,
+  selectedDays,
+  setEndHour,
+  setEndMinute,
+  setSalaryMonth,
+  setSalaryWeek,
+  setSelectedDays,
+  setStartDay,
+  setStartHour,
+  setStartMinute,
+  startDay,
+  startHour,
+  startMinute,
+  endHour,
+  endMinute,
+  salaryMonth,
+  salaryWeek,
+}: Prop) {
   const [isStartOpen, setIsStartOpen] = useState<boolean>(false);
   const [isEndOpen, setIsEndOpen] = useState<boolean>(false);
-  const [startHour, setStartHour] = useState("");
-  const [startMinute, setStartMinute] = useState("");
-  const [endHour, setEndHour] = useState("");
-  const [endMinute, setEndMinute] = useState("");
 
   const hours = Array.from({ length: 13 }, (_, i) =>
     (i + 9).toString().padStart(2, "0")
@@ -74,10 +101,10 @@ export default function CoordinationRequestModal({ setIsCoordination }: Prop) {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="flex flex-col bg-[#FCFCFB] items-center rounded-[20px] w-[742px] h-[802px] px-[23px] py-[13px] overflow-y-auto">
-        <div className="w-[742px] flex justify-between items-center mt-[49px] px-[30px]">
+        <div className="w-[742px] flex justify-between items-center px-[30px]">
           {" "}
           <strong className="text-[34px] text-[#000000] font-[700] ">
-            근무조건
+            근무조건 선택 및 추가
           </strong>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +112,7 @@ export default function CoordinationRequestModal({ setIsCoordination }: Prop) {
             height="32"
             viewBox="0 0 32 32"
             fill="none"
-            onClick={() => setIsCoordination(false)}
+            onClick={() => setIsElderConditionModal(false)}
           >
             <path
               fillRule="evenodd"
@@ -94,6 +121,17 @@ export default function CoordinationRequestModal({ setIsCoordination }: Prop) {
               fill="black"
             />
           </svg>
+        </div>
+        <p className="text-[26px] text-[#000000] font-[700] w-[742px] ml-[60px] mt-[48px]">
+          시작 날짜
+        </p>
+        <div className="flex items-center justify-start gap-[23px] w-[682px] h-[86px] rounded-[14px] bg-[#F7F8FA] pl-[23px] mt-[13px]">
+          <input
+            placeholder="YYYY-MM-DD"
+            value={startDay}
+            className="w-[364px] p-[16px] bg-[#FFFFFF] rounded-[10px] text-[22px] font-[600]"
+            onChange={(e) => setStartDay(e.target.value)}
+          />
         </div>
         <p className="text-[26px] text-[#000000] font-[700] w-[742px] ml-[60px] mt-[48px]">
           구인 요일
@@ -372,22 +410,16 @@ export default function CoordinationRequestModal({ setIsCoordination }: Prop) {
               </span>
             </p>
           </div>
-          <p className="text-[26px] font-[700] text-[#191A1C] mt-[22px]">
-            추가 요청사항
-          </p>
-          <textarea
-            placeholder="0/500"
-            maxLength={500}
-            className="w-[677px] h-[115px] bg-[#F7F8FA] rounded-[14px] text-[22px] font-[500] px-[21px] py-[15px]"
-          />
-          <p className="text-[22px] font-[500] text-[#666666] mt-[27px]">
-            꼼꼼히 확인하셨나요?
-            <br />
-            조율 요청을 하면 보내면 관리자에게 바로 알람이 가요.
-          </p>
         </div>
-        <div className="mt-[17px]  flex w-[742px] justify-end gap-[8px] mr-[30px]">
-          <button className="w-[269px] h-[84px] bg-[#58C185] rounded-[10px] text-[22px] text-[#FFFFFF] font-[600]">
+        <div className="mt-[17px]  flex items-center gap-[8px]">
+          <button
+            onClick={() => setIsElderConditionModal(false)}
+            className={`w-[269px] h-[52px] ${
+              salaryMonth && startDay.length == 10
+                ? "bg-[#58C185]"
+                : "bg-[#D9D9D9]"
+            } rounded-[10px] text-[22px] text-[#FFFFFF] font-[600]"`}
+          >
             근무 조건 등록
           </button>
         </div>

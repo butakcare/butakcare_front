@@ -1,36 +1,55 @@
-// import { useEffect } from "react";
-// import axios from "axios";
-
+import axios from "axios";
 import Link from "next/link";
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import AcceptImg from "@/../public/assets/images/AcceptImg.svg";
 
 interface Props {
   selectedThree: number;
   disease: string;
+  selectedCareDetails: number[];
+  setSelectedCareDetails: React.Dispatch<React.SetStateAction<number[]>>;
   setSelected: React.Dispatch<React.SetStateAction<number>>;
   setSelectedThree: React.Dispatch<React.SetStateAction<number>>;
   setDisease: React.Dispatch<React.SetStateAction<string>>;
+  PostAdd: () => void;
+}
+
+interface CareDetail {
+  id: number;
+  content: string;
+}
+
+interface CareCategory {
+  name: string;
+  care_details: CareDetail[];
 }
 
 export default function AddElderCare({
   selectedThree,
   disease,
+  selectedCareDetails,
   setSelected,
   setSelectedThree,
   setDisease,
+  setSelectedCareDetails,
+  PostAdd,
 }: Props) {
-  // useEffect(() => {
-  //   const handleSubmit = async () => {
-  //     try {
-  //       const response = await axios.get(
-  //         `http://127.0.0.1:8000/api/recommendation/care-details/`
-  //       );
-  //       console.log(response.data);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
-  //   handleSubmit();
-  // });
+  const [careCategories, setCareCategories] = useState<CareCategory[]>([]);
+  const [dropdownOpen, setDropdownOpen] = useState<{ [key: string]: boolean }>(
+    {}
+  );
+
+  useEffect(() => {
+    const fetchGet = async () => {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL_KEY}/api/recommendation/care-details/`
+      );
+      setCareCategories(response.data);
+    };
+    fetchGet();
+  }, []);
+
   const maxSteps = 1;
 
   const handleGauge1 = () => {
@@ -40,6 +59,7 @@ export default function AddElderCare({
   };
 
   const handleGauge2 = () => {
+    PostAdd();
     if (selectedThree < maxSteps) {
       if (disease) {
         setSelectedThree((prev) => prev + 1);
@@ -48,6 +68,21 @@ export default function AddElderCare({
       setSelectedThree(2);
       setSelected(3);
     }
+  };
+
+  const toggleDropdown = (categoryName: string) => {
+    setDropdownOpen((prev) => ({
+      ...prev,
+      [categoryName]: !prev[categoryName],
+    }));
+  };
+
+  const handleCareDetailSelect = (id: number) => {
+    setSelectedCareDetails((prev) =>
+      prev.includes(id)
+        ? prev.filter((detailId) => detailId !== id)
+        : [...prev, id]
+    );
   };
 
   return (
@@ -62,13 +97,38 @@ export default function AddElderCare({
               *
             </span>
           </p>
+          {careCategories.map((category) => (
+            <div key={category.name} className="mt-[20px]">
+              <button
+                onClick={() => toggleDropdown(category.name)}
+                className="w-full text-left bg-[#F7F8FA] p-[10px] rounded-[10px] text-[22px] font-[600] text-[#000000]"
+              >
+                {category.name}
+              </button>
+              {dropdownOpen[category.name] && (
+                <div className="mt-[10px] ml-[20px]">
+                  {category.care_details.map((detail) => (
+                    <div
+                      key={detail.id}
+                      className="flex items-center gap-[10px]"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={selectedCareDetails.includes(detail.id)}
+                        onChange={() => handleCareDetailSelect(detail.id)}
+                      />
+                      <span className="text-[20px] text-[#000000]">
+                        {detail.content}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
           <button
             onClick={() => handleGauge1()}
-            // className={`absolute right-[500px] w-[254px] h-[58px] flex items-center justify-center ${
-            //   elderName
-            //     ? "bg-[#D7F3D1] text-[#000000]"
-            //     : "bg-[#CFCFCF]  text-[#FFFFFF]"
-            // } rounded-[10px] text-[22px] font-[600]`}
+            className="mt-[30px] w-[254px] h-[58px] flex items-center justify-center bg-[#D7F3D1] text-[#000000] rounded-[10px] text-[22px] font-[600]"
           >
             다음
           </button>
@@ -111,42 +171,8 @@ export default function AddElderCare({
           <p className="text-[30px] font-[600] text-[#0000000] mt-[76px]">
             어르신 정보 등록이 완료되었습니다.
           </p>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="170"
-            height="170"
-            viewBox="0 0 170 170"
-            fill="none"
-            className="mt-[25px]"
-          >
-            <mask
-              id="mask0_683_3579"
-              maskUnits="userSpaceOnUse"
-              x="13"
-              y="13"
-              width="144"
-              height="144"
-            >
-              <path
-                d="M84.9994 155.833C94.303 155.844 103.517 154.017 112.113 150.457C120.708 146.896 128.515 141.673 135.086 135.086C141.673 128.515 146.896 120.708 150.457 112.113C154.017 103.517 155.844 94.303 155.833 84.9994C155.844 75.6958 154.017 66.4815 150.457 57.8861C146.896 49.2907 141.673 41.4836 135.086 34.9132C128.515 28.3262 120.708 23.1025 112.113 19.542C103.517 15.9816 94.303 14.1546 84.9994 14.1661C75.6958 14.1546 66.4815 15.9816 57.8861 19.542C49.2907 23.1025 41.4836 28.3262 34.9132 34.9132C28.3262 41.4836 23.1025 49.2907 19.542 57.8861C15.9816 66.4815 14.1546 75.6958 14.1661 84.9994C14.1546 94.303 15.9816 103.517 19.542 112.113C23.1025 120.708 28.3262 128.515 34.9132 135.086C41.4836 141.673 49.2907 146.896 57.8861 150.457C66.4815 154.017 75.6958 155.844 84.9994 155.833Z"
-                fill="#555555"
-                stroke="white"
-                strokeWidth="1.97674"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M56.666 85L77.916 106.25L120.416 63.75"
-                stroke="white"
-                strokeWidth="1.97674"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </mask>
-            <g mask="url(#mask0_683_3579)">
-              <path d="M0 0H170V170H0V0Z" fill="#58C185" />
-            </g>
-          </svg>
-          <p className="text-[24px] font-[700] text-[#000000] mt-[76px] text-center">
+          <Image src={AcceptImg} alt="사진" width={341} height={296} />
+          <p className="text-[24px] font-[700] text-[#000000] mt-[20px] text-center">
             지금 어르신께 필요한 요양보호사를 추천받고,
           </p>
           <p className="text-[24px] font-[700] text-[#191A1C] mt-[20px]">
@@ -163,7 +189,7 @@ export default function AddElderCare({
               href="/manager/main"
               className="w-[254px] mt-[76px] h-[58px] flex items-center justify-center bg-[#58C185] rounded-[10px] text-[22px] font-[600] text-[#FFFFFF]"
             >
-              매칭관리
+              어르신 관리
             </Link>
           </div>
         </div>

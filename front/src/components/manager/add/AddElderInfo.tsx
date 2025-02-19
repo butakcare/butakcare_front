@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Checked from "@/../public/assets/icons/icon_green_check.svg";
+import NoChecked from "@/../public/assets/icons/icon_no_check.svg";
+import axios from "axios";
 
 interface Props {
   selectedOne: number;
@@ -9,13 +12,15 @@ interface Props {
   elderBirth: string;
   elderAddress: string;
   elderGender: string;
-  elderGrade: number;
+  elderGrade: string;
   elderAddress2: string;
+  elderWeight: number | null;
   image: string | null;
+  setElderWeight: React.Dispatch<React.SetStateAction<number | null>>;
   setElderName: React.Dispatch<React.SetStateAction<string>>;
   setElderBirth: React.Dispatch<React.SetStateAction<string>>;
   setElderGender: React.Dispatch<React.SetStateAction<string>>;
-  setElderGrade: React.Dispatch<React.SetStateAction<number>>;
+  setElderGrade: React.Dispatch<React.SetStateAction<string>>;
   setElderAddress: React.Dispatch<React.SetStateAction<string>>;
   setImage: React.Dispatch<React.SetStateAction<string | null>>;
   setSelectedOne: React.Dispatch<React.SetStateAction<number>>;
@@ -31,7 +36,7 @@ export default function AddElder({
   elderAddress2,
   elderGender,
   elderGrade,
-
+  elderWeight,
   image,
   setElderName,
   setElderBirth,
@@ -42,10 +47,13 @@ export default function AddElder({
   setImage,
   setSelectedOne,
   setSelected,
+  setElderWeight,
 }: Props) {
   const [showCareGradeDropdown, setShowCareGradeDropdown] = useState(false);
   const [selectedGender, setSelectedGender] = useState<string | null>(null);
-  const [careGrade, setCareGrade] = useState<number>(0);
+  const [careGrade, setCareGrade] = useState<string>("");
+  const [doNotKnow, setDoNotKnow] = useState<boolean>(false);
+  const [loadStr, setLoadStr] = useState<string>("");
 
   const maxSteps = 2;
   const handleGauge1 = () => {
@@ -55,6 +63,12 @@ export default function AddElder({
       }
     } else {
       setSelected(1);
+    }
+  };
+  const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (/^\d*$/.test(value)) {
+      setElderWeight(Number(value));
     }
   };
 
@@ -88,20 +102,37 @@ export default function AddElder({
     }
   };
 
+  const handleAPI = (load: string) => {
+    if (elderAddress) {
+      setElderAddress("");
+    } else {
+      const fetchGet = async () => {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL_KEY}/api/location/address/?search=${load}`
+        );
+        setElderAddress(response.data.road_address);
+      };
+      fetchGet();
+    }
+  };
+
   const handleGenderSelect = (gender: string) => {
     setElderGender(gender);
     setSelectedGender(gender);
   };
 
   const handleCareGradeChange = (grade: string) => {
-    if (grade == "인지자원") {
-      setCareGrade(6);
-      setElderGrade(6);
-      setShowCareGradeDropdown(false);
+    setCareGrade(`${grade}등급`);
+    setElderGrade(`${grade}등급`);
+    setShowCareGradeDropdown(false);
+  };
+
+  const handleDontKnow = () => {
+    if (!doNotKnow) {
+      setElderWeight(0);
+      setDoNotKnow(true);
     } else {
-      setCareGrade(Number(grade));
-      setElderGrade(Number(grade));
-      setShowCareGradeDropdown(false);
+      setDoNotKnow(false);
     }
   };
 
@@ -230,17 +261,49 @@ export default function AddElder({
               남성
             </button>
           </div>
+          <p className="text-[30px] text-[#000000] font-[600] mt-[45px]">
+            어르신 몸무게를 입력해주세요.
+            <span className="w-[12px] text-[#FF602B] text-[30px] font-[600]">
+              *
+            </span>
+          </p>
+          <div className="flex">
+            <input
+              placeholder="00 (kg)"
+              value={elderWeight !== null ? elderWeight.toString() : ""}
+              onChange={(e) => handleWeightChange(e)}
+              className="placeholder:text-[#909090] placeholder:text-[22px] text-[22px] font-[600] placeholder:font-[600] mt-[25px] w-[516px] p-[16px] rounded-[10px] bg-[#FFFFFF] border border-[#909090]"
+            />
+            <div
+              className="flex items-center mt-[20px] ml-[20px]"
+              onClick={() => handleDontKnow()}
+            >
+              {doNotKnow ? (
+                <Image src={Checked} alt="체크" width={35} height={35} />
+              ) : (
+                <Image src={NoChecked} alt="체크" width={35} height={35} />
+              )}
+
+              <p
+                className={`text-[22px] font-[600] ml-[8px] ${
+                  doNotKnow ? "text-[#58C185]" : "text-[#666666]"
+                }`}
+              >
+                모름
+              </p>
+            </div>
+          </div>
           <div className="flex w-[726px] justify-between relative">
             <button
               onClick={() => setSelectedOne((prev) => prev - 1)}
-              className="absolute bottom-[-250px] w-[254px] h-[58px] flex items-center justify-center bg-[#FFFFFF] rounded-[10px] border border-[1px] border-[#000000] text-[22px] text-[#191A1C] font-[600]"
+              className="absolute bottom-[-150px] w-[254px] h-[58px] flex items-center justify-center bg-[#FFFFFF] rounded-[10px] border border-[1px] border-[#000000] text-[22px] text-[#191A1C] font-[600]"
             >
               이전
             </button>
 
             <button
               onClick={handleGauge2}
-              className={`absolute bottom-[-250px] right-[0px] w-[254px] h-[58px] flex items-center justify-center ${
+              className={`absolute bottom-[-150px] right-[0px] w-[254px] h-[58px] flex items-center justify-center ${
                 elderBirth.length == 10 && elderGender
                   ? "bg-[#D7F3D1] text-[#000000]"
                   : "bg-[#CFCFCF]  text-[#FFFFFF]"
@@ -263,9 +326,7 @@ export default function AddElder({
               onClick={() => setShowCareGradeDropdown(!showCareGradeDropdown)}
               className="flex items-center justify-center w-[174px] h-[47px] border border-[#909090] rounded-[10px] text-[22px] font-[600] gap-[30px] text-[#000000]"
             >
-              <span>
-                {careGrade == 0 ? "요양등급" : `${Number(careGrade)}등급`}
-              </span>
+              <span>{careGrade == "" ? "요양등급" : `${careGrade}`}</span>
               <Image
                 src="/assets/icons/icon_down_arrow.svg"
                 alt="화살표"
@@ -297,8 +358,8 @@ export default function AddElder({
           <div className="absolute w-[516px] h-[58px]">
             <input
               placeholder="도로명, 지번 혹은 건물명으로 검색"
-              value={elderAddress}
-              onChange={(e) => setElderAddress(e.target.value)}
+              value={elderAddress || loadStr}
+              onChange={(e) => setLoadStr(e.target.value)}
               className="placeholder:text-[#909090] placeholder:text-[22px] text-[22px] font-[600] placeholder:font-[600] mt-[25px] w-[516px] p-[16px] rounded-[10px] bg-[#FFFFFF] border border-[#909090]"
             />
 
@@ -309,6 +370,7 @@ export default function AddElder({
               viewBox="0 0 26 26"
               fill="none"
               className="relative bottom-[45px] left-[460px]"
+              onClick={() => handleAPI(loadStr)}
             >
               <path
                 d="M21.2333 22.75L14.4083 15.925C13.8667 16.3583 13.2438 16.7014 12.5396 16.9542C11.8354 17.2069 11.0861 17.3333 10.2917 17.3333C8.32361 17.3333 6.65817 16.6516 5.29533 15.288C3.9325 13.9244 3.25072 12.259 3.25 10.2917C3.24928 8.32433 3.93106 6.65889 5.29533 5.29533C6.65961 3.93178 8.32506 3.25 10.2917 3.25C12.2583 3.25 13.9241 3.93178 15.2891 5.29533C16.6541 6.65889 17.3355 8.32433 17.3333 10.2917C17.3333 11.0861 17.2069 11.8354 16.9542 12.5396C16.7014 13.2438 16.3583 13.8667 15.925 14.4083L22.75 21.2333L21.2333 22.75ZM10.2917 15.1667C11.6458 15.1667 12.7971 14.6929 13.7453 13.7453C14.6936 12.7978 15.1674 11.6466 15.1667 10.2917C15.1659 8.93678 14.6922 7.78592 13.7453 6.83908C12.7985 5.89225 11.6473 5.41811 10.2917 5.41667C8.93606 5.41522 7.7852 5.88936 6.83908 6.83908C5.89297 7.78881 5.41883 8.93967 5.41667 10.2917C5.4145 11.6437 5.88864 12.7949 6.83908 13.7453C7.78953 14.6958 8.94039 15.1696 10.2917 15.1667Z"
@@ -347,23 +409,6 @@ export default function AddElder({
       ) : (
         <></>
       )}
-      {/* <div className="flex w-[726px] justify-between relative">
-        {selectedOne !== 0 && (
-          <button
-            onClick={() => setSelectedOne((prev) => prev - 1)}
-            className="absolute left-[30px] w-[254px] h-[58px] flex items-center justify-center bg-[#FFFFFF] rounded-[10px] border border-[1px] border-[#000000] text-[22px] text-[#191A1C] font-[600]"
-          >
-            이전
-          </button>
-        )}
-
-        <button
-          onClick={handleGauge}
-          className="absolute right-[0px] w-[254px] h-[58px] flex items-center justify-center bg-[#CFCFCF] rounded-[10px] text-[22px] text-[#FFFFFF] font-[600]"
-        >
-          다음
-        </button>
-      </div> */}
     </div>
   );
 }

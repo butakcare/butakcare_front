@@ -4,10 +4,9 @@ import { useState } from "react";
 import Image from "next/image";
 
 interface Filter {
-  schedules: string[];
-  time: string;
-  grade: number;
-  address: string;
+  days: string[];
+  grade: string;
+  gender: string;
 }
 
 interface FilterProps {
@@ -18,29 +17,21 @@ interface FilterProps {
 export default function Filter({ filter, setFilter }: FilterProps) {
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [showDaysDropdown, setShowDaysDropdown] = useState(false);
-  const [showWorkingHoursDropdown, setShowWorkingHoursDropdown] =
-    useState(false);
+  const [showGenderDropdown, setShowGenderDropdown] = useState(false);
   const [showCareGradeDropdown, setShowCareGradeDropdown] = useState(false);
-  const [showAddressDropdown, setShowAddressDropdown] = useState(false);
-
-  const [workingHours, setWorkingHours] = useState<string>("");
-  const [careGrade, setCareGrade] = useState<number>(0);
-  const [address, setAddress] = useState<string>("");
+  const [gender, setGender] = useState<string>("");
+  const [careGrade, setCareGrade] = useState<string>("");
 
   const days = ["월", "화", "수", "목", "금", "토", "일"];
-  const workingHoursOptions = [
-    "09:00 ~ 12:00",
-    "12:00 ~ 18:00",
-    "18:00 ~ 21:00",
-  ];
-  const careGrades = [1, 2, 3];
+  const careGrades = ["1등급", "2등급", "3등급", "4등급", "5등급"];
+  const genderOptions = ["남", "여"];
 
   const toggleDay = (day: string) => {
     setFilter({
       ...filter,
-      schedules: filter.schedules.includes(day)
-        ? filter.schedules.filter((d) => d !== day)
-        : [...filter.schedules, day],
+      days: filter.days.includes(day)
+        ? filter.days.filter((d) => d !== day)
+        : [...filter.days, day],
     });
     setSelectedDays((prevSelectedDays) => {
       if (prevSelectedDays.includes(day)) {
@@ -50,22 +41,16 @@ export default function Filter({ filter, setFilter }: FilterProps) {
     });
   };
 
-  const handleWorkingHoursChange = (option: string) => {
-    setFilter({ ...filter, time: option });
-    setWorkingHours(option);
-    setShowWorkingHoursDropdown(false);
+  const handleGenderChange = (gender: string) => {
+    setFilter({ ...filter, gender });
+    setGender(gender);
+    setShowGenderDropdown(false);
   };
 
-  const handleCareGradeChange = (grade: number) => {
+  const handleCareGradeChange = (grade: string) => {
     setFilter({ ...filter, grade });
     setCareGrade(grade);
     setShowCareGradeDropdown(false);
-  };
-
-  const handleAddressChange = (address: string) => {
-    setFilter({ ...filter, address });
-    setAddress(address);
-    setShowAddressDropdown(false);
   };
 
   return (
@@ -122,13 +107,13 @@ export default function Filter({ filter, setFilter }: FilterProps) {
         )}
       </div>
 
-      {/* 근무 시간 */}
+      {/* 성별 필터 */}
       <div className="relative">
         <button
-          onClick={() => setShowWorkingHoursDropdown(!showWorkingHoursDropdown)}
+          onClick={() => setShowGenderDropdown(!showGenderDropdown)}
           className="flex items-center justify-center w-[141px] h-[47px] border border-[#909090] rounded-[10px] text-[22px] font-[600] text-[#C6C6C6]"
         >
-          <span className="line-clamp-1">{workingHours || "근무 시간"}</span>
+          <span className="line-clamp-1">{gender || "성별"}</span>
           <Image
             src="/assets/icons/icon_down_arrow.svg"
             alt="화살표"
@@ -137,13 +122,13 @@ export default function Filter({ filter, setFilter }: FilterProps) {
           />
         </button>
 
-        {showWorkingHoursDropdown && (
+        {showGenderDropdown && (
           <div className="absolute left-0 mt-2 w-[141px] bg-white border border-gray-300 shadow-md rounded-[10px] p-2 z-10">
-            {workingHoursOptions.map((option) => (
+            {genderOptions.map((option) => (
               <div
                 key={option}
                 className="p-1 hover:bg-gray-100 cursor-pointer text-[#C6C6C6]"
-                onClick={() => handleWorkingHoursChange(option)}
+                onClick={() => handleGenderChange(option)}
               >
                 {option}
               </div>
@@ -158,7 +143,7 @@ export default function Filter({ filter, setFilter }: FilterProps) {
           onClick={() => setShowCareGradeDropdown(!showCareGradeDropdown)}
           className="flex items-center justify-center w-[174px] h-[47px] border border-[#909090] rounded-[10px] text-[22px] font-[600] text-[#C6C6C6]"
         >
-          <span>{careGrade == 0 ? "장기요양등급" : `${careGrade}등급`}</span>
+          <span>{careGrade == "" ? "장기요양등급" : `${careGrade}`}</span>
           <Image
             src="/assets/icons/icon_down_arrow.svg"
             alt="화살표"
@@ -174,36 +159,6 @@ export default function Filter({ filter, setFilter }: FilterProps) {
                 key={grade}
                 className="p-1 hover:bg-gray-100 cursor-pointer text-[#C6C6C6]"
                 onClick={() => handleCareGradeChange(grade)}
-              >
-                {grade}등급
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-
-      {/* 주소 검색 */}
-      <div className="relative">
-        <button
-          onClick={() => setShowAddressDropdown(!showAddressDropdown)}
-          className="flex items-center justify-between w-[424px] h-[47px] px-[15px] border border-[#909090] rounded-[10px] text-[22px] font-[600] text-[#C6C6C6]"
-        >
-          <span>주소</span>
-          <Image
-            src="/assets/icons/icon_down_arrow.svg"
-            alt="화살표"
-            width={24}
-            height={24}
-          />
-        </button>
-
-        {showAddressDropdown && (
-          <div className="absolute left-0 mt-2 w-[424px] bg-white border border-gray-300 shadow-md rounded-md p-2 z-10">
-            {careGrades.map((grade) => (
-              <div
-                key={grade}
-                className="p-1 hover:bg-gray-100 cursor-pointer text-[#C6C6C6]"
-                onClick={() => handleAddressChange(address)}
               >
                 {grade}
               </div>

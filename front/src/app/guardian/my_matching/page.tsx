@@ -37,7 +37,7 @@ export default function Home() {
         <NewMatching />
       ) : selectedFilter === "조율 중인 매칭" ? (
         <Matching />
-      ) : selectedFilter === "수락한 요청" ? (
+      ) : selectedFilter === "수락한 매칭" ? (
         <Accept />
       ) : (
         <Refusal />

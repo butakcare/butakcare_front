@@ -1,22 +1,70 @@
+"use client";
+
 import Image from "next/image";
-import React, { SetStateAction } from "react";
+import React, { SetStateAction, useState, useEffect } from "react";
 
 interface ElderModalProps {
   data: {
     id: number;
-    profile: string;
     name: string;
-    grade: number;
     gender: string;
-    schedules: string[];
-    times: string[];
-    location: string;
-    matching: string;
-  } | null;
+    birth: string;
+    address: string;
+    address_detail: string;
+    care_details: CareDetails;
+    care_grade: string;
+    center: string | null;
+    days: string[];
+    detail: string;
+    start_hour: number;
+    start_minute: number;
+    end_hour: number;
+    end_minute: number;
+    wage: number | null;
+    weight: number | null;
+    matching_status: string;
+    photo: string | null;
+  };
   onClose: React.Dispatch<SetStateAction<boolean>>;
+  request: Requests;
 }
 
-export default function ElderModal({ data, onClose }: ElderModalProps) {
+interface CareDetails {
+  [key: string]: string[];
+}
+
+interface Requests {
+  days: string;
+  end_hour: string;
+  end_minute: string;
+  start_hour: string;
+  start_minute: string;
+  wage: string;
+}
+
+export default function ElderModal({
+  data,
+  onClose,
+  request,
+}: ElderModalProps) {
+  const [salaryMonth, setSalaryMonth] = useState<number>(0);
+
+  useEffect(() => {
+    const calculateMonthlySalary = () => {
+      const start =
+        Number(request.start_hour) + Number(request.start_minute) / 60;
+      const end = Number(request.end_hour) + Number(request.end_minute) / 60;
+      const workHours = end - start;
+      const daysArray = request.days.split(",");
+      const weeklySalary =
+        (Number(request.wage) ?? 0) * workHours * (daysArray.length ?? 0);
+      const monthlySalary = weeklySalary * 4; // 4주 기준
+      setSalaryMonth(monthlySalary);
+    };
+
+    calculateMonthlySalary();
+  }, [request]);
+
   if (!data) return null;
 
   const handleBackgroundClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -25,10 +73,20 @@ export default function ElderModal({ data, onClose }: ElderModalProps) {
     }
   };
 
+  const getAge = (birthDate: string): number => {
+    const birthYear = Number(birthDate.split("-")[0]); // 출생 연도 가져오기
+    const currentYear = new Date().getFullYear(); // 현재 연도 가져오기
+    return currentYear - birthYear;
+  };
+
+  const formatCurrency = (value: number) => {
+    return value.toLocaleString("ko-kr");
+  };
+
   return (
     <div
       onClick={handleBackgroundClick}
-      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-[5]"
     >
       <div
         className="flex flex-col bg-[#FCFCFB] rounded-[20px] w-[742px] max-h-[95vh] overflow-y-auto pl-[30px] pt-[30px]"
@@ -66,14 +124,6 @@ export default function ElderModal({ data, onClose }: ElderModalProps) {
             <div className="flex flex-col w-[355px] h-auto pt-[18px] bg-[#F0F0F0] items-start pl-[23px] gap-[14px] rounded-[14px] pb-[19px] mt-[12px]">
               <div className="flex gap-[16px] h-[26px]">
                 <p className="w-[75px] text-[22px] whitespace-nowrap font-[500] text-[#9A9A9A]">
-                  요양등급
-                </p>
-                <p className="text-[22px] whitespace-nowrap font-[500] text-[#000000]">
-                  {data.grade}등급
-                </p>
-              </div>
-              <div className="flex gap-[16px] h-[26px]">
-                <p className="w-[75px] text-[22px] whitespace-nowrap font-[500] text-[#9A9A9A]">
                   성별
                 </p>
                 <p className="text-[22px] whitespace-nowrap font-[500] text-[#000000]">
@@ -85,7 +135,7 @@ export default function ElderModal({ data, onClose }: ElderModalProps) {
                   나이
                 </p>
                 <p className="text-[22px] whitespace-nowrap font-[500] text-[#000000]">
-                  85세
+                  {getAge(data.birth)}세
                 </p>
               </div>
               <div className="flex gap-[16px] h-[26px]">
@@ -93,31 +143,31 @@ export default function ElderModal({ data, onClose }: ElderModalProps) {
                   몸무게
                 </p>
                 <p className="text-[22px] whitespace-nowrap font-[500] text-[#000000]">
-                  58kg
+                  {data.weight}kg
                 </p>
               </div>
               <div className="flex gap-[16px] h-[26px]">
                 <p className="w-[75px] text-[22px] whitespace-nowrap font-[500] text-[#9A9A9A]">
-                  질병
+                  요양등급
                 </p>
                 <p className="text-[22px] whitespace-nowrap font-[500] text-[#000000]">
-                  난청, 관절
+                  {data.care_grade}
                 </p>
               </div>
               <div className="flex gap-[16px] h-[26px]">
                 <p className="w-[75px] text-[22px] whitespace-nowrap font-[500] text-[#9A9A9A]">
-                  인지상태
+                  요일
                 </p>
-                <p className="text-[22px] whitespace-nowrap font-[500] text-[#000000]">
-                  정상(치매 증상 없음)
+                <p className="text-[22px] whitespace-nowrap font-[500] text-[#191A1C]">
+                  {data.days.join(", ")}
                 </p>
               </div>
-              <div className="flex gap-[16px] h-[26px]">
+              <div className="flex gap-[16px]">
                 <p className="w-[75px] text-[22px] whitespace-nowrap font-[500] text-[#9A9A9A]">
-                  동거여부
+                  시간
                 </p>
-                <p className="text-[22px] whitespace-nowrap font-[500] text-[#000000]">
-                  독거 중
+                <p className="whitespace-nowrap text-[22px] text-[#191A1C] font-[500]">
+                  {`${data.start_hour}:${data.start_minute}~${data.end_hour}:${data.end_minute}`}
                 </p>
               </div>
             </div>
@@ -134,7 +184,7 @@ export default function ElderModal({ data, onClose }: ElderModalProps) {
                 height={30}
               />
               <p className="text-[22px] font-[500] text-[#000000] line-clamp-2 py-[14px]">
-                {data.location}
+                {data.address}
               </p>
             </div>
             <strong className="text-[26px] font-[700] text-[#000000] leading-[31px] mt-[28px]">
@@ -146,29 +196,29 @@ export default function ElderModal({ data, onClose }: ElderModalProps) {
                   기간
                 </p>
                 <p className="text-[22px] whitespace-nowrap font-[500] text-[#000000]">
-                  {data.schedules.join(", ")}
+                  {request.days}
                 </p>
               </div>
               <div className="flex gap-[16px] h-[26px]">
                 <p className="w-[75px] text-[22px] whitespace-nowrap font-[500] text-[#9A9A9A]">
                   시간
                 </p>
-                {data.times.map((time, idx) => (
-                  <p
-                    key={idx}
-                    className="text-[22px] whitespace-nowrap font-[500] text-[#000000]"
-                  >
-                    {time}
-                  </p>
-                ))}
+                <p className="text-[22px] whitespace-nowrap font-[500] text-[#000000]">
+                  {`${request?.start_hour}:${request?.start_minute} ~`}{" "}
+                  {`${request?.end_hour}:${request?.end_minute}`}
+                </p>
               </div>
-              <div className="flex gap-[16px] h-[26px]">
+              <div className="flex gap-[16px]">
                 <p className="w-[75px] text-[22px] whitespace-nowrap font-[500] text-[#9A9A9A]">
                   급여
                 </p>
-                <p className="text-[22px] whitespace-nowrap font-[500] text-[#000000]">
-                  시급 15,000원
-                </p>
+                <div className="flex flex-col">
+                  <p className="text-[22px] whitespace-nowrap font-[500] text-[#191A1C]">
+                    {`시급 ${formatCurrency(Number(request.wage))}원`}
+                    <br />
+                    {`월급 ${formatCurrency(Math.floor(salaryMonth))}원`}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -177,30 +227,30 @@ export default function ElderModal({ data, onClose }: ElderModalProps) {
           케어 필요 항목
         </strong>
         <div className="flex flex-col w-[683px] h-auto bg-[#F0F0F0] pl-[23px] pt-[14px] gap-[10px] rounded-[14px] mt-4 pb-[26px]">
-          <p className="text-[22px] font-[700] text-[#676767]">이동보조</p>
+          {Object.entries(data.care_details).map(([category, details]) => (
+            <div key={category}>
+              <p className="text-[22px] font-[700] text-[#676767]">
+                {category}
+              </p>
+              <div className="flex flex-wrap gap-[10px]">
+                {(details as unknown as string[]).map((detail, idx) => (
+                  <div
+                    key={idx}
+                    className="px-[10px] py-[5px] h-[34px] flex justify-center items-center bg-[#D7F3D1] rounded-[8px]"
+                  >
+                    <p className="text-[20px] font-[500] text-[#58C185]">
+                      {detail}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+          <p className="text-[22px] font-[700] text-[#676767]">건강상태</p>
           <div className="flex flex-wrap gap-[10px]">
-            <div className="px-[10px] py-[5px] h-[34px] flex justify-center items-center bg-[#B3B3B3] rounded-[8px] bg-[#D7F3D1]">
-              <p className="text-[20px] font-[500] text-[#58C185]">
-                휠체어 이동보조
-              </p>
-            </div>
-          </div>
-          <p className="text-[22px] font-[700] text-[#676767]">생활보조</p>
-          <div className="flex flex-wrap gap-[6px]">
-            <div className="px-[10px] py-[5px] h-[34px] flex justify-center items-center bg-[#B3B3B3] rounded-[8px] bg-[#D7F3D1]">
-              <p className="text-[20px] font-[500] text-[#58C185]">청소</p>
-            </div>
-            <div className="px-[10px] py-[5px] h-[34px] flex justify-center items-center bg-[#B3B3B3] rounded-[8px] bg-[#D7F3D1]">
-              <p className="text-[20px] font-[500] text-[#58C185]">빨래 도움</p>
-            </div>
-            <div className="px-[10px] py-[5px] h-[34px] flex justify-center items-center bg-[#B3B3B3] rounded-[8px] bg-[#D7F3D1]">
-              <p className="text-[20px] font-[500] text-[#58C185]">
-                말벗 등 정서지원
-              </p>
-            </div>
-            <div className="px-[10px] py-[5px] h-[34px] flex justify-center items-center bg-[#B3B3B3] rounded-[8px] bg-[#D7F3D1]">
-              <p className="text-[20px] font-[500] text-[#58C185]">
-                산책 등 간단한 운동
+            <div className="px-[4px] py-[5px] h-[34px] flex justify-center items-center rounded-[8px]">
+              <p className="text-[20px] font-[500] text-[#191A1C]">
+                {data.detail}
               </p>
             </div>
           </div>

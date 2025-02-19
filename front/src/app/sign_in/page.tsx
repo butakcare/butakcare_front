@@ -1,4 +1,5 @@
 "use client";
+import { Suspense } from "react";
 import Header from "@/components/common/TitleHeader";
 import InputField from "@/components/sign_up/InputField";
 import { LongBtn, XBLBtn } from "@/components/common/Button";
@@ -49,51 +50,53 @@ export default function SignUpPage() {
     router.push("/sign_up");
   };
   return (
-    <div className="w-full h-full">
-      <div className="tablet:hidden w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
-        <Header name="" />
-        <div className="flex flex-row w-[354px]">
-          <div className="text-[26px] font-bold leading-[40px]">
-            부탁케어 로그인
+    <Suspense fallback={<div>Loading..</div>}>
+      <div className="w-full h-full">
+        <div className="tablet:hidden w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
+          <Header name="" />
+          <div className="flex flex-row w-[354px]">
+            <div className="text-[26px] font-bold leading-[40px]">
+              부탁케어 로그인
+            </div>
+          </div>
+          <form className="flex flex-col justify-center items-center align-center pt-[124px]">
+            <InputField
+              label="아이디"
+              value={username}
+              onChange={setUsername}
+              placeholder="아이디를 입력해주세요."
+              on={true}
+            />
+            <div className="h-[25px]" />
+            <InputField
+              label="비밀번호"
+              value={password}
+              onChange={setPassword}
+              placeholder="비밀번호를 입력해주세요."
+              on={true}
+            />
+            <div className="h-[25px]" />
+            <LongBtn
+              text={loading ? "로그인 중..." : "로그인"}
+              disabled={loading || !isFormValid}
+              onClick={handleSubmit}
+              type="button"
+              width={354}
+            />
+          </form>
+          <div className="h-[197px]" />
+          <div className="text-stroke font-semibold text-[18px] text-left w-[354px] pb-[15px]">
+            아직 부탁케어 계정이 없으신가요?
+          </div>
+          <div className="flex justify-center ">
+            <XBLBtn text="회원가입" onClick={handleNext} width={354} />
           </div>
         </div>
-        <form className="flex flex-col justify-center items-center align-center pt-[124px]">
-          <InputField
-            label="아이디"
-            value={username}
-            onChange={setUsername}
-            placeholder="아이디를 입력해주세요."
-            on={true}
-          />
-          <div className="h-[25px]" />
-          <InputField
-            label="비밀번호"
-            value={password}
-            onChange={setPassword}
-            placeholder="비밀번호를 입력해주세요."
-            on={true}
-          />
-          <div className="h-[25px]" />
-          <LongBtn
-            text={loading ? "로그인 중..." : "로그인"}
-            disabled={loading || !isFormValid}
-            onClick={handleSubmit}
-            type="button"
-            width={354}
-          />
-        </form>
-        <div className="h-[197px]" />
-        <div className="text-stroke font-semibold text-[18px] text-left w-[354px] pb-[15px]">
-          아직 부탁케어 계정이 없으신가요?
-        </div>
-        <div className="flex justify-center ">
-          <XBLBtn text="회원가입" onClick={handleNext} width={354} />
+        <div className="w-full h-full flex max-tablet:hidden">
+          <Navigation selected={selected} setSelected={setSelected} />
+          <Login setType={setType} />
         </div>
       </div>
-      <div className="w-full h-full flex max-tablet:hidden">
-        <Navigation selected={selected} setSelected={setSelected} />
-        <Login setType={setType} />
-      </div>
-    </div>
+    </Suspense>
   );
 }
