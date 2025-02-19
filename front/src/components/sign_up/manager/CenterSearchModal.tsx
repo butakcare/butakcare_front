@@ -27,10 +27,7 @@ export default function CenterSearchModal({
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/profiles/care-centers`,
-        {
-          params: { search: term },
-        }
+        `${process.env.NEXT_PUBLIC_API_URL}/api/profiles/care-centers/?serach=${term}`
       );
       setFilteredCenters(response.data?.centers || []);
     } catch (error) {

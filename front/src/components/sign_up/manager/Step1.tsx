@@ -34,7 +34,7 @@ export default function ManagerStep1({
     onCenternameChange(centerName);
   };
   return (
-    <div className="tablet:hidden w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
+    <div className="w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
       <div>
         <TitleText
           text1="근무하는 센터를 찾은 후"

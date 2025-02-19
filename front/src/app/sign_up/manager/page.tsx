@@ -4,9 +4,11 @@ import Header from "@/components/common/TitleHeader";
 import ManagerStep1 from "@/components/sign_up/manager/Step1";
 import ManagerStep10 from "@/components/sign_up/manager/Step10";
 import ManagerStep8 from "@/components/sign_up/manager/Step8";
+import Navi from "@/components/sign_up/manager/tablet/Navi";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+
 type FormFields =
   | "id"
   | "username"
@@ -16,6 +18,8 @@ type FormFields =
   | "introduction";
 
 export default function ManagerSignup() {
+  const [selected, setSelected] = useState<number>(1);
+
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
@@ -116,8 +120,36 @@ export default function ManagerSignup() {
   };
 
   return (
-    <div>
-      <div className="w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
+    <div className="w-full h-full">
+      {/*테블릿릿 */}
+      <div className="w-full h-full flex max-tablet:hidden">
+        <Navi selected={selected} setSelected={setSelected} />
+        {showCurrentStep()}
+        <div className="fixed bottom-0 w-full flex justify-center bg-white py-4">
+          {step === 1 ? (
+            <LongBtn
+              text="다음"
+              disabled={handleFormbtn() || loading}
+              onClick={handleNext}
+              type="button"
+              width={354}
+            />
+          ) : (
+            <ShortsBtn
+              next={step === 3 && loading ? "저장 중.." : "다음"}
+              back="이전"
+              disabled={handleFormbtn() || loading}
+              onClickNext={step === 3 ? handleSubmit : handleNext}
+              onClickBack={handleBack}
+              width={175}
+            />
+          )}
+        </div>
+      </div>
+
+      {/*모바일 */}
+
+      <div className=" tablet:hidden w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
         <div className=" tablet:hidden flex flex-col items-center">
           <Header name="센터 관리자 회원가입" />
           <div className="w-[354px] bg-gray-200 h-1">
