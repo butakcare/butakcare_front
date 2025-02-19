@@ -1,5 +1,3 @@
-"use client";
-
 import Navigation from "@/components/main/matching/Navigation";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
@@ -93,6 +91,7 @@ export default function Home() {
   const [isProfileModal, setIsProfileModal] = useState<boolean>(false);
   const [selectedId, setSelectedId] = useState<string[]>([]);
   const [isGuardianModal, setIsGuardianModal] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
@@ -126,7 +125,11 @@ export default function Home() {
         setElderData(response.data.elderly);
         setCaregivers(response.data.caregivers);
         setRequests(response.data.request);
-      } catch {}
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchGet();
   }, [days, end_hour, end_minute, id, start_hour, start_minute, wage]);
@@ -223,6 +226,18 @@ export default function Home() {
     };
     fetchPost();
   };
+
+  if (typeof window === "undefined") {
+    return null; // Prevent SSR
+  }
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center">
+        <p className="text-xl">Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full h-full flex relative">

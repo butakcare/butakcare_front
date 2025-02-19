@@ -40,6 +40,35 @@ interface Caregiver {
   description: string;
 }
 
+interface Person {
+  address: string;
+  address_detail: string;
+  available_area: AvailableArea[];
+  birth: string; // YYYY-MM-DD 형식
+  career_content: string | null;
+  career_month: number | null;
+  career_year: number | null;
+  caregiver_qualification: string;
+  days: string[]; // ['금', '일', '목', '수', '월', '토', '화']
+  description: string | null;
+  gender: string; // 남자 혹은 여자
+  has_car: boolean;
+  has_dementia_training: boolean;
+  id: string;
+  max_wage: number;
+  min_wage: number;
+  name: string;
+  nursing_assistant_qualification: string | null;
+  phone: string;
+  photo: string | null;
+  social_worker_qualification: string | null;
+  times: string[]; // ['오전(09:00~12:00)', '저녁(18:00~21:00)', '오후(12:00-18:00)']
+}
+interface AvailableArea {
+  id: number;
+  name: string;
+}
+
 interface CareDetails {
   [key: string]: string[]; // care_details 내의 항목들이 배열이므로 이와 같이 정의
 }
@@ -62,6 +91,33 @@ interface CareRequest {
 
 export default function Chat({ elderId, selectedGuardianId }: Prop) {
   // const [guardianData, setGuardianData] = useState<Caregiver>();
+  const samplePerson: Person = {
+    address: "서울특별시 강남구 삼성로 85길 17",
+    address_detail: "3층",
+    available_area: [
+      { id: 1, name: "강남구" },
+      { id: 2, name: "서초구" },
+    ],
+    birth: "1985-05-12", // YYYY-MM-DD 형식
+    career_content: "5년간 요양보호사 경력",
+    career_month: 60, // 5년 경력
+    career_year: 5,
+    caregiver_qualification: "요양보호사 2급",
+    days: ["월", "화", "수", "목", "금"], // 요일 배열
+    description: "세심한 관리와 배려로 어르신들을 돌보는 것을 좋아합니다.",
+    gender: "여자", // 여성
+    has_car: true,
+    has_dementia_training: true,
+    id: "123456789",
+    max_wage: 15000,
+    min_wage: 12000,
+    name: "홍길동",
+    nursing_assistant_qualification: "간호조무사 2급",
+    phone: "010-1234-5678",
+    photo: null, // 프로필 사진이 없다면 null
+    social_worker_qualification: null, // 사회복지사 자격증이 없다면 null
+    times: ["오전(09:00~12:00)", "오후(12:00~18:00)"], // 근무 가능한 시간대
+  };
   const [message, setMessage] = useState<CareRequest[]>([]);
   const [isAcceptModal, setIsAcceptModal] = useState<boolean>(false);
   const [isRefusalModal, setIsRefusalModal] = useState<boolean>(false);
@@ -320,7 +376,10 @@ export default function Chat({ elderId, selectedGuardianId }: Prop) {
         </div>
       )}
       {isProfileModal && (
-        <GuardianProfile setIsProfileModal={setIsProfileModal} />
+        <GuardianProfile
+          data={samplePerson}
+          setIsProfileModal={setIsProfileModal}
+        />
       )}
       {isTuningModal && <GuardianTuning setIsTuningModal={setIsTuningModal} />}
       {isAcceptModal && <AcceptModal setIsAcceptModal={setIsAcceptModal} />}
