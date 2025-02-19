@@ -42,7 +42,7 @@ export default function Matching() {
         {matching.map((match, index) => (
           <div
             key={index}
-            className="w-full shrink-0 bg-[#F0F0F0] rounded-[14px] mt-[18px] snap-center"
+            className="w-full shrink-0 bg-[#F7F8FA] rounded-[14px] mt-[18px] snap-center"
           >
             <div className="pl-[20px] pt-[17px]">
               {/* 필터 */}

@@ -33,7 +33,7 @@ export default function MainLeft() {
           <br /> 부탁케어에 다 있어요.
         </p>
       </div>
-      <button className="max-tablet:hidden w-[163px] h-[66px] flex items-center justify-center bg-[#A4A4A4] rounded-[10px] text-[32px] font-[700] text-[#FFFFFF] mt-[26px]">
+      <button className="max-tablet:hidden w-[163px] h-[66px] flex items-center justify-center bg-[#58C185] rounded-[10px] text-[32px] font-[700] text-[#FFFFFF] mt-[26px]">
         <Link href="/sign_in/selected">시작하기</Link>
       </button>
       <div className="flex flex-col w-full items-center gap-[10px] mt-[185px] tablet:hidden">
@@ -50,17 +50,7 @@ export default function MainLeft() {
           로그인
         </Link>
       </div>
-      <div className="mt-[154px] flex gap-[20px] items-center max-tablet:hidden">
-        <Image
-          src="/assets/icons/icon_logo.svg"
-          alt="로고"
-          width={85}
-          height={85}
-        />
-        <Link href="/sign_in" className="text-[26px] text-[#6B6B6B] font-[700]">
-          모바일 버전 바로가기
-        </Link>
-      </div>
+      <div className="mt-[154px] flex gap-[20px] items-center max-tablet:hidden"></div>
     </div>
   );
 }

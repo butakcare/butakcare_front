@@ -1,39 +1,159 @@
-import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GuardianProfile from "./GuardianProfile";
 import GuardianTuning from "./GuardianTuning";
 import AcceptModal from "./AcceptModal";
 import RefusaltModal from "./RefusalModal";
 import CoordinationRequestModal from "./CoordinationRequestModal";
+import axios from "axios";
 
 interface Prop {
-  selectedElder: number;
+  elderId: number;
+  selectedGuardianId: number;
 }
 
-export default function Chat({ selectedElder }: Prop) {
+interface Area {
+  id: number;
+  name: string;
+}
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+interface Caregiver {
+  id: string;
+  name: string;
+  photo: string | null;
+  phone: string;
+  has_car: boolean;
+  has_dementia_training: boolean;
+  address: string;
+  address_detail: string;
+  available_area: Area[];
+  times: string[];
+  days: string[];
+  min_wage: number;
+  max_wage: number;
+  caregiver_qualification: string;
+  social_worker_qualification: string;
+  nursing_assistant_qualification: string;
+  career_year: number;
+  career_month: number | null;
+  career_content: string;
+  description: string;
+}
+
+interface Person {
+  address: string;
+  address_detail: string;
+  available_area: AvailableArea[];
+  birth: string; // YYYY-MM-DD 형식
+  career_content: string | null;
+  career_month: number | null;
+  career_year: number | null;
+  caregiver_qualification: string;
+  days: string[]; // ['금', '일', '목', '수', '월', '토', '화']
+  description: string | null;
+  gender: string; // 남자 혹은 여자
+  has_car: boolean;
+  has_dementia_training: boolean;
+  id: string;
+  max_wage: number;
+  min_wage: number;
+  name: string;
+  nursing_assistant_qualification: string | null;
+  phone: string;
+  photo: string | null;
+  social_worker_qualification: string | null;
+  times: string[]; // ['오전(09:00~12:00)', '저녁(18:00~21:00)', '오후(12:00-18:00)']
+}
+interface AvailableArea {
+  id: number;
+  name: string;
+}
+
+interface CareDetails {
+  [key: string]: string[]; // care_details 내의 항목들이 배열이므로 이와 같이 정의
+}
+
+interface CareRequest {
+  id: number;
+  care_details: CareDetails;
+  days: string[];
+  sender: string;
+  status: string; // 상태는 제한된 값만 가능하므로 문자열 리터럴 타입으로 설정
+  start_hour: number;
+  start_minute: number;
+  end_hour: number;
+  end_minute: number;
+  detail: string;
+  wage: number | null;
+  created_at: string; // 날짜는 ISO 문자열로 표현
+  matching: number;
+}
+
+export default function Chat({ elderId, selectedGuardianId }: Prop) {
+  // const [guardianData, setGuardianData] = useState<Caregiver>();
+  const samplePerson: Person = {
+    address: "서울특별시 강남구 삼성로 85길 17",
+    address_detail: "3층",
+    available_area: [
+      { id: 1, name: "강남구" },
+      { id: 2, name: "서초구" },
+    ],
+    birth: "1985-05-12", // YYYY-MM-DD 형식
+    career_content: "5년간 요양보호사 경력",
+    career_month: 60, // 5년 경력
+    career_year: 5,
+    caregiver_qualification: "요양보호사 2급",
+    days: ["월", "화", "수", "목", "금"], // 요일 배열
+    description: "세심한 관리와 배려로 어르신들을 돌보는 것을 좋아합니다.",
+    gender: "여자", // 여성
+    has_car: true,
+    has_dementia_training: true,
+    id: "123456789",
+    max_wage: 15000,
+    min_wage: 12000,
+    name: "홍길동",
+    nursing_assistant_qualification: "간호조무사 2급",
+    phone: "010-1234-5678",
+    photo: null, // 프로필 사진이 없다면 null
+    social_worker_qualification: null, // 사회복지사 자격증이 없다면 null
+    times: ["오전(09:00~12:00)", "오후(12:00~18:00)"], // 근무 가능한 시간대
+  };
+  const [message, setMessage] = useState<CareRequest[]>([]);
   const [isAcceptModal, setIsAcceptModal] = useState<boolean>(false);
   const [isRefusalModal, setIsRefusalModal] = useState<boolean>(false);
   const [isProfileModal, setIsProfileModal] = useState<boolean>(false);
   const [isTuningModal, setIsTuningModal] = useState<boolean>(false);
   const [isCoordination, setIsCoordination] = useState<boolean>(false);
-  const data = {
-    name: "김요양",
-    gender: "여",
-    schedules: ["월", "화", "수", "목", "금"],
-    time: "09:00 ~ 12:00",
-    location: "종로구 낙원동",
-    tuning: {
-      filters: ["3등급", "이동보조", "일상보조"],
-      schedules: ["월", "수", "금"],
-      time: "12:00 ~ 18:00",
-      location: "서울특별시 종로구",
-      salary: "시급 16,000원",
-    },
-  };
+
+  useEffect(() => {
+    const fetchGet = async () => {
+      if (selectedGuardianId != 0) {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL_KEY}/api/matching/${selectedGuardianId}/`
+        );
+
+        console.log(response.data);
+        setMessage(response.data);
+        // setGuardianData(response.data);
+      }
+    };
+    fetchGet();
+  }, [selectedGuardianId]);
+
+  function formatDateToKorean(dateString: string): string {
+    const date = new Date(dateString);
+    return date
+      .toLocaleDateString("ko-KR", {
+        year: "numeric",
+        month: "long", // 'long'을 사용하면 월 이름이 제대로 나오게 됩니다.
+        day: "numeric",
+      })
+      .replace(/ /g, ""); // 필요시 공백 제거
+  }
 
   return (
     <div className="w-full h-full">
-      {selectedElder == 0 ? (
+      {elderId == 0 ? (
         <div className="flex flex-col w-full h-full items-center justify-center">
           <p className="text-[24px] font-[600] text-[#000000] text-center">
             요청 보낸 어르신 목록에서
@@ -78,71 +198,65 @@ export default function Chat({ selectedElder }: Prop) {
         </div>
       ) : (
         <div className="w-full h-full">
-          <div className="flex w-full items-center justify-center gap-[80px] h-[151px] border-b-[1px] border-[#909090]">
+          <div className="flex w-full items-center justify-between px-[30px] gap-[80px] h-[151px] border-b-[1px] bg-[#F7F8FA] border-[#909090]">
             <div className="flex ml-[29px] gap-[17px]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="78"
-                height="78"
-                viewBox="0 0 78 78"
+                width="84"
+                height="84"
+                viewBox="0 0 84 84"
                 fill="none"
               >
-                <circle cx="39" cy="39" r="39" fill="#D9D9D9" />
+                <circle
+                  cx="42"
+                  cy="42"
+                  r="40.5"
+                  fill="white"
+                  stroke="white"
+                  strokeWidth="3"
+                />
+                <mask
+                  id="mask0_803_10858"
+                  maskUnits="userSpaceOnUse"
+                  x="3"
+                  y="3"
+                  width="78"
+                  height="78"
+                >
+                  <circle cx="42" cy="42" r="39" fill="#DFDDDB" />
+                </mask>
+                <g mask="url(#mask0_803_10858)">
+                  <path
+                    d="M27.2766 32.3633C17.9237 32.3633 10.3418 39.9452 10.3418 49.298C10.3418 55.954 14.1817 61.7131 19.767 64.4809C14.1817 67.2488 10.3418 73.0079 10.3418 79.6638C10.3418 89.0166 17.9237 96.5986 27.2766 96.5986C33.9325 96.5986 39.6916 92.7587 42.4594 87.1734C45.2273 92.7587 50.9864 96.5986 57.6423 96.5986C66.9951 96.5986 74.5771 89.0166 74.5771 79.6638C74.5771 73.0079 70.7372 67.2488 65.1519 64.4809C70.7372 61.7131 74.5771 55.954 74.5771 49.298C74.5771 39.9452 66.9951 32.3633 57.6423 32.3633C50.9864 32.3633 45.2273 36.2032 42.4594 41.7885C39.6916 36.2032 33.9325 32.3633 27.2766 32.3633Z"
+                    fill="#191A1C"
+                  />
+                  <path
+                    d="M32.3649 43.8329C32.3649 45.6067 30.927 47.0446 29.1532 47.0446C27.3794 47.0446 25.9414 45.6067 25.9414 43.8329C25.9414 42.059 27.3794 40.6211 29.1532 40.6211C30.927 40.6211 32.3649 42.059 32.3649 43.8329Z"
+                    fill="white"
+                  />
+                  <path
+                    d="M58.9782 43.8329C58.9782 45.6067 57.5403 47.0446 55.7665 47.0446C53.9926 47.0446 52.5547 45.6067 52.5547 43.8329C52.5547 42.059 53.9926 40.6211 55.7665 40.6211C57.5403 40.6211 58.9782 42.059 58.9782 43.8329Z"
+                    fill="white"
+                  />
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M39.708 47.0113C38.7901 46.6441 37.8711 45.9552 37.8711 44.75H38.7887C38.7887 45.3801 39.2462 45.8382 40.0488 46.1593C40.8376 46.4748 41.8073 46.5853 42.4593 46.5853C43.1114 46.5853 44.0811 46.4748 44.8698 46.1593C45.6725 45.8382 46.1299 45.3801 46.1299 44.75H47.0476C47.0476 45.9552 46.1285 46.6441 45.2106 47.0113C44.2788 47.384 43.1837 47.5029 42.4593 47.5029C41.7349 47.5029 40.6399 47.384 39.708 47.0113Z"
+                    fill="white"
+                  />
+                </g>
               </svg>
-              <div>
+              {/* <div>
                 <p className="text-[22px] text-[#A0A0A0] font-[500]">
                   요양보호사
                 </p>
                 <p className="text-[26px] text-[#484848] font-[600]">
-                  김요양{" "}
+                  {guardianData?.name}{" "}
                   <span className="text-[22px] text-[#858585] font-[600]">
                     여성
                   </span>
                 </p>
-              </div>
-            </div>
-            <div className="">
-              <div className="flex items-center gap-[4px] mt-[6px]">
-                <Image
-                  src="/assets/icons/icon_calendar.svg"
-                  alt="달력"
-                  width={24}
-                  height={24}
-                />
-                <div className="flex">
-                  {data.schedules.map((schedule, idx) => (
-                    <p
-                      className="text-[22px] text-[#858585] font-[500]"
-                      key={idx}
-                    >
-                      {schedule}
-                      {idx < data.schedules.length - 1 && ","}
-                    </p>
-                  ))}
-                </div>
-              </div>
-              <div className="flex items-center gap-[4px]">
-                <Image
-                  src="/assets/icons/icon_alarm.svg"
-                  alt="시계"
-                  width={24}
-                  height={24}
-                />
-                <p className="whitespace-nowrap text-[22px] text-[#858585] font-[500]">
-                  {data.time}
-                </p>
-              </div>
-              <div className="flex items-center gap-[4px]">
-                <Image
-                  src="/assets/icons/location.svg"
-                  alt="위치"
-                  width={24}
-                  height={24}
-                />
-                <p className="text-[22px] text-[#858585] font-[500]">
-                  {data.location}
-                </p>
-              </div>
+              </div> */}
             </div>
             <div className="flex flex-col gap-[6px]">
               <button
@@ -163,7 +277,7 @@ export default function Chat({ selectedElder }: Prop) {
             <div className="flex items-center justify-center gap-[73px] mt-[21px]">
               <div className="w-[178px] h-[2px] bg-[#CFCFCF]"></div>
               <p className="text-[18px] text-[#8E8E8E] font-[600]">
-                2025년 2월 12일
+                {formatDateToKorean(message[0]?.created_at)}
               </p>
               <div className="w-[178px] h-[2px] bg-[#CFCFCF]"></div>
             </div>
@@ -173,8 +287,11 @@ export default function Chat({ selectedElder }: Prop) {
               <strong className="text-[30px] text-[#000000] font-[600]">
                 조율을 요청했어요.
               </strong>
-              <div className="flex gap-[6px] mt-[13px]">
-                {data.tuning.filters.map((filter, idx) => (
+              {message.map((m, idx) => (
+                <div key={idx}></div>
+              ))}
+              {/* <div className="flex gap-[6px] mt-[13px]">
+                {message.filters?.map((filter, idx) => (
                   <div
                     className="px-[10px] py-[5px] bg-[#D7F3D1] rounded-[8px] text-[22px] text-[#58C185] font-[500]"
                     key={idx}
@@ -203,8 +320,8 @@ export default function Chat({ selectedElder }: Prop) {
                     {data.tuning.location}
                   </p>
                 </div>
-              </div>
-              <div className="flex items-center mt-[12px]">
+              </div> */}
+              {/* <div className="flex items-center mt-[12px]">
                 <div className="w-[270px] flex">
                   <p className="text-[22px] text-[#9A9A9A] font-[500] mr-[6px]">
                     시간
@@ -221,7 +338,7 @@ export default function Chat({ selectedElder }: Prop) {
                     {data.tuning.salary}
                   </p>
                 </div>
-              </div>
+              </div> */}
               <button
                 onClick={() => setIsTuningModal(true)}
                 className="mt-[20px] text-[22px] font-[600] text-[#000000] w-[153px] h-[52px] flex items-center justify-center bg-[#FFFFFF] rounded-[10px]"
@@ -259,7 +376,10 @@ export default function Chat({ selectedElder }: Prop) {
         </div>
       )}
       {isProfileModal && (
-        <GuardianProfile setIsProfileModal={setIsProfileModal} />
+        <GuardianProfile
+          data={samplePerson}
+          setIsProfileModal={setIsProfileModal}
+        />
       )}
       {isTuningModal && <GuardianTuning setIsTuningModal={setIsTuningModal} />}
       {isAcceptModal && <AcceptModal setIsAcceptModal={setIsAcceptModal} />}
