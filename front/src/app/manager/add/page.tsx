@@ -47,30 +47,6 @@ export default function Home() {
 
   const progressWidth = `${(getSelectedValue() / maxSteps) * 724}px`;
 
-  // const handleGauge = () => {
-  //   if (selected === 0) {
-  //     if (selectedOne < maxSteps) {
-  //       setSelectedOne((prev) => prev + 1);
-  //     } else {
-  //       if (
-  //         elderName &&
-  //         elderAddress &&
-  //         elderBirth.length == 10 &&
-  //         elderGender &&
-  //         elderGrade
-  //       ) {
-  //         setSelected(1);
-  //       } else {
-  //         alert("필수 항목을 다 채워주시기 바랍니다.");
-  //       }
-  //     }
-  //   } else if (selected === 1) {
-  //     setSelected(2);
-  //   } else if (selected === 2) {
-  //     setSelected(3);
-  //   }
-  // };
-
   // selected가 바뀌면 해당 단계의 게이지 초기화
   useEffect(() => {
     if (selected === 1) setSelectedOne(0);
@@ -90,6 +66,7 @@ export default function Home() {
           start_hour: startHour,
           start_minute: startMinute,
           end_hour: endHour,
+          weight: elderWeight,
           end_minute: endMinute,
           care_grade: elderGrade,
           address: elderAddress,

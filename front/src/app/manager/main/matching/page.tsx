@@ -3,15 +3,84 @@
 import Navigation from "@/components/main/matching/Navigation";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ElderModal from "@/components/main/matching/ElderModal";
 import Check from "@/../public/assets/icons/icon_green_check.svg";
 import NoCheck from "@/../public/assets/icons/icon_no_check.svg";
 import GuardianProfile from "@/components/main/GuardianProfile";
 import Matching from "@/components/main/matching/Matching";
+import axios from "axios";
+
+interface ElderData {
+  id: number;
+  name: string;
+  gender: string;
+  birth: string;
+  address: string;
+  address_detail: string;
+  care_details: CareDetails;
+  care_grade: string;
+  center: string | null;
+  days: string[];
+  detail: string;
+  start_hour: number;
+  start_minute: number;
+  end_hour: number;
+  end_minute: number;
+  wage: number | null;
+  weight: number | null;
+  matching_status: string;
+  photo: string | null;
+}
+interface CareDetails {
+  [key: string]: string[];
+}
+
+interface AvailableArea {
+  id: number;
+  name: string;
+}
+
+interface Person {
+  address: string;
+  address_detail: string;
+  available_area: AvailableArea[];
+  birth: string; // YYYY-MM-DD 형식
+  career_content: string | null;
+  career_month: number | null;
+  career_year: number | null;
+  caregiver_qualification: string;
+  days: string[]; // ['금', '일', '목', '수', '월', '토', '화']
+  description: string | null;
+  gender: string; // 남자 혹은 여자
+  has_car: boolean;
+  has_dementia_training: boolean;
+  id: string;
+  max_wage: number;
+  min_wage: number;
+  name: string;
+  nursing_assistant_qualification: string | null;
+  phone: string;
+  photo: string | null;
+  social_worker_qualification: string | null;
+  times: string[]; // ['오전(09:00~12:00)', '저녁(18:00~21:00)', '오후(12:00-18:00)']
+}
+
+interface Requests {
+  days: string;
+  end_hour: string;
+  end_minute: string;
+  start_hour: string;
+  start_minute: string;
+  wage: string;
+}
 
 export default function Home() {
   const router = useRouter();
+  const [caregivers, setCaregivers] = useState<Person[]>([]);
+  const [selectedCaregivers, setSelectedCaregivers] = useState<Person>();
+  const [requests, setRequests] = useState<Requests>();
+  const [elderData, setElderData] = useState<ElderData>();
   const [isGender, setIsGender] = useState<boolean>(false);
   const [selectedGender, setSelectedGender] = useState<string>("");
   const [isCar, setIsCar] = useState<boolean>(false);
@@ -22,77 +91,45 @@ export default function Home() {
   const [ownDementia, setOwnDementia] = useState<boolean>(false);
   const [selectedDementia, setSelectedDementia] = useState<boolean>(false);
   const [isProfileModal, setIsProfileModal] = useState<boolean>(false);
-  const [selectedId, setSelectedId] = useState<number[]>([]);
+  const [selectedId, setSelectedId] = useState<string[]>([]);
   const [isGuardianModal, setIsGuardianModal] = useState<boolean>(false);
 
-  const data = {
-    id: 1,
-    profile: "",
-    name: "김복순",
-    birth: "85세",
-    gender: "여",
-    grade: 3,
-
-    location: "서울특별시 종로구 창신동 702 창신쌍용1단지아파트",
-    schedules: ["월", "화", "수", "목"],
-    times: ["09:00 ~ 12:00"],
-    salaryWeek: 15000,
-    salaryMonth: 1500000,
-    matching: "매칭 안료",
-    guardianList: [
-      {
-        id: 1,
-        name: "김요양",
-        gender: "여",
-        isCar: true,
-        isDementia: true,
-        schedules: ["월", "화", "수", "목", "금"],
-        location: ["종로구 낙원동"],
-        times: ["09:00 ~ 12:00", "12:00 ~ 18:00", "18:00 ~ 21:00"],
-        minWage: 12000,
-        maxWage: 16000,
-      },
-      {
-        id: 2,
-        name: "김옥자",
-        gender: "남",
-        isCar: true,
-        isDementia: false,
-        schedules: ["월", "화", "수", "목", "금"],
-        location: ["종로구 낙원동"],
-        times: ["09:00 ~ 12:00", "12:00 ~ 18:00", "18:00 ~ 21:00"],
-        minWage: 12000,
-        maxWage: 16000,
-      },
-      {
-        id: 3,
-        name: "김요양",
-        gender: "여",
-        isCar: true,
-        isDementia: true,
-        schedules: ["월", "화", "수", "목", "금"],
-        location: ["종로구 낙원동"],
-        times: ["09:00 ~ 12:00", "12:00 ~ 18:00", "18:00 ~ 21:00"],
-        minWage: 12000,
-        maxWage: 16000,
-      },
-      {
-        id: 4,
-        name: "김옥자",
-        gender: "남",
-        isCar: true,
-        isDementia: false,
-        schedules: ["월", "화", "수", "목", "금"],
-        location: ["종로구 낙원동"],
-        times: ["09:00 ~ 12:00", "12:00 ~ 18:00", "18:00 ~ 21:00"],
-        minWage: 12000,
-        maxWage: 16000,
-      },
-    ],
-  };
   const searchParams = useSearchParams();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const id = searchParams.get("id");
+  const wage = searchParams.get("wage");
+  const days = searchParams.get("days");
+  const start_hour = searchParams.get("start_hour");
+  const start_minute = searchParams.get("start_minute");
+  const end_hour = searchParams.get("end_hour");
+  const end_minute = searchParams.get("end_minute");
+
+  const getAge = (birthDate: string): number => {
+    const birthYear = Number(birthDate.split("-")[0]); // 출생 연도 가져오기
+    const currentYear = new Date().getFullYear(); // 현재 연도 가져오기
+    return currentYear - birthYear;
+  };
+  useEffect(() => {
+    const fetchGet = async () => {
+      try {
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL_KEY}/api/recommendation/elderly/${id}/caregiver-list/`,
+          {
+            days: days,
+            start_hour: Number(start_hour),
+            start_minute: Number(start_minute),
+            end_hour: Number(end_hour),
+            end_minute: Number(end_minute),
+            wage: Number(wage),
+          }
+        );
+        console.log(response.data);
+        setElderData(response.data.elderly);
+        setCaregivers(response.data.caregivers);
+        setRequests(response.data.request);
+      } catch {}
+    };
+    fetchGet();
+  }, [days, end_hour, end_minute, id, start_hour, start_minute, wage]);
 
   const formatCurrency = (value: number) => {
     return value.toLocaleString("ko-KR");
@@ -115,7 +152,7 @@ export default function Home() {
     setIsDementia(false);
   };
 
-  const handleSelect = (id: number) => {
+  const handleSelect = (id: string) => {
     setSelectedId((prevSelectedId) =>
       prevSelectedId.includes(id)
         ? prevSelectedId.filter((selected) => selected !== id)
@@ -124,20 +161,20 @@ export default function Home() {
   };
 
   const filteredGuardians = useMemo(() => {
-    return data.guardianList.filter((guardian) => {
+    return caregivers.filter((guardian) => {
       if (selectedGender && guardian.gender !== selectedGender) {
         return false;
       }
-      if (ownCar && guardian.isCar !== selectedCar) {
+      if (ownCar && guardian.has_car !== selectedCar) {
         return false;
       }
-      if (ownDementia && guardian.isDementia !== selectedDementia) {
+      if (ownDementia && guardian.has_dementia_training !== selectedDementia) {
         return false;
       }
       return true;
     });
   }, [
-    data.guardianList,
+    caregivers,
     selectedGender,
     ownCar,
     selectedCar,
@@ -145,8 +182,46 @@ export default function Home() {
     selectedDementia,
   ]);
 
-  const handleClick = () => {
+  const handleClick = (guardian: Person) => {
+    setSelectedCaregivers(guardian);
     setIsGuardianModal(true);
+  };
+
+  const calculateMonthlySalary = () => {
+    const start =
+      Number(requests?.start_hour) + Number(requests?.start_minute) / 60;
+    const end = Number(requests?.end_hour) + Number(requests?.end_minute) / 60;
+    const workHours = end - start;
+    const daysArray = days?.split(",");
+    const weeklySalary =
+      (Number(requests?.wage) ?? 0) * workHours * (daysArray?.length ?? 0);
+    const monthlySalary = weeklySalary * 4; // 4주 기준
+
+    return monthlySalary;
+  };
+
+  const postAdd = () => {
+    const fetchPost = async () => {
+      try {
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL_KEY}/api/matching/`,
+          {
+            wage: Number(requests?.wage),
+            elderly: elderData?.id,
+            start_hour: Number(requests?.start_hour),
+            start_minute: Number(requests?.start_minute),
+            end_hour: Number(requests?.end_hour),
+            end_minute: Number(requests?.end_minute),
+            days: [],
+          }
+        );
+        console.log(response.data);
+        setMatching(true);
+      } catch {
+        console.error();
+      }
+    };
+    fetchPost();
   };
 
   return (
@@ -154,10 +229,15 @@ export default function Home() {
       <Navigation />
       <div className="w-full flex flex-col">
         {matching ? (
-          <Matching selectedId={selectedId} />
+          <Matching
+            elderData={elderData as ElderData}
+            caregiver={caregivers}
+            request={requests as Requests}
+            selectedId={selectedId}
+          />
         ) : (
           <>
-            <div className="flex flex-col w-full h-[320px] bg-[#F7F8FA] pl-[31px] pt-[24px]">
+            <div className="flex flex-col w-full h-[350px] bg-[#F7F8FA] pl-[31px] pt-[24px]">
               <div className="flex items-start ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -242,12 +322,16 @@ export default function Home() {
                 </svg>
                 <div className="ml-[25px]">
                   <p className="text-[34px] font-[700] text-[#191A1C]">
-                    {data.name} 어르신
+                    {elderData?.name} 어르신
                   </p>
                   <div className="text-[22px] text-[#666666] font-[600] gap-[18px] flex justify-center">
-                    <p>{data.birth}</p>
-                    <p>{data.gender}성</p>
-                    <p>{data.grade}등급</p>
+                    <p>
+                      {elderData?.birth
+                        ? `${getAge(elderData.birth)}세`
+                        : "00세"}
+                    </p>
+                    <p>{elderData?.gender}성</p>
+                    <p>{elderData?.care_grade}</p>
                   </div>
                 </div>
                 <div className="ml-[48px] flex flex-col gap-[11px]">
@@ -258,14 +342,9 @@ export default function Home() {
                       height={24}
                       alt="달력"
                     />
-                    {data.schedules.map((schedule, idx) => (
-                      <p
-                        className="text-[22px] font-[500] text-[#535252]"
-                        key={idx}
-                      >
-                        {schedule}
-                      </p>
-                    ))}
+                    <p className="text-[22px] font-[500] text-[#535252]">
+                      {requests?.days}
+                    </p>
                   </div>
                   <div className="flex gap-[3px] text-[22px] font-[500] text-[#535252]">
                     <Image
@@ -274,14 +353,15 @@ export default function Home() {
                       height={24}
                       alt="시계"
                     />
-                    {data.times.map((time, idx) => (
-                      <p
-                        className="text-[22px] font-[500] text-[#535252]"
-                        key={idx}
-                      >
-                        {time}
-                      </p>
-                    ))}
+                    <p className="whitespace-nowrap text-[22px] text-[#858585] font-[500]">
+                      {`${String(requests?.start_hour).padStart(
+                        2,
+                        "0"
+                      )}:${String(requests?.start_minute).padStart(2, "0")}
+    ~ ${String(requests?.end_hour).padStart(2, "0")}:${String(
+                        requests?.end_minute
+                      ).padStart(2, "0")}`}
+                    </p>
                   </div>
                   <div className="flex gap-[3px] text-[22px] font-[500] text-[#535252]">
                     <Image
@@ -291,7 +371,7 @@ export default function Home() {
                       alt="위치"
                     />
                     <p className="text-[22px] font-[500] text-[#535252]">
-                      {data.location}
+                      {elderData?.address}
                     </p>
                   </div>
                   <div className="flex gap-[3px] text-[22px] font-[500] text-[#535252]">
@@ -302,8 +382,10 @@ export default function Home() {
                       alt="시급"
                     />
                     <p>{`시급 ${formatCurrency(
-                      data.salaryWeek
-                    )}원, 월급 ${formatCurrency(data.salaryMonth)}원`}</p>
+                      Number(requests?.wage)
+                    )}원, 월급 ${formatCurrency(
+                      Number(calculateMonthlySalary())
+                    )}원`}</p>
                   </div>
                 </div>
                 <button
@@ -316,7 +398,7 @@ export default function Home() {
             </div>
             <div className="flex flex-col pl-[30px] pt-[30px]">
               <p className="text-[26px] font-[600] text-[#000000]">
-                {data.name} 어르신 딱 맞는 요양보호사
+                {elderData?.name} 어르신과 딱 맞는 요양보호사
               </p>
               <div className="flex relative mt-[20px] gap-[8px]">
                 <svg
@@ -524,15 +606,15 @@ export default function Home() {
                     </div>
                     <div className="w-[507px] ml-[24px] h-[173px] bg-[#F7F8FA] rounded-[14px] flex flex-col gap-[22px] items-start justify-center  pl-[24px]">
                       <div className="flex gap-[46px]">
-                        <div className="flex ">
+                        <div className="flex items-center">
                           <Image
                             src="/assets/icons/icon_calendar.svg"
                             alt="달력"
                             width={24}
                             height={24}
                           />
-                          <p className="text-[22px] w-[192px] font-[500] text-[#666666]">
-                            {guardian.schedules.join(", ")}
+                          <p className="text-[22px] w-[192px] font-[500] text-[#666666] whitespace-nowrap">
+                            {guardian.days.join(", ")}
                           </p>
                         </div>
                         <div className="flex">
@@ -542,8 +624,8 @@ export default function Home() {
                             width={24}
                             height={24}
                           />
-                          <p className="text-[22px] font-[500] text-[#666666]">
-                            {guardian.location}
+                          <p className="text-[22px] font-[500] text-[#666666] w-[192px] line-clamp-1">
+                            {guardian.address}
                           </p>
                         </div>
                       </div>
@@ -577,18 +659,18 @@ export default function Home() {
                           />
                           <div className="flex items-center">
                             <p className="text-[22px] font-[500] text-[#666666]">
-                              {formatCurrency(guardian.minWage)} ~
+                              {formatCurrency(guardian.min_wage)} ~
                             </p>
 
                             <p className="text-[22px] font-[500] text-[#666666]">
-                              {formatCurrency(guardian.maxWage)}
+                              {formatCurrency(guardian.max_wage)}
                             </p>
                           </div>
                         </div>
                       </div>
                     </div>
                     <button
-                      onClick={() => handleClick()}
+                      onClick={() => handleClick(guardian)}
                       className="ml-[89px] w-[141px] h-[48px] bg-[#D7F3D1] rounded-[10px] text-[22px] font-[500] text-[#2D8859]"
                     >
                       프로필 보기
@@ -606,7 +688,7 @@ export default function Home() {
               </p>
 
               <button
-                onClick={() => selectedId.length && setMatching(true)}
+                onClick={() => selectedId.length && postAdd()}
                 className={`w-[254px] h-[58px] ${
                   selectedId.length > 0 ? "bg-[#58C185]" : "bg-[#D9D9D9]"
                 } rounded-[10px] flex justify-center items-center text-[#FFFFFF] mr-[20px]`}
@@ -617,11 +699,18 @@ export default function Home() {
           </>
         )}
 
-        {isProfileModal && (
-          <ElderModal data={data} onClose={setIsProfileModal} />
+        {isProfileModal && elderData && (
+          <ElderModal
+            data={elderData}
+            request={requests || ({} as Requests)}
+            onClose={setIsProfileModal}
+          />
         )}
-        {isGuardianModal && (
-          <GuardianProfile setIsProfileModal={setIsGuardianModal} />
+        {isGuardianModal && selectedCaregivers && (
+          <GuardianProfile
+            data={selectedCaregivers}
+            setIsProfileModal={setIsGuardianModal}
+          />
         )}
       </div>
     </div>

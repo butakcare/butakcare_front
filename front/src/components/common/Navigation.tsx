@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function Navigation({ selected, setSelected }: Props) {
-  const menuItems = ["어르신 관리", "요청 목록", "매칭 통계", "계정 관리"];
+  const menuItems = ["어르신 관리", "요청 목록", "계정 관리"];
 
   return (
     <div className="w-[237px] h-full border-r border-[#909090] flex flex-col justify-between pl-[33px] pt-[34px]">

@@ -127,7 +127,7 @@ export default function ElderConditionModal({
         </p>
         <div className="flex items-center justify-start gap-[23px] w-[682px] h-[86px] rounded-[14px] bg-[#F7F8FA] pl-[23px] mt-[13px]">
           <input
-            placeholder="YYYY.MM.DD"
+            placeholder="YYYY-MM-DD"
             value={startDay}
             className="w-[364px] p-[16px] bg-[#FFFFFF] rounded-[10px] text-[22px] font-[600]"
             onChange={(e) => setStartDay(e.target.value)}

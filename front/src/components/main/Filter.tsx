@@ -4,8 +4,8 @@ import { useState } from "react";
 import Image from "next/image";
 
 interface Filter {
-  schedules: string[];
-  grade: number;
+  days: string[];
+  grade: string;
   gender: string;
 }
 
@@ -20,18 +20,18 @@ export default function Filter({ filter, setFilter }: FilterProps) {
   const [showGenderDropdown, setShowGenderDropdown] = useState(false);
   const [showCareGradeDropdown, setShowCareGradeDropdown] = useState(false);
   const [gender, setGender] = useState<string>("");
-  const [careGrade, setCareGrade] = useState<number>(0);
+  const [careGrade, setCareGrade] = useState<string>("");
 
   const days = ["월", "화", "수", "목", "금", "토", "일"];
-  const careGrades = [1, 2, 3, 4, 5];
+  const careGrades = ["1등급", "2등급", "3등급", "4등급", "5등급"];
   const genderOptions = ["남", "여"];
 
   const toggleDay = (day: string) => {
     setFilter({
       ...filter,
-      schedules: filter.schedules.includes(day)
-        ? filter.schedules.filter((d) => d !== day)
-        : [...filter.schedules, day],
+      days: filter.days.includes(day)
+        ? filter.days.filter((d) => d !== day)
+        : [...filter.days, day],
     });
     setSelectedDays((prevSelectedDays) => {
       if (prevSelectedDays.includes(day)) {
@@ -47,7 +47,7 @@ export default function Filter({ filter, setFilter }: FilterProps) {
     setShowGenderDropdown(false);
   };
 
-  const handleCareGradeChange = (grade: number) => {
+  const handleCareGradeChange = (grade: string) => {
     setFilter({ ...filter, grade });
     setCareGrade(grade);
     setShowCareGradeDropdown(false);
@@ -143,7 +143,7 @@ export default function Filter({ filter, setFilter }: FilterProps) {
           onClick={() => setShowCareGradeDropdown(!showCareGradeDropdown)}
           className="flex items-center justify-center w-[174px] h-[47px] border border-[#909090] rounded-[10px] text-[22px] font-[600] text-[#C6C6C6]"
         >
-          <span>{careGrade == 0 ? "장기요양등급" : `${careGrade}등급`}</span>
+          <span>{careGrade == "" ? "장기요양등급" : `${careGrade}`}</span>
           <Image
             src="/assets/icons/icon_down_arrow.svg"
             alt="화살표"
@@ -160,7 +160,7 @@ export default function Filter({ filter, setFilter }: FilterProps) {
                 className="p-1 hover:bg-gray-100 cursor-pointer text-[#C6C6C6]"
                 onClick={() => handleCareGradeChange(grade)}
               >
-                {grade}등급
+                {grade}
               </div>
             ))}
           </div>

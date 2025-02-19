@@ -4,80 +4,86 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 interface Props {
-  selectedId: number[];
+  selectedId: string[];
+  elderData: ElderData;
+  caregiver: Person[];
+  request: Requests;
 }
 
-export default function Matching({ selectedId }: Props) {
+interface ElderData {
+  id: number;
+  name: string;
+  gender: string;
+  birth: string;
+  address: string;
+  address_detail: string;
+  care_details: CareDetails;
+  care_grade: string;
+  center: string | null;
+  days: string[];
+  detail: string;
+  start_hour: number;
+  start_minute: number;
+  end_hour: number;
+  end_minute: number;
+  wage: number | null;
+  weight: number | null;
+  matching_status: string;
+  photo: string | null;
+}
+interface CareDetails {
+  [key: string]: string[];
+}
+
+interface AvailableArea {
+  id: number;
+  name: string;
+}
+
+interface Person {
+  address: string;
+  address_detail: string;
+  available_area: AvailableArea[];
+  birth: string; // YYYY-MM-DD 형식
+  career_content: string | null;
+  career_month: number | null;
+  career_year: number | null;
+  caregiver_qualification: string;
+  days: string[]; // ['금', '일', '목', '수', '월', '토', '화']
+  description: string | null;
+  gender: string; // 남자 혹은 여자
+  has_car: boolean;
+  has_dementia_training: boolean;
+  id: string;
+  max_wage: number;
+  min_wage: number;
+  name: string;
+  nursing_assistant_qualification: string | null;
+  phone: string;
+  photo: string | null;
+  social_worker_qualification: string | null;
+  times: string[]; // ['오전(09:00~12:00)', '저녁(18:00~21:00)', '오후(12:00-18:00)']
+}
+
+interface Requests {
+  days: string;
+  end_hour: string;
+  end_minute: string;
+  start_hour: string;
+  start_minute: string;
+  wage: string;
+}
+
+export default function Matching({
+  selectedId,
+  elderData,
+  caregiver,
+}: // request,
+Props) {
   const router = useRouter();
 
-  const data = {
-    id: 1,
-    profile: "",
-    name: "김복순",
-    birth: "85세",
-    gender: "여",
-    grade: 3,
-
-    location: "서울특별시 종로구 창신동 702 창신쌍용1단지아파트",
-    schedules: ["월", "화", "수", "목"],
-    times: ["09:00 ~ 12:00"],
-    salaryWeek: 15000,
-    salaryMonth: 1500000,
-    matching: "매칭 안료",
-    guardianList: [
-      {
-        id: 1,
-        name: "김요양",
-        gender: "여",
-        isCar: true,
-        isDementia: true,
-        schedules: ["월", "화", "수", "목", "금"],
-        location: ["종로구 낙원동"],
-        times: ["09:00 ~ 12:00", "12:00 ~ 18:00", "18:00 ~ 21:00"],
-        minWage: 12000,
-        maxWage: 16000,
-      },
-      {
-        id: 2,
-        name: "김옥자",
-        gender: "남",
-        isCar: true,
-        isDementia: false,
-        schedules: ["월", "화", "수", "목", "금"],
-        location: ["종로구 낙원동"],
-        times: ["09:00 ~ 12:00", "12:00 ~ 18:00", "18:00 ~ 21:00"],
-        minWage: 12000,
-        maxWage: 16000,
-      },
-      {
-        id: 3,
-        name: "김요양",
-        gender: "여",
-        isCar: true,
-        isDementia: true,
-        schedules: ["월", "화", "수", "목", "금"],
-        location: ["종로구 낙원동"],
-        times: ["09:00 ~ 12:00", "12:00 ~ 18:00", "18:00 ~ 21:00"],
-        minWage: 12000,
-        maxWage: 16000,
-      },
-      {
-        id: 4,
-        name: "김옥자",
-        gender: "남",
-        isCar: true,
-        isDementia: false,
-        schedules: ["월", "화", "수", "목", "금"],
-        location: ["종로구 낙원동"],
-        times: ["09:00 ~ 12:00", "12:00 ~ 18:00", "18:00 ~ 21:00"],
-        minWage: 12000,
-        maxWage: 16000,
-      },
-    ],
-  };
-
-  const filteredGuardians = data.guardianList.filter((guardian) =>
-    selectedId.includes(guardian.id)
+  const filteredGuardians = caregiver.filter((ca) =>
+    selectedId.includes(ca.id)
   );
 
   return (
@@ -176,12 +182,12 @@ export default function Matching({ selectedId }: Props) {
           <div className="flex">
             <div className="ml-[25px] ">
               <p className="text-[34px] font-[700] text-[#191A1C]">
-                {data.name} 어르신
+                {elderData.name} 어르신
               </p>
               <div className="text-[22px] text-[#666666] font-[600] gap-[18px] flex">
-                <p>{data.birth}</p>
-                <p>{data.gender}성</p>
-                <p>{data.grade}등급</p>
+                <p>{elderData.birth}</p>
+                <p>{elderData.gender}성</p>
+                <p>{elderData.care_grade}</p>
               </div>
             </div>
           </div>
@@ -214,26 +220,26 @@ export default function Matching({ selectedId }: Props) {
                 </div>
                 <div className="w-[507px] ml-[24px] h-[173px] bg-[#F7F8FA] rounded-[14px] flex flex-col gap-[22px] items-start justify-center  pl-[24px]">
                   <div className="flex gap-[46px]">
-                    <div className="flex ">
+                    <div className="flex items-center">
                       <Image
                         src="/assets/icons/icon_calendar.svg"
                         alt="달력"
                         width={24}
                         height={24}
                       />
-                      <p className="text-[22px] w-[192px] font-[500] text-[#666666]">
-                        {guardian.schedules.join(", ")}
+                      <p className="text-[22px] w-[192px] font-[500] text-[#666666] line-clamp-1 ml-[10px]">
+                        {guardian.days[0].split("").join(", ")}
                       </p>
                     </div>
-                    <div className="flex">
+                    <div className="flex items-center">
                       <Image
                         src="/assets/icons/location.svg"
                         alt="위치"
                         width={24}
                         height={24}
                       />
-                      <p className="text-[22px] font-[500] text-[#666666]">
-                        {guardian.location}
+                      <p className="text-[22px] font-[500] text-[#666666] line-clamp-1">
+                        {guardian.address}
                       </p>
                     </div>
                   </div>
@@ -265,10 +271,10 @@ export default function Matching({ selectedId }: Props) {
                         height={24}
                         className="mt-[5px]"
                       />
-                      <div className="flex items-center">
+                      <div className="flex items-center ml-[5px]">
                         <p className="text-[22px] font-[500] text-[#666666]">
-                          {guardian.minWage.toLocaleString()} ~{" "}
-                          {guardian.maxWage.toLocaleString()}원
+                          {guardian.min_wage.toLocaleString()} ~{" "}
+                          {guardian.max_wage.toLocaleString()}원
                         </p>
                       </div>
                     </div>
@@ -278,6 +284,12 @@ export default function Matching({ selectedId }: Props) {
             ))}
           </div>
         </div>
+        <button
+          onClick={() => router.push("/manager/main")}
+          className={`absolute bottom-[50px] right-[200px] w-[254px] h-[58px] rounded-[10px] bg-[#58C185] flex justify-center items-center text-[#FFFFFF] mr-[20px] cursor-pointer`}
+        >
+          첫 페이지로 돌아가기
+        </button>
       </div>
     </>
   );

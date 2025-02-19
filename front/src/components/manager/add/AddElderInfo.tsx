@@ -110,9 +110,7 @@ export default function AddElder({
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_API_URL_KEY}/api/location/address/?search=${load}`
         );
-        setElderAddress(
-          response.data.sigungu_name + " " + response.data.eupmyeondong_name
-        );
+        setElderAddress(response.data.road_address);
       };
       fetchGet();
     }
@@ -328,7 +326,7 @@ export default function AddElder({
               onClick={() => setShowCareGradeDropdown(!showCareGradeDropdown)}
               className="flex items-center justify-center w-[174px] h-[47px] border border-[#909090] rounded-[10px] text-[22px] font-[600] gap-[30px] text-[#000000]"
             >
-              <span>{careGrade == "" ? "요양등급" : `${careGrade}ㅌ`}</span>
+              <span>{careGrade == "" ? "요양등급" : `${careGrade}`}</span>
               <Image
                 src="/assets/icons/icon_down_arrow.svg"
                 alt="화살표"

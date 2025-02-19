@@ -3,32 +3,44 @@ import React from "react";
 
 interface Prop {
   setIsProfileModal: React.Dispatch<React.SetStateAction<boolean>>;
+  data: Person;
 }
 
-export default function GuardianProfile({ setIsProfileModal }: Prop) {
-  const data = {
-    name: "김요양",
-    profile: {
-      qualifications: "요양보호사 1급",
-      gender: "여",
-      age: 48,
-      isCar: "예",
-      isDementia: "예",
-    },
-    location: [
-      "서울특별시 종로 전체",
-      "서울특별시 성북구 성북동",
-      "성북동 1가",
-      "돈암동",
-      "동소문동 1가",
-      "동소문동 2가",
-      "동소문동 3가",
-    ],
-    condition: {
-      schedules: ["월", "화", "수", "목", "금"],
-      time: ["09:00 ~ 12:00", "12:00 ~ 18:00"],
-      salaryWeek: "12,000 ~ 16,000",
-    },
+interface Person {
+  address: string;
+  address_detail: string;
+  available_area: AvailableArea[];
+  birth: string; // YYYY-MM-DD 형식
+  career_content: string | null;
+  career_month: number | null;
+  career_year: number | null;
+  caregiver_qualification: string;
+  days: string[]; // ['금', '일', '목', '수', '월', '토', '화']
+  description: string | null;
+  gender: string; // 남자 혹은 여자
+  has_car: boolean;
+  has_dementia_training: boolean;
+  id: string;
+  max_wage: number;
+  min_wage: number;
+  name: string;
+  nursing_assistant_qualification: string | null;
+  phone: string;
+  photo: string | null;
+  social_worker_qualification: string | null;
+  times: string[]; // ['오전(09:00~12:00)', '저녁(18:00~21:00)', '오후(12:00-18:00)']
+}
+
+interface AvailableArea {
+  id: number;
+  name: string;
+}
+
+export default function GuardianProfile({ setIsProfileModal, data }: Prop) {
+  const getAge = (birthDate: string): number => {
+    const birthYear = Number(birthDate.split("-")[0]); // 출생 연도 가져오기
+    const currentYear = new Date().getFullYear(); // 현재 연도 가져오기
+    return currentYear - birthYear;
   };
 
   return (
@@ -63,7 +75,7 @@ export default function GuardianProfile({ setIsProfileModal }: Prop) {
           <div>
             <p className="text-[26px] font-[700] text-[#191A1C]">한 줄 소개</p>
             <p className="text-[22px] font-[500] text-[#666666]">
-              부모님을 돌보는 마음으로 정성을 담아 임하겠습니다.
+              {data.description}
             </p>
           </div>
         </div>
@@ -78,7 +90,7 @@ export default function GuardianProfile({ setIsProfileModal }: Prop) {
                   자격증
                 </p>
                 <p className="text-[22px] whitespace-nowrap font-[500] text-[#000000]">
-                  {data.profile.qualifications}
+                  {data.caregiver_qualification}
                 </p>
               </div>
               <div className="flex gap-[20px] h-[26px]">
@@ -86,7 +98,7 @@ export default function GuardianProfile({ setIsProfileModal }: Prop) {
                   성별
                 </p>
                 <p className="text-[22px] whitespace-nowrap font-[500] text-[#000000]">
-                  {data.profile.gender}성
+                  {data.gender}성
                 </p>
               </div>
               <div className="flex gap-[20px] h-[26px]">
@@ -94,7 +106,7 @@ export default function GuardianProfile({ setIsProfileModal }: Prop) {
                   나이
                 </p>
                 <p className="text-[22px] whitespace-nowrap font-[500] text-[#000000]">
-                  {data.profile.age}세
+                  {getAge(data.birth)}세
                 </p>
               </div>
               <div className="flex gap-[20px] h-[52px]">
@@ -104,7 +116,7 @@ export default function GuardianProfile({ setIsProfileModal }: Prop) {
                   소유 여부
                 </p>
                 <p className="text-[22px] whitespace-nowrap font-[500] text-[#000000]">
-                  {data.profile.isCar}
+                  {data.has_car ? "예" : "아니요"}
                 </p>
               </div>
               <div className="flex gap-[20px] h-[52px] justify-start mt-[4px]">
@@ -114,7 +126,7 @@ export default function GuardianProfile({ setIsProfileModal }: Prop) {
                   이수여부
                 </p>
                 <p className="text-[22px] whitespace-nowrap font-[500] text-[#000000]">
-                  {data.profile.isDementia}
+                  {data.has_dementia_training ? "예" : "아니요"}
                 </p>
               </div>
             </div>
@@ -132,10 +144,10 @@ export default function GuardianProfile({ setIsProfileModal }: Prop) {
                 className="mt-[17px]"
               />
               <div className="text-[22px] font-[500] text-[#000000] py-[14px] flex flex-wrap gap-[6px]">
-                {data.location.map((locat, idx) => (
+                {data.available_area.map((locat, idx) => (
                   <span key={idx} className="whitespace-nowrap">
-                    {locat}
-                    {idx !== data.location.length - 1 && ","}
+                    {locat.name}
+                    {idx !== data.available_area.length - 1 && ","}
                   </span>
                 ))}
               </div>
@@ -149,7 +161,7 @@ export default function GuardianProfile({ setIsProfileModal }: Prop) {
                   기간
                 </p>
                 <p className="text-[22px] whitespace-nowrap font-[500] text-[#000000]">
-                  {data.condition.schedules.join(", ")}
+                  {data.days.join(", ")}
                 </p>
               </div>
               <div className="flex gap-[16px]">
@@ -157,10 +169,10 @@ export default function GuardianProfile({ setIsProfileModal }: Prop) {
                   시간
                 </p>
                 <div className="text-[22px] whitespace-nowrap font-[500] text-[#000000]">
-                  {data.condition.time.map((t, idx) => (
+                  {data.times.map((t, idx) => (
                     <p key={idx}>
                       {t}
-                      {idx < data.condition.time.length - 1 && ", "}
+                      {idx < data.times.length - 1 && ", "}
                     </p>
                   ))}
                 </div>
@@ -170,7 +182,7 @@ export default function GuardianProfile({ setIsProfileModal }: Prop) {
                   희망급여
                 </p>
                 <p className="text-[22px] whitespace-nowrap font-[600] text-[#000000]">
-                  시급 {data.condition.salaryWeek}원
+                  {data.min_wage}원 ~ {data.max_wage}원
                 </p>
               </div>
             </div>

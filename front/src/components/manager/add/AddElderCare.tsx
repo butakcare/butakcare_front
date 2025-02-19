@@ -189,7 +189,7 @@ export default function AddElderCare({
               href="/manager/main"
               className="w-[254px] mt-[76px] h-[58px] flex items-center justify-center bg-[#58C185] rounded-[10px] text-[22px] font-[600] text-[#FFFFFF]"
             >
-              매칭관리
+              어르신 관리
             </Link>
           </div>
         </div>
