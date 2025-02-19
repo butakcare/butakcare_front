@@ -1,7 +1,9 @@
+"use client";
+
 import Navigation from "@/components/main/matching/Navigation";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import ElderModal from "@/components/main/matching/ElderModal";
 import Check from "@/../public/assets/icons/icon_green_check.svg";
 import NoCheck from "@/../public/assets/icons/icon_no_check.svg";
@@ -72,8 +74,7 @@ interface Requests {
   start_minute: string;
   wage: string;
 }
-
-export default function Home() {
+const Matchin = () => {
   const router = useRouter();
   const [caregivers, setCaregivers] = useState<Person[]>([]);
   const [selectedCaregivers, setSelectedCaregivers] = useState<Person>();
@@ -730,4 +731,10 @@ export default function Home() {
       </div>
     </div>
   );
+};
+
+export default function Home() {
+  <Suspense fallback={<div>Loading...</div>}>
+    <Matchin />
+  </Suspense>;
 }
