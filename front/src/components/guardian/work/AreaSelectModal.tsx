@@ -1,26 +1,20 @@
-"use client";
-
+import axios from "axios";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import XIcon from "@/../public/assets/icons/X.svg";
 import Search from "@/../public/assets/icons/6_search.svg";
 import BorderX from "@/../public/assets/icons/ic_round-cancel.svg";
+
 interface AreaSelectModalProps {
   onClose: () => void;
   onConfirm: (selectedAreas: string[]) => void;
   initialSelected: string[];
 }
 
-const koreaRegions: { [key: string]: { [key: string]: string[] } } = {
-  서울특별시: {
-    강남구: ["개포동", "논현동", "대치동"],
-    강서구: ["가양동", "개화동", "공항동"],
-  },
-  경기도: {
-    수원시: ["장안구", "권선구", "팔달구"],
-    고양시: ["덕양구", "일산동구", "일산서구"],
-  },
-};
+interface RegionData {
+  id: number;
+  name: string;
+}
 
 export default function AreaSelectModal({
   onClose,
@@ -30,13 +24,60 @@ export default function AreaSelectModal({
   const [selectedSigungu, setSelectedSigungu] = useState<string>("");
   const [selectedDong, setSelectedDong] = useState<string>("");
   const [selectedAreas, setSelectedAreas] = useState<string[]>([]);
+  const [regions, setRegions] = useState<RegionData[]>([]);
+  const [sigugunData, setSigugunData] = useState<RegionData[]>([]);
+  const [dongData, setDongData] = useState<RegionData[]>([]);
+  useEffect(() => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API_URL_KEY}/api/location/sigudong`)
+      .then((res) => {
+        setRegions(res.data);
+      })
+      .catch((error) => console.error("Error fetching regions:", error));
+  }, []);
+
+  useEffect(() => {
+    if (selectedSido) {
+      axios
+        .get(
+          `${process.env.NEXT_PUBLIC_API_URL_KEY}/api/location/sigudong?si=${selectedSido}`
+        )
+        .then((res) => {
+          const nameList = res.data.map((item: { name: string }) => ({
+            name: item.name,
+          }));
+          setSigugunData(nameList);
+        })
+        .catch((error) => console.error("Error fetching sigungu:", error));
+    } else {
+      setSigugunData([]);
+    }
+  }, [selectedSido]);
+
+  useEffect(() => {
+    if (selectedSido && selectedSigungu) {
+      axios
+        .get(
+          `${process.env.NEXT_PUBLIC_API_URL_KEY}/api/location/sigudong?si=${selectedSido}&gu=${selectedSigungu}`
+        )
+        .then((res) => {
+          const nameList = res.data.map((item: { name: string }) => ({
+            name: item.name,
+          }));
+          setDongData(nameList);
+        })
+        .catch((error) => console.error("Error fetching dong:", error));
+    } else {
+      setDongData([]);
+    }
+  }, [selectedSido, selectedSigungu]);
 
   const handleAreaSelect = (dong: string) => {
     if (selectedAreas.length >= 10) {
       alert("최대 10개까지 선택할 수 있습니다.");
       return;
     }
-
+    setSelectedDong(dong);
     const fullAddress = `${selectedSido} ${selectedSigungu} ${dong}`;
     if (!selectedAreas.includes(fullAddress)) {
       setSelectedAreas([...selectedAreas, fullAddress]);
@@ -45,11 +86,6 @@ export default function AreaSelectModal({
 
   const handleRemoveArea = (area: string) => {
     setSelectedAreas(selectedAreas.filter((a) => a !== area));
-  };
-
-  const getLastRegion = (fullAddress: string) => {
-    const parts = fullAddress.split(" ");
-    return parts[parts.length - 1];
   };
 
   return (
@@ -85,15 +121,15 @@ export default function AreaSelectModal({
             시/도
           </div>
 
-          {Object.keys(koreaRegions).map((sido) => (
+          {regions.map((region: RegionData) => (
             <div
-              key={sido}
+              key={region.id}
               className={`p-3 cursor-pointer ${
-                selectedSido === sido ? "bg-key text-white" : ""
+                selectedSido === region.name ? "bg-key text-white" : ""
               }`}
-              onClick={() => setSelectedSido(sido)}
+              onClick={() => setSelectedSido(region.name)}
             >
-              {sido}
+              {region.name}
             </div>
           ))}
         </div>
@@ -102,42 +138,33 @@ export default function AreaSelectModal({
             시/군/구
           </div>
 
-          {selectedSido &&
-            Object.keys(koreaRegions[selectedSido]).map((sigungu) => (
-              <div
-                key={sigungu}
-                className={`p-3 cursor-pointer ${
-                  selectedSigungu === sigungu ? "bg-key text-white" : ""
-                }`}
-                onClick={() => setSelectedSigungu(sigungu)}
-              >
-                {sigungu}
-              </div>
-            ))}
+          {sigugunData.map((gu: RegionData) => (
+            <div
+              key={gu.name}
+              className={`p-3 cursor-pointer ${
+                selectedSigungu === gu.name ? "bg-key text-white" : ""
+              }`}
+              onClick={() => setSelectedSigungu(gu.name)}
+            >
+              {gu.name}
+            </div>
+          ))}
         </div>
         <div className="flex-1 border-r h-auto overflow-y-auto text-[18px] font-medium text-center">
           <div className="leading-[51px] text-center bg-[#F7F8FA] border-b border-[#666666] ">
             동/읍/면
           </div>
-
-          {selectedSido &&
-            selectedSigungu &&
-            koreaRegions[selectedSido][selectedSigungu].map((dong) => (
-              <div
-                key={dong}
-                className={`p-3 cursor-pointer ${
-                  selectedDong === dong ? "bg-key text-white" : ""
-                }`}
-                onClick={() => {
-                  setSelectedDong(dong);
-                  handleAreaSelect(
-                    `${selectedSido} ${selectedSigungu} ${dong}`
-                  );
-                }}
-              >
-                {dong}
-              </div>
-            ))}
+          {dongData.map((dong: RegionData) => (
+            <div
+              key={dong.name}
+              className={`p-3 cursor-pointer ${
+                selectedDong === dong.name ? "bg-key text-white" : ""
+              }`}
+              onClick={() => handleAreaSelect(dong.name)}
+            >
+              {dong.name}
+            </div>
+          ))}
         </div>
       </div>
 
@@ -153,9 +180,7 @@ export default function AreaSelectModal({
                   key={area}
                   className="flex-none px-5 py-3.5 bg-sub rounded-lg flex items-center whitespace-nowrap"
                 >
-                  <span className="text-[#2D8859] text-lg">
-                    {getLastRegion(area)}
-                  </span>
+                  <span className="text-[#2D8859] text-lg">{selectedDong}</span>
                   <button
                     onClick={() => handleRemoveArea(area)}
                     className="ml-2 text-sub hover:text-green-700"

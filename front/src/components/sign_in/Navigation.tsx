@@ -13,7 +13,7 @@ export default function Navigation({ selected, setSelected }: Props) {
 
   const handleCLick = (index: number) => {
     if (index == 2) {
-      router.push("/sign_up");
+      router.push("/sign_up/manager");
     } else {
       setSelected(index);
     }
