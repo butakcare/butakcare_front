@@ -27,9 +27,14 @@ export default function CenterSearchModal({
     setIsLoading(true);
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/profiles/care-centers/?serach=${term}`
+        `${process.env.NEXT_PUBLIC_API_URL_KEY}/api/profiles/care-centers/?search=${term}`
       );
-      setFilteredCenters(response.data?.centers || []);
+      console.log("API 응답:", response.data);
+      const centerNames =
+        response.data.map((center: { name: string }) => center.name) || [];
+      console.log("추출된 센터 이름들:", centerNames);
+
+      setFilteredCenters(centerNames);
     } catch (error) {
       console.error("검색 중 오류 발생:", error);
       setFilteredCenters([]);
@@ -37,6 +42,7 @@ export default function CenterSearchModal({
       setIsLoading(false);
     }
   };
+  console.log(filteredCenters);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -66,7 +72,6 @@ export default function CenterSearchModal({
   }, [isOpen, handleKeyDown]);
 
   if (!isOpen) return null;
-
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 top-[110px] ">
       <div
