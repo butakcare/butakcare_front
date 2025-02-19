@@ -34,12 +34,14 @@ export default function ManagerStep1({
     onCenternameChange(centerName);
   };
   return (
-    <div>
-      <TitleText
-        text1="근무하는 센터를 찾은 후"
-        text2="로그인 회원정보를 입력해주세요."
-        on={true}
-      />
+    <div className="tablet:hidden w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
+      <div>
+        <TitleText
+          text1="근무하는 센터를 찾은 후"
+          text2="로그인 회원정보를 입력해주세요."
+          on={true}
+        />
+      </div>
 
       <form className="flex flex-col justify-center items-center align-center pt-[25px]">
         <div className="relative w-full">
