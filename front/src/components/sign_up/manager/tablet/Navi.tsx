@@ -19,6 +19,9 @@ export default function Navi({ selected, setSelected, step }: Props) {
       setSelected(index);
     }
   };
+  const handleCenter = () => {
+    router.push("/sign_up/manager/center");
+  };
   return (
     <div className="w-[247px] h-full border-r border-[#666666] flex flex-col justify-between p-[0px_33px] pt-[34px]">
       <div className="flex flex-col gap-[16px]">
@@ -50,6 +53,7 @@ export default function Navi({ selected, setSelected, step }: Props) {
             className={`text-[24px] font-bold ${
               step === 1 ? "text-key" : "text-[#A7ABA5]"
             }`}
+            onClick={handleCenter}
           >
             1. 센터 등록
           </div>
