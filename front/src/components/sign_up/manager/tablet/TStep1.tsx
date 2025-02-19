@@ -20,10 +20,12 @@ export default function TStep1() {
     }
   };
   const progress = (step / 8) * 100;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleNext = () => {
     setStep((prev) => prev + 1);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleBack = () => {
     setStep((prev) => prev - 1);
   };

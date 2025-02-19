@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import GuardianProfile from "./GuardianProfile";
 import GuardianTuning from "./GuardianTuning";
@@ -17,6 +16,7 @@ interface Area {
   name: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface Caregiver {
   id: string;
   name: string;
@@ -234,8 +234,8 @@ export default function Chat({ elderId, selectedGuardianId }: Prop) {
               {message.map((m, idx) => (
                 <div key={idx}></div>
               ))}
-              <div className="flex gap-[6px] mt-[13px]">
-                {message.filters.map((filter, idx) => (
+              {/* <div className="flex gap-[6px] mt-[13px]">
+                {message.filters?.map((filter, idx) => (
                   <div
                     className="px-[10px] py-[5px] bg-[#D7F3D1] rounded-[8px] text-[22px] text-[#58C185] font-[500]"
                     key={idx}
@@ -264,8 +264,8 @@ export default function Chat({ elderId, selectedGuardianId }: Prop) {
                     {data.tuning.location}
                   </p>
                 </div>
-              </div>
-              <div className="flex items-center mt-[12px]">
+              </div> */}
+              {/* <div className="flex items-center mt-[12px]">
                 <div className="w-[270px] flex">
                   <p className="text-[22px] text-[#9A9A9A] font-[500] mr-[6px]">
                     시간
@@ -282,7 +282,7 @@ export default function Chat({ elderId, selectedGuardianId }: Prop) {
                     {data.tuning.salary}
                   </p>
                 </div>
-              </div>
+              </div> */}
               <button
                 onClick={() => setIsTuningModal(true)}
                 className="mt-[20px] text-[22px] font-[600] text-[#000000] w-[153px] h-[52px] flex items-center justify-center bg-[#FFFFFF] rounded-[10px]"

@@ -24,8 +24,8 @@ export default function Filter({
           onClick={() => setSelectedFilter(filter)}
           className={`whitespace-nowrap px-[13px] py-[5px] text-[18px] font-[500] rounded-[6px] flex items-center justify-center ${
             selectedFilter === filter
-              ? "bg-[#58C185] text-[#FFFFFF]"
-              : "bg-[#CECECE] text-[#FFFFFF]"
+              ? "bg-[#D7F3D1] text-[#2D8859]"
+              : "bg-[#F7F8FA] text-[#666666]"
           }`}
         >
           {filter}

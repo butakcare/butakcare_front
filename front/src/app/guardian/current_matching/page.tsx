@@ -26,6 +26,7 @@ function InnerComponent() {
       times: ["09:00~12:00"],
       location: "서울특별시 동작구",
       salary: "시급 15,000원",
+      isSentByCaregiver: true,
     },
     {
       id: 2,
@@ -35,6 +36,7 @@ function InnerComponent() {
       times: ["09:00~12:00"],
       location: "서울특별시 강남구",
       salary: "시급 75,000원",
+      isSentByCaregiver: true,
     },
     {
       id: 3,
@@ -44,6 +46,7 @@ function InnerComponent() {
       times: ["09:00~12:00"],
       location: "서울특별시 종로구",
       salary: "시급 22,000원",
+      isSentByCaregiver: true,
     },
   ];
   const filterMatch = matching.find((match) => match.id === Number(id));

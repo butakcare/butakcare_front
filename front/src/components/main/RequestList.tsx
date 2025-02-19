@@ -41,8 +41,6 @@ export default function RequestList() {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL_KEY}/api/profiles/elderly/?matching=true`
       );
-
-      console.log(response.data);
       setElderData(response.data);
     };
     fetchGet();
@@ -52,6 +50,7 @@ export default function RequestList() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [searchText, setSearchText] = useState<string>("");
   const [selectedGuardianId, setSelectedGuardianId] = useState<number>(0);
+  const [guardianName, setGuardianName] = useState<string>("");
   const [guardianStatus, setGuardianStatus] = useState<string>("");
   const [elderId, setElderId] = useState<number>(0);
 
@@ -180,6 +179,7 @@ export default function RequestList() {
             <GuardianList
               elderId={elderId}
               setElderId={setElderId}
+              setGuardianName={setGuardianName}
               selectedGuardianId={selectedGuardianId}
               setSelectedGuardianId={setSelectedGuardianId}
               setGuardianStatus={setGuardianStatus}
@@ -193,7 +193,7 @@ export default function RequestList() {
         ) : guardianStatus === "수락" ? (
           <ChatAccept
             elderName={elderData[0]?.name}
-            guardianName={elderData[selectedGuardianId]?.name}
+            guardianName={guardianName}
           />
         ) : (
           <ChatRefusal />

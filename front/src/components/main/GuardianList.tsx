@@ -9,6 +9,7 @@ interface Prop {
   setSelectedGuardianId: React.Dispatch<SetStateAction<number>>;
   setElderId: React.Dispatch<SetStateAction<number>>;
   setGuardianStatus: React.Dispatch<SetStateAction<string>>;
+  setGuardianName: React.Dispatch<SetStateAction<string>>;
 }
 
 interface List {
@@ -31,6 +32,7 @@ export default function GuardianList({
   elderId,
   setGuardianStatus,
   setSelectedGuardianId,
+  setGuardianName,
 }: Prop) {
   const [elderData, setElderData] = useState<List[]>([]);
 
@@ -48,9 +50,16 @@ export default function GuardianList({
 
   const [selectedGuardian, setSelectedGuardian] = useState<number>(0);
   useEffect(() => {
+    setGuardianName(elderData[selectedGuardian]?.caregiver);
     setSelectedGuardianId(elderData[selectedGuardian]?.id);
     setGuardianStatus(elderData[selectedGuardian]?.status || "조율 중");
-  }, [elderData, selectedGuardian, setGuardianStatus, setSelectedGuardianId]);
+  }, [
+    elderData,
+    selectedGuardian,
+    setGuardianName,
+    setGuardianStatus,
+    setSelectedGuardianId,
+  ]);
   return (
     <div className="flex flex-col items-center w-[362px] h-full">
       <div className="mt-[20px] flex w-[318px] pl-[15px] rounded-[10px] h-[44px] flex items-center">
