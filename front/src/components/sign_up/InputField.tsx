@@ -17,7 +17,7 @@ export default function InputField({
     <div className="flex flex-col">
       <label
         htmlFor="name"
-        className={`text-[#666666] font-semibold text-[18px] pb-[10px] w-[354px] ${
+        className={`tablet:text-[24px] text-[#666666] font-semibold text-[18px] pb-[10px] w-[354px] ${
           on ? "" : "hidden"
         }`}
       >
@@ -29,7 +29,7 @@ export default function InputField({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="w-[354px] h-[52px] p-[15px_16px] text-black rounded-[10px] border border-[#666666] focus:outline-none"
+          className="w-[354px] tablet:w-[516px] tablet:text-[22px] tablet:h-[58px] font-semibold h-[52px] p-[15px_16px] text-black rounded-[10px] border border-[#666666] focus:outline-none"
         />
       </div>
     </div>

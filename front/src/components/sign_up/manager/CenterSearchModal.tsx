@@ -73,19 +73,26 @@ export default function CenterSearchModal({
 
   if (!isOpen) return null;
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 top-[110px] ">
+    <div className="fixed inset-0 flex items-center justify-center z-50">
+      <div className="fixed inset-0 bg-black bg-opacity-50" />
+
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white w-full h-full fixed rounded-[10px] overflow-hidden"
+        className="bg-white w-full h-full relative rounded-[10px] overflow-hidden 
+        tablet:w-[640px] tablet:h-[582px] tablet:fixed tablet:top-1/2 tablet:left-1/2 tablet:transform tablet:-translate-x-1/2 tablet:-translate-y-1/2"
       >
-        <div className="p-[15px_24px]">
+        <div className="p-[15px_24px] m-[19px_33px]">
+          <div className="font-semibold text-black text-[30px] w-full mb-[25px] text-center">
+            등록된 센터 찾기
+          </div>
           <div className="relative flex flex-row items-center align-center">
             <input
               type="text"
-              value={searchTerm}
+              defaultValue={searchTerm}
               onChange={handleSearchChange}
               placeholder="검색"
-              className="w-full h-[52px] pl-[16px] font-semibold pr-12 border border-[#666666] rounded-[10px] focus:outline-none"
+              className="w-full h-[52px] pl-[16px] font-semibold pr-12 border border-[#666666] rounded-[10px] focus:outline-none
+    tablet:h-[58px] tablet:text-[22px]"
             />
             <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
               {isLoading ? (
@@ -97,7 +104,10 @@ export default function CenterSearchModal({
           </div>
         </div>
 
-        <div className="max-h-[400px] overflow-y-auto pl-[24px] pr-[24px] bg-white">
+        <div
+          className="max-h-[300px] overflow-y-auto tablet:w-[526px] ml-[55px] bg-white
+        tablet:max-h-[300px]"
+        >
           {filteredCenters.map((center, index) => (
             <div key={index} className="group w-full border-b border-[#DFE3E2]">
               <button
@@ -105,7 +115,7 @@ export default function CenterSearchModal({
                   onSelect(center);
                   onClose();
                 }}
-                className="w-full p-[10px_20px] bg-white text-left text-[22px] font-semibold hover:bg-[#F7F8FA]"
+                className="w-full p-[10px_20px] bg-white text-left text-[22px] font-semibold hover:bg-sub rounded-[10px]"
               >
                 {center}
               </button>
@@ -117,13 +127,15 @@ export default function CenterSearchModal({
             </div>
           )}
         </div>
-        <div className="flex align-center items-center flex-col pt-[589px]">
+
+        {/* 닫기 버튼을 하단에 고정 */}
+        <div className="absolute bottom-0 left-[160px] p-6 bg-white">
           <LongBtn
             text="닫기"
-            disabled={true}
+            disabled={false}
             onClick={onClose}
             type="button"
-            width={354}
+            width={269}
           />
         </div>
       </div>

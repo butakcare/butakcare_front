@@ -35,8 +35,20 @@ export default function ManagerStep8({
   return (
     <div>
       <TitleText text1="프로필 사진을 등록해주세요." text2="" on={false} />
+      <div className="">
+        <div className="flex flex-row">
+          <div className="text-[30px] leading-[50px] font-bold flex items-center">
+            프로필 사진을 등록해주세요.
+            <div className="flex items-end">
+              <span className="font-semibold text-black text-[22px] ml-[10px]">
+                (선택)
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="h-[30px]" />
-      <div className="flex flex-col w-[354px] justify-center items-center">
+      <div className="flex flex-col w-[354px]  tablet:items-start justify-center items-center">
         {selectedImage ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -70,10 +82,22 @@ export default function ManagerStep8({
       <div className="h-[49px]" />
 
       <TitleText text1="한줄 소개를 입력해주세요." text2="" on={false} />
+      <div className="">
+        <div className="flex flex-row">
+          <div className="text-[30px] leading-[50px] font-bold flex items-center">
+            한줄 소개를 입력해주세요.
+            <div className="flex items-end">
+              <span className="font-semibold text-black text-[22px] ml-[10px]">
+                (선택)
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="h-[21px]" />
 
-      <form className="flex flex-col justify-center items-center align-center">
-        <div className="relative w-[354px]">
+      <form className="flex flex-col  tablet:items-start justify-center items-center align-center">
+        <div className="relative w-[354px]  tablet:w-[516px]">
           <textarea
             className="w-full h-[138px] p-4 border rounded-lg resize-none focus:outline-none text-semibold text-black font-semibold border-[#666666]"
             placeholder="예시) 세심한 전문성으로 돌봄을 실천합니다.         어르신의 일상을 위해 최선을 다합니다."

@@ -27,12 +27,24 @@ export default function ManagerStep1_5({
   };
 
   return (
-    <div className="w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
+    <div className="w-full h-full max-tablet:flex max-tablet:flex-col max-tablet:items-center">
       <div>
         <TitleText text1="센터 직위를" text2="선택해주세요." on={true} />
       </div>
+      <div className="">
+        <div className="flex flex-row">
+          <div className="text-[30px] leading-[50px] font-bold flex items-center">
+            센터 직위를 선택해주세요.
+            <div className="flex items-end">
+              <span className="font-semibold text-[#FF602B] text-[26px]">
+                *
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <form className="flex flex-col justify-center items-center align-center pt-[25px] font-semibold text-[22px]">
+      <form className="flex flex-col tablet:items-start justify-center items-center align-center pt-[25px] font-semibold text-[22px]">
         <div className="relative w-full max-w-md">
           <button
             type="button"
@@ -60,12 +72,12 @@ export default function ManagerStep1_5({
           </button>
 
           {isOpen && (
-            <div className="absolute z-10 w-full mt-1 bg-white border border-[#666666] rounded-[10px] shadow-lg">
+            <div className="absolute z-10 w-[156px]  mt-1 bg-white border border-[#666666] rounded-[10px] shadow-lg">
               {roles.map((role) => (
                 <button
                   key={role.id}
                   type="button"
-                  className="w-full px-4 py-3 text-left hover:bg-key hover:text-white focus:bg-key rounded-[10px]"
+                  className="w-[156px] px-4 py-3 text-left hover:bg-key hover:text-white focus:bg-key rounded-[10px]"
                   onClick={() => handleRoleSelect(role.id)}
                 >
                   {role.name}

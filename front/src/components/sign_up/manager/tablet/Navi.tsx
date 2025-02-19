@@ -19,7 +19,7 @@ export default function Navi({ selected, setSelected }: Props) {
     }
   };
   return (
-    <div className="w-[247px] h-full border-r border-[#666666] flex flex-col justify-between ml-[33px] pt-[34px]">
+    <div className="w-[247px] h-full border-r border-[#666666] flex flex-col justify-between p-[0px_33px] pt-[34px]">
       <div className="flex flex-col gap-[16px]">
         <Image
           src="/assets/icons/icon_logo_full.svg"

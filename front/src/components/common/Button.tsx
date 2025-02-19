@@ -32,7 +32,7 @@ export function LongBtn({
     <div>
       <button
         type={type}
-        className={`w-[${width}px] h-[52px] rounded-[10px] font-semibold text-[18px] transition-all
+        className={`w-[${width}px] tablet:ml-[505px] h-[52px] rounded-[10px] font-semibold text-[18px] transition-all
           ${
             disabled
               ? "bg-sub text-[#666666] cursor-not-allowed"
@@ -56,9 +56,9 @@ export function ShortsBtn({
   width,
 }: ShortsBtnProps) {
   return (
-    <div className="flex flex-row gap-[4px]">
+    <div className="flex flex-row gap-[4px] tablet:gap-[218px] ">
       <button
-        className={`w-[${width}px] h-[52px] rounded-[10px] font-semibold text-[18px] transition-all
+        className={`w-[${width}px] tablet:bg-[#DFE3E2] h-[52px] rounded-[10px] font-semibold text-[18px] transition-all
         border border-stroke text-black`}
         onClick={onClickBack}
       >

@@ -146,30 +146,41 @@ export default function ManagerSignup() {
   };
 
   return (
-    <div className="w-full h-full">
+    <div className="w-screen h-screen">
       {/*테블릿릿 */}
-      <div className="w-full h-full flex max-tablet:hidden">
+      <div className="w-full h-screen flex max-tablet:hidden">
         <Navi selected={selected} setSelected={setSelected} />
-        {showCurrentStep()}
-        <div className="fixed bottom-0 w-full flex justify-center bg-white py-4">
-          {step === 1 ? (
-            <LongBtn
-              text="다음"
-              disabled={handleFormbtn() || loading}
-              onClick={handleNext}
-              type="button"
-              width={354}
+        <div className="m-[30px]  flex-1">
+          <strong className="text-[30px] font-[700] text-[#2E2E2E]">
+            센터 관리자 회원가입
+          </strong>
+          <div className="w-[726px] bg-gray-200 h-[6px] m-[20px_0px]">
+            <div
+              className="h-full bg-key transition-all duration-300 ease-in-out"
+              style={{ width: `${progress}%` }}
             />
-          ) : (
-            <ShortsBtn
-              next={step === 3 && loading ? "저장 중.." : "다음"}
-              back="이전"
-              disabled={handleFormbtn() || loading}
-              onClickNext={step === 3 ? handleSubmit : handleNext}
-              onClickBack={handleBack}
-              width={175}
-            />
-          )}
+          </div>
+          {showCurrentStep()}
+          <div className="fixed bottom-10 flex justify-center bg-white py-4">
+            {step <= 4 ? (
+              <LongBtn
+                text="다음"
+                disabled={handleFormbtn() || loading}
+                onClick={handleNext}
+                type="button"
+                width={254}
+              />
+            ) : (
+              <ShortsBtn
+                next={step === 5 && loading ? "저장 중.." : "다음"}
+                back="이전"
+                disabled={handleFormbtn() || loading}
+                onClickNext={step === 5 ? handleSubmit : handleNext}
+                onClickBack={handleBack}
+                width={254}
+              />
+            )}
+          </div>
         </div>
       </div>
 

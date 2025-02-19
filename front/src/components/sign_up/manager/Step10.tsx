@@ -35,9 +35,22 @@ export default function ManagerStep10({
   };
   return (
     <div>
-      <TitleText text1="성함을 입력해주세요." text2="" on={true} />
-
-      <form className="flex flex-col justify-center items-center align-center pt-[21px]">
+      <div>
+        <TitleText text1="관리자 성함을 입력해주세요." text2="" on={true} />
+      </div>
+      <div className="">
+        <div className="flex flex-row">
+          <div className="text-[30px] leading-[50px] font-bold flex items-center">
+            관리자 성함을 입력해주세요.
+            <div className="flex items-end">
+              <span className="font-semibold text-[#FF602B] text-[26px]">
+                *
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form className="flex flex-col  tablet:items-start justify-center items-center align-center pt-[21px]">
         <InputField
           label="성함"
           value={name}
@@ -48,7 +61,18 @@ export default function ManagerStep10({
         <div className="h-[50px]" />
         <TitleText text1="전화번호를 입력해주세요." text2="" on={true} />
         <div className="h-[21px]" />
-
+        <div className="">
+          <div className="flex flex-row pb-[25px]">
+            <div className="text-[30px] leading-[50px] font-bold flex items-center">
+              전화번호를 입력해주세요.
+              <div className="flex items-end">
+                <span className="font-semibold text-[#FF602B] text-[26px]">
+                  *
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
         <InputField
           label="전화번호"
           value={formattedPhone}
