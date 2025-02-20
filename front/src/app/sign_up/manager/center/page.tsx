@@ -10,6 +10,7 @@ import ManagerStep7 from "@/components/sign_up/manager/Step7";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import axios from "axios";
+import Navi from "@/components/sign_up/manager/tablet/Navi";
 interface ManagerForm {
   name: string;
   photo: null;
@@ -56,6 +57,7 @@ export default function ManagerSignup() {
     center_period_year: 0,
     center_period_month: 0,
   });
+  const [selected, setSelected] = useState<number>(1);
 
   const progress = (step / 8) * 100;
 
@@ -201,38 +203,70 @@ export default function ManagerSignup() {
   };
 
   return (
-    <div className="w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
-      <div className="flex flex-col items-center">
-        <Header name="센터 등록" />
-        <div className="w-[354px] bg-gray-200 h-1">
-          <div
-            className="h-full bg-key transition-all duration-300 ease-in-out"
-            style={{ width: `${progress}%` }}
-          />
+    <div className="w-screen h-screen ">
+      <div>
+        {" "}
+        <div className="w-full h-screen flex max-tablet:hidden">
+          <Navi selected={selected} setSelected={setSelected} step={1} />
+          <div className="m-[30px]  flex-1">
+            <strong className="text-[30px] font-[700] text-[#2E2E2E]">
+              센터 등록
+            </strong>
+            <div className="w-[726px] bg-gray-200 h-[6px] m-[20px_0px]">
+              <div
+                className="h-full bg-key transition-all duration-300 ease-in-out"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+            {showCurrentStep()}
+            <div className="fixed bottom-10 flex justify-center bg-white py-4">
+              <ShortsBtn
+                next={step === 7 && loading ? "저장 중.." : "다음"}
+                back="이전"
+                disabled={handleFormbtn() || loading}
+                onClickNext={step === 7 ? handleSubmit : handleNext}
+                onClickBack={handleBack}
+                width={254}
+              />
+            </div>
+          </div>
         </div>
       </div>
+      <div>
+        <div className="tablet:hidden  w-screen h-screen max-tablet:flex max-tablet:flex-col max-tablet:items-center">
+          <div className="flex flex-col items-center">
+            <Header name="센터 등록" />
+            <div className="w-[354px] bg-gray-200 h-1">
+              <div
+                className="h-full bg-key transition-all duration-300 ease-in-out"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </div>
 
-      <div className="h-[78px]" />
-      {showCurrentStep()}
-      <div className="fixed bottom-0 w-full flex justify-center bg-white py-4">
-        {step === 2 ? (
-          <LongBtn
-            text="다음"
-            disabled={handleFormbtn() || loading}
-            onClick={handleNext}
-            type="button"
-            width={354}
-          />
-        ) : (
-          <ShortsBtn
-            next={step === 7 && loading ? "저장 중.." : "다음"}
-            back="이전"
-            disabled={handleFormbtn() || loading}
-            onClickNext={step === 7 ? handleSubmit : handleNext}
-            onClickBack={handleBack}
-            width={175}
-          />
-        )}
+          <div className="h-[78px]" />
+          {showCurrentStep()}
+          <div className="fixed bottom-0 w-full flex justify-center bg-white py-4">
+            {step === 2 ? (
+              <LongBtn
+                text="다음"
+                disabled={handleFormbtn() || loading}
+                onClick={handleNext}
+                type="button"
+                width={354}
+              />
+            ) : (
+              <ShortsBtn
+                next={step === 7 && loading ? "저장 중.." : "다음"}
+                back="이전"
+                disabled={handleFormbtn() || loading}
+                onClickNext={step === 7 ? handleSubmit : handleNext}
+                onClickBack={handleBack}
+                width={175}
+              />
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

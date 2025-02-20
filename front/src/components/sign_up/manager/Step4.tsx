@@ -32,8 +32,15 @@ export default function ManagerStep4({
   return (
     <div>
       <TitleText text1="전화번호를 입력해주세요." text2="" on={true} />
-
-      <form className="flex flex-col justify-center items-center align-center pt-[21px]">
+      <div className="flex flex-row">
+        <div className="text-[30px] leading-[50px] font-bold flex items-center">
+          전화번호를 입력해주세요.
+          <div className="flex items-end">
+            <span className="font-semibold text-[#FF602B] text-[26px]">*</span>
+          </div>
+        </div>
+      </div>
+      <form className="flex flex-col tablet:items-start justify-center items-center align-center pt-[21px]">
         <InputField
           label="전화번호"
           value={formattedPhone}

@@ -12,14 +12,19 @@ export default function Navigation({ selected, setSelected }: Props) {
   const router = useRouter();
 
   const handleCLick = (index: number) => {
+    if (index == 1) {
+      router.push("/sign_in");
+    } else {
+      setSelected(index);
+    }
     if (index == 2) {
-      router.push("/sign_up/manager");
+      router.push("/sign_up");
     } else {
       setSelected(index);
     }
   };
   return (
-    <div className="w-[247px] h-full border-r border-[#909090] flex flex-col justify-between pl-[33px] pt-[34px]">
+    <div className="w-[247px] h-full border-r border-[#909090] flex flex-col justify-between pl-[33px] pr-[33px] pt-[34px]">
       <div className="flex flex-col gap-[16px]">
         <Image
           src="/assets/icons/icon_logo_full.svg"
@@ -34,7 +39,7 @@ export default function Navigation({ selected, setSelected }: Props) {
               className={`w-[178px] h-[49px] rounded-[10px] flex items-center pl-[19px] cursor-pointer
                     ${
                       index + 1 == selected
-                        ? "text-[#FFFFFF] bg-[#DFDFDF]"
+                        ? "text-key bg-sub"
                         : "text-[#9A9A9A] bg-[#FFFFFF]"
                     }  
                     `}

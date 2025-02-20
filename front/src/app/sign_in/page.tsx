@@ -6,8 +6,8 @@ import { LongBtn, XBLBtn } from "@/components/common/Button";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Navigation from "@/components/sign_in/Navigation";
-import Login from "@/components/sign_in/Login";
 import axios from "axios";
+import Login from "@/components/sign_in/Login";
 
 export default function SignUpPage() {
   const router = useRouter();
@@ -15,8 +15,8 @@ export default function SignUpPage() {
   const [loading, setLoading] = useState<boolean>(false);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [type, setType] = useState<string>("");
   const isFormValid = username !== "" && password !== "";
+  const [type, setType] = useState<string>("");
   const handleSubmit = async () => {
     setLoading(true);
     try {
