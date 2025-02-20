@@ -5,9 +5,33 @@ import Checked from "@/../public/assets/icons/icon_check.svg";
 
 interface Prop {
   setIsCoordination: React.Dispatch<SetStateAction<boolean>>;
+  setMessage: React.Dispatch<SetStateAction<CareRequest[]>>;
 }
 
-export default function CoordinationRequestModal({ setIsCoordination }: Prop) {
+interface CareRequest {
+  id: number;
+  care_details: CareDetails;
+  days: string[];
+  sender: string;
+  status: string; // 상태는 제한된 값만 가능하므로 문자열 리터럴 타입으로 설정
+  start_hour: number;
+  start_minute: number;
+  end_hour: number;
+  end_minute: number;
+  detail: string;
+  wage: number | null;
+  created_at: string;
+  matching: number;
+}
+
+interface CareDetails {
+  [key: string]: string[]; // care_details 내의 항목들이 배열이므로 이와 같이 정의
+}
+
+export default function CoordinationRequestModal({
+  setIsCoordination,
+  setMessage,
+}: Prop) {
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
   const [salaryWeek, setSalaryWeek] = useState<number>(0);
   const [salaryMonth, setSalaryMonth] = useState<number>(0);
@@ -17,6 +41,7 @@ export default function CoordinationRequestModal({ setIsCoordination }: Prop) {
   const [startMinute, setStartMinute] = useState("");
   const [endHour, setEndHour] = useState("");
   const [endMinute, setEndMinute] = useState("");
+  const [req, setReq] = useState<string>("");
 
   const hours = Array.from({ length: 13 }, (_, i) =>
     (i + 9).toString().padStart(2, "0")
@@ -70,6 +95,26 @@ export default function CoordinationRequestModal({ setIsCoordination }: Prop) {
     calculateMonthlySalary();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [salaryWeek, selectedDays, startHour, startMinute, endHour, endMinute]);
+
+  const handleClick = () => {
+    const newMessage: CareRequest = {
+      id: 10,
+      care_details: { details: ["3등급", "이동보조", "생활보조"] },
+      days: ["수", "목", "금"],
+      sender: "관리자",
+      status: "조율",
+      start_hour: Number(startHour),
+      start_minute: Number(startMinute),
+      end_hour: Number(endHour),
+      end_minute: Number(endMinute),
+      detail: req,
+      wage: salaryWeek,
+      created_at: "2025년 2월 20일",
+      matching: 10,
+    };
+    setIsCoordination(false);
+    setMessage((prev) => [...prev, newMessage]);
+  };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -378,6 +423,7 @@ export default function CoordinationRequestModal({ setIsCoordination }: Prop) {
           <textarea
             placeholder="0/500"
             maxLength={500}
+            onChange={(e) => setReq(e.target.value)}
             className="w-[677px] h-[115px] bg-[#F7F8FA] rounded-[14px] text-[22px] font-[500] px-[21px] py-[15px]"
           />
           <p className="text-[22px] font-[500] text-[#666666] mt-[27px]">
@@ -387,7 +433,10 @@ export default function CoordinationRequestModal({ setIsCoordination }: Prop) {
           </p>
         </div>
         <div className="mt-[17px]  flex w-[742px] justify-end gap-[8px] mr-[30px]">
-          <button className="w-[269px] h-[84px] bg-[#58C185] rounded-[10px] text-[22px] text-[#FFFFFF] font-[600]">
+          <button
+            onClick={() => handleClick()}
+            className="w-[269px] h-[84px] bg-[#58C185] rounded-[10px] text-[22px] text-[#FFFFFF] font-[600]"
+          >
             근무 조건 등록
           </button>
         </div>

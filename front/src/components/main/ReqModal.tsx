@@ -1,10 +1,31 @@
 import React from "react";
 
-interface Prop {
-  setIsTuningModal: React.Dispatch<React.SetStateAction<boolean>>;
+interface CareDetails {
+  [key: string]: string[]; // care_details 내의 항목들이 배열이므로 이와 같이 정의
 }
 
-export default function GuardianTuning({ setIsTuningModal }: Prop) {
+interface CareRequest {
+  id: number;
+  care_details: CareDetails;
+  days: string[];
+  sender: string;
+  status: string; // 상태는 제한된 값만 가능하므로 문자열 리터럴 타입으로 설정
+  start_hour: number;
+  start_minute: number;
+  end_hour: number;
+  end_minute: number;
+  detail: string;
+  wage: number | null;
+  created_at: string;
+  matching: number;
+}
+
+interface Prop {
+  setReqModal: React.Dispatch<React.SetStateAction<boolean>>;
+  message: CareRequest;
+}
+
+export default function ReqModal({ setReqModal, message }: Prop) {
   const data = {
     name: "김요양",
     profile: {
@@ -29,12 +50,26 @@ export default function GuardianTuning({ setIsTuningModal }: Prop) {
       salary: "시급 16,000원",
     },
     tuning: {
-      text: "휠체어 종류를 같이 알려주세요",
+      text: "",
     },
     assistance: {
       walk: ["휠체어 이동보조"],
       daily: ["청소", "빨래 도움", "말벗 등 정서지원", "산책 등 간단한 운동"],
     },
+  };
+
+  const calculateMonthlySalary = (wage: number) => {
+    const start = message.start_hour + message.start_minute / 60;
+    const end = message.end_hour + message.end_minute / 60;
+    const workHours = end - start;
+    const weeklySalary = wage * workHours * message.days.length;
+    const monthlySalary = weeklySalary * 4; // 4주 기준
+
+    return monthlySalary;
+  };
+
+  const formatCurrency = (value: number) => {
+    return value.toLocaleString("ko-KR");
   };
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -101,7 +136,7 @@ export default function GuardianTuning({ setIsTuningModal }: Prop) {
                 />
               </g>
             </svg>
-            <p className="text-[34px] font-[700] text-[#484848] ml-4">송재현</p>
+            <p className="text-[34px] font-[700] text-[#484848] ml-4">관리자</p>
           </div>
         </div>
         <div className="flex items-start gap-[18px]">
@@ -115,7 +150,7 @@ export default function GuardianTuning({ setIsTuningModal }: Prop) {
                   요일
                 </p>
                 <p className="text-[22px] whitespace-nowrap font-[500] text-[#000000]">
-                  수, 목, 금
+                  {message.days.join(", ")}
                 </p>
               </div>
               <div className="flex gap-[53px]">
@@ -123,20 +158,28 @@ export default function GuardianTuning({ setIsTuningModal }: Prop) {
                   시간
                 </p>
                 <div className="text-[22px] whitespace-nowrap font-[500] text-[#000000]">
-                  {data.condition.time.map((t, idx) => (
-                    <p key={idx}>
-                      {t}
-                      {idx < data.condition.time.length - 1 && ", "}
-                    </p>
-                  ))}
+                  {`${String(message.start_hour).padStart(2, "0")}:${String(
+                    message.start_minute
+                  ).padStart(2, "0")}
+    ~ ${String(message.end_hour).padStart(2, "0")}:${String(
+                    message.end_minute
+                  ).padStart(2, "0")}`}
                 </div>
               </div>
-              <div className="flex gap-[53px] h-[26px]">
+              <div className="flex gap-[53px]">
                 <p className="text-[22px] whitespace-nowrap font-[500] text-[#9A9A9A]">
                   급여
                 </p>
                 <p className="text-[22px] whitespace-nowrap font-[600] text-[#000000]">
-                  시급 15,000원
+                  {message?.wage
+                    ? `시급 ${formatCurrency(message.wage)}원`
+                    : "시급 15,000원"}
+                  <br />
+                  {message?.wage
+                    ? `월급 ${formatCurrency(
+                        calculateMonthlySalary(message.wage)
+                      )}원`
+                    : " 월급 540,000원"}
                 </p>
               </div>
             </div>
@@ -146,7 +189,7 @@ export default function GuardianTuning({ setIsTuningModal }: Prop) {
               </strong>
               <div className="flex flex-col w-[352px] px-[20px] py-[16px] min-h-[115px] bg-[#F7F8FA] rounded-[14px] mt-4">
                 <p className="text-[22px] text-[#676767] font-[500]">
-                  {data.tuning.text}
+                  {message.detail}
                 </p>
               </div>
             </div>
@@ -193,7 +236,7 @@ export default function GuardianTuning({ setIsTuningModal }: Prop) {
         </div>
         <div className="mt-[30px] w-[683px] flex items-center justify-end mb-[32px]">
           <button
-            onClick={() => setIsTuningModal(false)}
+            onClick={() => setReqModal(false)}
             className="w-[196px] h-[84px] bg-[#D7F3D1] rounded-[14px] text-[30px] text-[#000000] font-[700]"
           >
             닫기

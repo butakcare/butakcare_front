@@ -2,14 +2,18 @@ import React, { SetStateAction } from "react";
 
 interface Prop {
   setIsAcceptModal: React.Dispatch<SetStateAction<boolean>>;
+  setGuardianStatus: React.Dispatch<SetStateAction<string>>;
 }
 
-export default function AcceptModal({ setIsAcceptModal }: Prop) {
+export default function AcceptModal({
+  setIsAcceptModal,
+  setGuardianStatus,
+}: Prop) {
   const data = {
-    schedules: ["월", "수", "금"],
-    time: ["12:00 ~ 18:00"],
+    schedules: ["수", "목", "금"],
+    time: ["09:00 ~ 12:00"],
     location: ["서울특별시 동작구"],
-    salaryWeek: 16000,
+    salaryWeek: 15000,
   };
 
   const formatCurrency = (value: number) => {
@@ -81,12 +85,20 @@ export default function AcceptModal({ setIsAcceptModal }: Prop) {
         </div>
         <div className="mt-[17px]  flex items-center gap-[8px]">
           <button
-            onClick={() => setIsAcceptModal(false)}
+            onClick={() => {
+              setIsAcceptModal(false);
+            }}
             className="w-[269px] h-[52px] bg-[#DFE3E2] rounded-[10px] text-[22px] text-[#666666] font-[600]"
           >
             아니요
           </button>
-          <button className="w-[269px] h-[52px] bg-[#58C185] rounded-[10px] text-[22px] text-[#FFFFFF] font-[600]">
+          <button
+            onClick={() => {
+              setIsAcceptModal(false);
+              setGuardianStatus("수락");
+            }}
+            className="w-[269px] h-[52px] bg-[#58C185] rounded-[10px] text-[22px] text-[#FFFFFF] font-[600]"
+          >
             수락하기
           </button>
         </div>

@@ -2,14 +2,18 @@ import React, { SetStateAction } from "react";
 
 interface Prop {
   setIsRefusalModal: React.Dispatch<SetStateAction<boolean>>;
+  setGuardianStatus: React.Dispatch<SetStateAction<string>>;
 }
 
-export default function RefusaltModal({ setIsRefusalModal }: Prop) {
+export default function RefusaltModal({
+  setIsRefusalModal,
+  setGuardianStatus,
+}: Prop) {
   const data = {
-    schedules: ["월", "수", "금"],
-    time: ["12:00 ~ 18:00"],
+    schedules: ["수", "목", "금"],
+    time: ["09:00 ~ 12:00"],
     location: ["서울특별시 동작구"],
-    salaryWeek: 16000,
+    salaryWeek: 15000,
   };
 
   const formatCurrency = (value: number) => {
@@ -86,7 +90,13 @@ export default function RefusaltModal({ setIsRefusalModal }: Prop) {
           >
             아니요
           </button>
-          <button className="w-[269px] h-[52px] bg-[#58C185] rounded-[10px] text-[22px] text-[#FFFFFF] font-[600]">
+          <button
+            onClick={() => {
+              setIsRefusalModal(false);
+              setGuardianStatus("거절");
+            }}
+            className="w-[269px] h-[52px] bg-[#58C185] rounded-[10px] text-[22px] text-[#FFFFFF] font-[600]"
+          >
             거절하기
           </button>
         </div>

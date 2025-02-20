@@ -1,14 +1,16 @@
-import { useEffect, useState } from "react";
+import React, { SetStateAction, useEffect, useState } from "react";
 import GuardianProfile from "./GuardianProfile";
 import GuardianTuning from "./GuardianTuning";
 import AcceptModal from "./AcceptModal";
 import RefusaltModal from "./RefusalModal";
 import CoordinationRequestModal from "./CoordinationRequestModal";
 import axios from "axios";
+import ReqModal from "./ReqModal";
 
 interface Prop {
   elderId: number;
   selectedGuardianId: number;
+  setGuardianStatus: React.Dispatch<SetStateAction<string>>;
 }
 
 interface Area {
@@ -85,51 +87,30 @@ interface CareRequest {
   end_minute: number;
   detail: string;
   wage: number | null;
-  created_at: string; // 날짜는 ISO 문자열로 표현
+  created_at: string;
   matching: number;
 }
 
-export default function Chat({ elderId, selectedGuardianId }: Prop) {
+export default function Chat({
+  elderId,
+  selectedGuardianId,
+  setGuardianStatus,
+}: Prop) {
   // const [guardianData, setGuardianData] = useState<Caregiver>();
-  const samplePerson: Person = {
-    address: "서울특별시 강남구 삼성로 85길 17",
-    address_detail: "3층",
-    available_area: [
-      { id: 1, name: "강남구" },
-      { id: 2, name: "서초구" },
-    ],
-    birth: "1985-05-12", // YYYY-MM-DD 형식
-    career_content: "5년간 요양보호사 경력",
-    career_month: 60, // 5년 경력
-    career_year: 5,
-    caregiver_qualification: "요양보호사 2급",
-    days: ["월", "화", "수", "목", "금"], // 요일 배열
-    description: "세심한 관리와 배려로 어르신들을 돌보는 것을 좋아합니다.",
-    gender: "여자", // 여성
-    has_car: true,
-    has_dementia_training: true,
-    id: "123456789",
-    max_wage: 15000,
-    min_wage: 12000,
-    name: "홍길동",
-    nursing_assistant_qualification: "간호조무사 2급",
-    phone: "010-1234-5678",
-    photo: null, // 프로필 사진이 없다면 null
-    social_worker_qualification: null, // 사회복지사 자격증이 없다면 null
-    times: ["오전(09:00~12:00)", "오후(12:00~18:00)"], // 근무 가능한 시간대
-  };
+  const [guardian, setGuardian] = useState<Person>();
   const [message, setMessage] = useState<CareRequest[]>([]);
   const [isAcceptModal, setIsAcceptModal] = useState<boolean>(false);
   const [isRefusalModal, setIsRefusalModal] = useState<boolean>(false);
   const [isProfileModal, setIsProfileModal] = useState<boolean>(false);
   const [isTuningModal, setIsTuningModal] = useState<boolean>(false);
   const [isCoordination, setIsCoordination] = useState<boolean>(false);
+  const [reqModal, setReqModal] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchGet = async () => {
       if (selectedGuardianId != 0) {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_API_URL_KEY}/api/matching/${selectedGuardianId}/`
+          `${process.env.NEXT_PUBLIC_API_URL_KEY}/api/matching/8/`
         );
 
         console.log(response.data);
@@ -140,6 +121,31 @@ export default function Chat({ elderId, selectedGuardianId }: Prop) {
     fetchGet();
   }, [selectedGuardianId]);
 
+  useEffect(() => {
+    const fetchGet = async () => {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL_KEY}/api/profiles/caregivers/sjh121476/?full=true`
+      );
+      console.log(response.data);
+      setGuardian(response.data);
+    };
+    fetchGet();
+  }, [selectedGuardianId]);
+
+  const calculateMonthlySalary = (wage: number) => {
+    const start = message[5].start_hour + message[5].start_minute / 60;
+    const end = message[5].end_hour + message[5].end_minute / 60;
+    const workHours = end - start;
+    const weeklySalary = wage * workHours * message[5].days.length;
+    const monthlySalary = weeklySalary * 4; // 4주 기준
+
+    return monthlySalary;
+  };
+
+  const formatCurrency = (value: number) => {
+    return value.toLocaleString("ko-KR");
+  };
+
   function formatDateToKorean(dateString: string): string {
     const date = new Date(dateString);
     return date
@@ -148,7 +154,7 @@ export default function Chat({ elderId, selectedGuardianId }: Prop) {
         month: "long", // 'long'을 사용하면 월 이름이 제대로 나오게 됩니다.
         day: "numeric",
       })
-      .replace(/ /g, ""); // 필요시 공백 제거
+      .replace(/ /g, " "); // 필요시 공백 제거
   }
 
   return (
@@ -246,17 +252,17 @@ export default function Chat({ elderId, selectedGuardianId }: Prop) {
                   />
                 </g>
               </svg>
-              {/* <div>
+              <div>
                 <p className="text-[22px] text-[#A0A0A0] font-[500]">
                   요양보호사
                 </p>
                 <p className="text-[26px] text-[#484848] font-[600]">
-                  {guardianData?.name}{" "}
+                  {guardian?.name}{" "}
                   <span className="text-[22px] text-[#858585] font-[600]">
-                    여성
+                    {guardian?.gender}성
                   </span>
                 </p>
-              </div> */}
+              </div>
             </div>
             <div className="flex flex-col gap-[6px]">
               <button
@@ -273,121 +279,216 @@ export default function Chat({ elderId, selectedGuardianId }: Prop) {
               </button>
             </div>
           </div>
-          <div>
-            <div className="flex items-center justify-center gap-[73px] mt-[21px]">
-              <div className="w-[178px] h-[2px] bg-[#CFCFCF]"></div>
-              <p className="text-[18px] text-[#8E8E8E] font-[600]">
-                {formatDateToKorean(message[0]?.created_at)}
-              </p>
-              <div className="w-[178px] h-[2px] bg-[#CFCFCF]"></div>
-            </div>
-          </div>
-          <div className="mt-[33px] ml-[30px]">
-            <div className="w-[541px] bg-[#F0F0F0] rounded-[14px] pl-[23px] pt-[19px] pb-[24px]">
-              <strong className="text-[30px] text-[#000000] font-[600]">
-                조율을 요청했어요.
-              </strong>
-              {message.map((m, idx) => (
-                <div key={idx}></div>
-              ))}
-              {/* <div className="flex gap-[6px] mt-[13px]">
-                {message.filters?.map((filter, idx) => (
-                  <div
-                    className="px-[10px] py-[5px] bg-[#D7F3D1] rounded-[8px] text-[22px] text-[#58C185] font-[500]"
-                    key={idx}
-                  >
-                    {filter}
-                  </div>
-                ))}
+          <div className="ml-[35px] h-[650px] overflow-y-auto">
+            <div className="h-[50px]">
+              <div className="flex items-center justify-center gap-[73px] mt-[21px]">
+                <div className="w-[178px] h-[2px] bg-[#CFCFCF]"></div>
+                <p className="text-[18px] text-[#8E8E8E] font-[600]">
+                  {formatDateToKorean(message[0]?.created_at)}
+                </p>
+                <div className="w-[178px] h-[2px] bg-[#CFCFCF]"></div>
               </div>
-              <div className="flex items-center mt-[29px]">
-                <div className="w-[270px] flex">
-                  <p className="text-[22px] text-[#9A9A9A] font-[500] mr-[6px]">
-                    요일
-                  </p>
-                  {data.tuning.schedules.map((schdule, idx) => (
-                    <p className="text-[22px] font-[500] mr-[2px]" key={idx}>
-                      {schdule}
-                      {idx < data.tuning.schedules.length - 1 && ", "}
-                    </p>
+            </div>
+            <div className="mt-[33px] ml-[px]">
+              <div className="w-[541px] bg-[#F7F8FA] rounded-[14px] pl-[23px] pt-[19px] pb-[24px] ">
+                <strong className="text-[30px] text-[#000000] font-[600]">
+                  조율을 요청했어요.
+                </strong>
+                <div className="flex gap-[6px] mt-[13px]">
+                  {["3등급", "이동보조", "생활보조"].map((t, idx) => (
+                    <div
+                      key={idx}
+                      className="px-[10px] py-[5px] bg-[#D7F3D1] rounded-[8px] text-[22px] text-[#58C185] font-[500]"
+                    >
+                      {t}
+                    </div>
                   ))}
                 </div>
-                <div className="flex items-center">
-                  <p className="text-[22px] text-[#9A9A9A] font-[500] mr-[6px]">
-                    장소
-                  </p>
-                  <p className="text-[22px] text-[#000000] font-[500]">
-                    {data.tuning.location}
-                  </p>
+                <div className="flex items-center mt-[29px]">
+                  <div className="w-[270px] flex">
+                    <p className="text-[22px] text-[#9A9A9A] font-[500] mr-[6px]">
+                      요일
+                    </p>
+                    <p className="text-[22px] font-[500] mr-[2px]">
+                      {message[4]?.days?.join(", ")}
+                    </p>
+                  </div>
+                  <div className="flex items-center">
+                    <p className="text-[22px] text-[#9A9A9A] font-[500] mr-[6px]">
+                      장소
+                    </p>
+                    <p className="text-[22px] text-[#000000] font-[500]">
+                      서울특별시 동작구
+                    </p>
+                  </div>
                 </div>
-              </div> */}
-              {/* <div className="flex items-center mt-[12px]">
-                <div className="w-[270px] flex">
-                  <p className="text-[22px] text-[#9A9A9A] font-[500] mr-[6px]">
-                    시간
-                  </p>
-                  <p className="text-[22px] text-[#000000] font-[500]">
-                    {data.tuning.time}
-                  </p>
+                <div className="flex items-center mt-[12px]">
+                  <div className="w-[270px] flex">
+                    <p className="text-[22px] text-[#9A9A9A] font-[500] mr-[6px]">
+                      시간
+                    </p>
+                    <p className="text-[22px] text-[#000000] font-[500]">
+                      09:00 ~ 12:00
+                    </p>
+                  </div>
+                  <div className="flex">
+                    <p className="text-[22px] text-[#9A9A9A] font-[500] mr-[6px]">
+                      급여
+                    </p>
+                    <p className="text-[22px] text-[#000000] font-[500]">
+                      {message[4]?.wage ? message[4].wage : "시급 15,000원"}
+                      <br />
+                      월급 540,000원
+                    </p>
+                  </div>
                 </div>
-                <div className="flex items-center">
-                  <p className="text-[22px] text-[#9A9A9A] font-[500] mr-[6px]">
-                    급여
-                  </p>
-                  <p className="text-[22px] text-[#000000] font-[500]">
-                    {data.tuning.salary}
-                  </p>
-                </div>
-              </div> */}
-              <button
-                onClick={() => setIsTuningModal(true)}
-                className="mt-[20px] text-[22px] font-[600] text-[#000000] w-[153px] h-[52px] flex items-center justify-center bg-[#FFFFFF] rounded-[10px]"
-              >
-                자세히 보기
-              </button>
-            </div>
+                <button
+                  onClick={() => setIsTuningModal(true)}
+                  className="mt-[20px] text-[22px] font-[600] text-[#000000] w-[153px] h-[52px] flex items-center justify-center bg-[#DFE3E2] rounded-[10px]"
+                >
+                  자세히 보기
+                </button>
+              </div>
 
-            <p className="text-[18px] font-[500] text-[#9A9A9A] mt-[13px]">
-              오전 10:34
-            </p>
-          </div>
-          <div className="flex justify-end pr-[36px]">
-            <div className="flex flex-col gap-[6px]">
-              <button
-                onClick={() => setIsAcceptModal(true)}
-                className="text-[22px] text-[#828282] font-[600] hover:bg-[#58C185] hover:text-[#FFFFFF] w-[353px] h-[50px] border border-[#D1D1D1] rounded-[10px] flex items-center justify-center"
-              >
-                수락하기
-              </button>
-              <button
-                onClick={() => setIsCoordination(true)}
-                className="text-[22px] text-[#828282] font-[600] hover:bg-[#58C185] hover:text-[#FFFFFF] w-[353px] h-[50px] border border-[#D1D1D1] rounded-[10px] flex items-center justify-center"
-              >
-                조율 요청하기
-              </button>
-              <button
-                onClick={() => setIsRefusalModal(true)}
-                className="text-[22px] text-[#828282] font-[600] hover:bg-[#58C185] hover:text-[#FFFFFF] w-[353px] h-[50px] border border-[#D1D1D1] rounded-[10px] flex items-center justify-center"
-              >
-                거절하기
-              </button>
+              <p className="text-[18px] font-[500] text-[#9A9A9A] mt-[13px]">
+                오전 10:34
+              </p>
             </div>
+            {message.length > 5 ? (
+              <div className="mt-[33px] ml-[300px]">
+                <div className="w-[541px] bg-[#F7F8FA] rounded-[14px] pl-[23px] pt-[19px] pb-[24px]">
+                  <strong className="text-[30px] text-[#000000] font-[600]">
+                    조율 요청을 보냈어요.
+                  </strong>
+                  <div className="flex gap-[6px] mt-[13px]">
+                    {["3등급", "이동보조", "생활보조"].map((t, idx) => (
+                      <div
+                        key={idx}
+                        className="px-[10px] py-[5px] bg-[#D7F3D1] rounded-[8px] text-[22px] text-[#58C185] font-[500]"
+                      >
+                        {t}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex items-center mt-[29px]">
+                    <div className="w-[270px] flex">
+                      <p className="text-[22px] text-[#9A9A9A] font-[500] mr-[6px]">
+                        요일
+                      </p>
+                      <p className="text-[22px] font-[500] mr-[2px]">
+                        {message[5]?.days?.join(", ")}
+                      </p>
+                    </div>
+                    <div className="flex items-center">
+                      <p className="text-[22px] text-[#9A9A9A] font-[500] mr-[6px]">
+                        장소
+                      </p>
+                      <p className="text-[22px] text-[#000000] font-[500]">
+                        서울특별시 동작구
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center mt-[12px]">
+                    <div className="w-[270px] flex">
+                      <p className="text-[22px] text-[#9A9A9A] font-[500] mr-[6px]">
+                        시간
+                      </p>
+                      <p className="text-[22px] text-[#000000] font-[500]">
+                        {`${String(message[5].start_hour).padStart(
+                          2,
+                          "0"
+                        )}:${String(message[5].start_minute).padStart(2, "0")}
+    ~ ${String(message[5].end_hour).padStart(2, "0")}:${String(
+                          message[5].end_minute
+                        ).padStart(2, "0")}`}
+                      </p>
+                    </div>
+                    <div className="flex">
+                      <p className="text-[22px] text-[#9A9A9A] font-[500] mr-[6px]">
+                        급여
+                      </p>
+                      <p className="text-[22px] text-[#000000] font-[500]">
+                        {message[5]?.wage
+                          ? `시급 ${formatCurrency(message[5].wage)}원`
+                          : "시급 15,000원"}
+                        <br />
+                        {message[5]?.wage
+                          ? `월급 ${formatCurrency(
+                              calculateMonthlySalary(message[5].wage)
+                            )}원`
+                          : " 월급 540,000원"}
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setReqModal(true)}
+                    className="mt-[20px] text-[22px] font-[600] text-[#000000] w-[153px] h-[52px] flex items-center justify-center bg-[#DFE3E2] rounded-[10px]"
+                  >
+                    자세히 보기
+                  </button>
+                </div>
+
+                <p className="text-[18px] font-[500] text-[#9A9A9A] mt-[13px]">
+                  오후 01:30
+                </p>
+              </div>
+            ) : (
+              <></>
+            )}
+            {message.length > 5 ? (
+              <></>
+            ) : (
+              <div className="flex justify-end pr-[36px]">
+                <div className="flex flex-col gap-[6px]">
+                  <button
+                    onClick={() => setIsAcceptModal(true)}
+                    className="text-[22px] text-[#828282] font-[600] hover:bg-[#58C185] hover:text-[#FFFFFF] w-[353px] h-[50px] border border-[#D1D1D1] rounded-[10px] flex items-center justify-center"
+                  >
+                    수락하기
+                  </button>
+                  <button
+                    onClick={() => setIsCoordination(true)}
+                    className="text-[22px] text-[#828282] font-[600] hover:bg-[#58C185] hover:text-[#FFFFFF] w-[353px] h-[50px] border border-[#D1D1D1] rounded-[10px] flex items-center justify-center"
+                  >
+                    조율 요청하기
+                  </button>
+                  <button
+                    onClick={() => setIsRefusalModal(true)}
+                    className="text-[22px] text-[#828282] font-[600] hover:bg-[#58C185] hover:text-[#FFFFFF] w-[353px] h-[50px] border border-[#D1D1D1] rounded-[10px] flex items-center justify-center"
+                  >
+                    거절하기
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
-      {isProfileModal && (
+      {isProfileModal && guardian && (
         <GuardianProfile
-          data={samplePerson}
+          data={guardian}
           setIsProfileModal={setIsProfileModal}
         />
       )}
       {isTuningModal && <GuardianTuning setIsTuningModal={setIsTuningModal} />}
-      {isAcceptModal && <AcceptModal setIsAcceptModal={setIsAcceptModal} />}
+      {reqModal && <ReqModal message={message[5]} setReqModal={setReqModal} />}
+      {isAcceptModal && (
+        <AcceptModal
+          setIsAcceptModal={setIsAcceptModal}
+          setGuardianStatus={setGuardianStatus}
+        />
+      )}
       {isRefusalModal && (
-        <RefusaltModal setIsRefusalModal={setIsRefusalModal} />
+        <RefusaltModal
+          setIsRefusalModal={setIsRefusalModal}
+          setGuardianStatus={setGuardianStatus}
+        />
       )}
       {isCoordination && (
-        <CoordinationRequestModal setIsCoordination={setIsCoordination} />
+        <CoordinationRequestModal
+          setIsCoordination={setIsCoordination}
+          setMessage={setMessage}
+        />
       )}
     </div>
   );

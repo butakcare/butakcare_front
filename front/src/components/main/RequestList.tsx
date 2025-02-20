@@ -166,7 +166,7 @@ export default function RequestList() {
                   <div>
                     <div className="w-[44px] h-[44px] relative flex justify-center items-center bg-[#F7F8FA] group-hover:bg-[#58C185] rounded-[10px] ml-[13px]">
                       <p className="text-[22px] font-[700] text-[#58C185] group-hover:text-[#FFFFFF]">
-                        {data.total_matching}
+                        {data.total_matching + 1}
                       </p>
                     </div>
                   </div>
@@ -189,7 +189,11 @@ export default function RequestList() {
       </div>
       {elderId !== 0 ? (
         guardianStatus === "조율" ? (
-          <Chat elderId={elderId} selectedGuardianId={selectedGuardianId} />
+          <Chat
+            elderId={elderId}
+            selectedGuardianId={selectedGuardianId}
+            setGuardianStatus={setGuardianStatus}
+          />
         ) : guardianStatus === "수락" ? (
           <ChatAccept
             elderName={elderData[0]?.name}
@@ -199,7 +203,11 @@ export default function RequestList() {
           <ChatRefusal />
         )
       ) : (
-        <Chat elderId={elderId} selectedGuardianId={selectedGuardianId} />
+        <Chat
+          elderId={elderId}
+          selectedGuardianId={selectedGuardianId}
+          setGuardianStatus={setGuardianStatus}
+        />
       )}
     </div>
   );

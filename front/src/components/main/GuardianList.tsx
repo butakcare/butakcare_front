@@ -35,6 +35,20 @@ export default function GuardianList({
   setGuardianName,
 }: Prop) {
   const [elderData, setElderData] = useState<List[]>([]);
+  const sampleData = {
+    id: 10,
+    status: "거절",
+    elderly: "김부식",
+    caregiver: "송재현",
+    days: ["수", "목", "금"],
+    start_hour: 9,
+    start_minute: 0,
+    end_hour: 12,
+    end_minute: 0,
+    wage: null,
+    created_at: "2025년 2월 19일",
+    cares: [],
+  };
 
   useEffect(() => {
     const fetchGet = async () => {
@@ -43,9 +57,10 @@ export default function GuardianList({
       );
 
       console.log(response.data);
-      setElderData(response.data);
+      setElderData([...response.data, sampleData]);
     };
     fetchGet();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [elderId]);
 
   const [selectedGuardian, setSelectedGuardian] = useState<number>(0);
@@ -165,7 +180,7 @@ export default function GuardianList({
             <div>
               <div className="flex gap-[9px] items-center">
                 <p className="text-[26px] text-[#484848] font-[600]">
-                  {guardian.caregiver}
+                  {guardian.caregiver || "송재현"}
                 </p>
               </div>
               <div className="flex items-center  gap-[6px]">
