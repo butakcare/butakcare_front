@@ -129,7 +129,7 @@ export default function CenterSearchModal({
         </div>
 
         {/* 닫기 버튼을 하단에 고정 */}
-        <div className="absolute bottom-0 left-[160px] p-6 bg-white">
+        <div className="absolute bottom-0 right-[150px] p-6 bg-white">
           <LongBtn
             text="닫기"
             disabled={false}

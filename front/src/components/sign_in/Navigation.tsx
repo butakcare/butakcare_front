@@ -13,7 +13,7 @@ export default function Navigation({ selected, setSelected }: Props) {
 
   const handleCLick = (index: number) => {
     if (index == 1) {
-      router.push("/sign_in");
+      router.push("sign_in/selected");
     } else {
       setSelected(index);
     }
@@ -23,6 +23,9 @@ export default function Navigation({ selected, setSelected }: Props) {
       setSelected(index);
     }
   };
+  const handleMain = () => {
+    router.push(`/`);
+  };
   return (
     <div className="w-[247px] h-full border-r border-[#909090] flex flex-col justify-between pl-[33px] pr-[33px] pt-[34px]">
       <div className="flex flex-col gap-[16px]">
@@ -31,6 +34,7 @@ export default function Navigation({ selected, setSelected }: Props) {
           alt="메인 로고"
           width={127}
           height={27}
+          onClick={handleMain}
         />
         <div className="relative flex flex-col gap-[16px] mt-[48px]">
           {menuItems.map((item, index) => (
