@@ -6,45 +6,46 @@ import { LongBtn, XBLBtn } from "@/components/common/Button";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Navigation from "@/components/sign_in/Navigation";
-import axios from "axios";
 import Login from "@/components/sign_in/Login";
 
 export default function SignUpPage() {
   const router = useRouter();
   const [selected, setSelected] = useState<number>(1);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState<boolean>(false);
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const isFormValid = username !== "" && password !== "";
   const [type, setType] = useState<string>("");
-  const handleSubmit = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL_KEY}/api/profiles/caregiverssdf`,
-        { id: username, password: password },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+  const handleSubmit = () => {
+    router.push(`/${type}/main`);
+    // setLoading(true);
+    // try {
+    //   const response = await axios.post(
+    //     `${process.env.NEXT_PUBLIC_API_URL_KEY}/api/profiles/caregiverssdf`,
+    //     { id: username, password: password },
+    //     {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //     }
+    //   );
 
-      console.log("로그인 응답:", response.data);
+    //   console.log("로그인 응답:", response.data);
 
-      if (response.data.access_token) {
-        localStorage.setItem("access_token", response.data.access_token);
-        setLoading(false);
-        router.push(`/${type}/main`);
-      }
-    } catch (error) {
-      setLoading(false);
-      if (axios.isAxiosError(error)) {
-        console.error("로그인 에러:", error.response?.data);
-        alert("아이디 또는 비밀번호가 올바르지 않습니다.");
-      }
-      console.error("로그인 실패:", error);
-    }
+    //   if (response.data.access_token) {
+    //     localStorage.setItem("access_token", response.data.access_token);
+    //     setLoading(false);
+    //     router.push(`/${type}/main`);
+    //   }
+    // } catch (error) {
+    //   setLoading(false);
+    //   if (axios.isAxiosError(error)) {
+    //     console.error("로그인 에러:", error.response?.data);
+    //     alert("아이디 또는 비밀번호가 올바르지 않습니다.");
+    //   }
+    //   console.error("로그인 실패:", error);
+    // }
   };
   const handleNext = () => {
     router.push("/sign_up");

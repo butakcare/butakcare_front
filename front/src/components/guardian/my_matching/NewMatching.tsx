@@ -98,7 +98,7 @@ export default function NewMatching() {
                 자세히 보기
               </Link>
               <Link
-                href="/guardian/current_matching"
+                href="/guardian/current_matching?id=1"
                 className="text-[#FFFFFF] text-[18px] font-[600] w-[168px] h-[52px] bg-[#58C185] rounded-[10px] flex justify-center items-center cursor-pointer font-[600] px-[43px] py-[15px] whitespace-nowrap"
               >
                 매칭하러 가기
