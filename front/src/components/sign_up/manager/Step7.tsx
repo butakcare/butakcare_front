@@ -120,7 +120,7 @@ export default function ManagerStep7({
               className="w-full h-[52px] px-8 border border-[#666666] rounded-[10px] focus:outline-none text-left"
               maxLength={3}
             />
-            <span className=" absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500">
+            <span className=" absolute right-4 top-[25px] transform -translate-y-1/2 text-gray-500">
               (년)
             </span>
           </div>
@@ -133,7 +133,7 @@ export default function ManagerStep7({
               className=" w-full h-[52px] px-8 border border-[#666666] rounded-[10px] focus:outline-none text-left"
               maxLength={2}
             />
-            <span className="font-semibold absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500">
+            <span className="font-semibold absolute right-4 top-[25px] transform -translate-y-1/2 text-gray-500">
               (개월)
             </span>
           </div>

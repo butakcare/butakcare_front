@@ -76,7 +76,7 @@ export default function ManagerStep8({
         <div className="relative w-[354px]">
           <textarea
             className="w-full h-[138px] p-4 border rounded-lg resize-none focus:outline-none text-semibold text-black font-semibold border-[#666666]"
-            placeholder="예시) 경험이 풍부한 요양 보호사입니다.
+            placeholder="예시) 경험이 풍부한 요양 보호사입니다.                       
           책임감 있고 성실한 요양 보호사입니다. "
             value={introduction}
             onChange={(e) => onIntroductionChange(e.target.value)}

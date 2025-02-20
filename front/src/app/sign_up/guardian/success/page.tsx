@@ -9,7 +9,7 @@ export default function GuardianStep9() {
   const router = useRouter();
 
   const handleMoveToLogin = () => {
-    router.push("/sign_in/guardian");
+    router.push("/sign_in?type=guardian");
   };
 
   return (
