@@ -23,6 +23,7 @@ export default function ManagerStep1({
   };
   const handleCenterSelect = (centerName: string) => {
     onCenternameChange(centerName);
+    setIsModalOpen(false);
   };
   return (
     <div className="w-full h-full max-tablet:flex max-tablet:flex-col max-tablet:items-center">
@@ -63,6 +64,7 @@ export default function ManagerStep1({
                   value={Centername}
                   onClick={() => setIsModalOpen(true)}
                   placeholder="센터명으로 검색"
+                  readOnly
                   className="w-full tablet:text-[22px] tablet:h-[58px] font-semibold min-w-[354px] h-[52px] p-[15px_16px] pr-[50px] text-black rounded-[10px] border border-[#666666] focus:outline-none"
                 />
                 <button
