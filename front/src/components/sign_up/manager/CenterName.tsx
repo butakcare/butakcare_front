@@ -26,7 +26,7 @@ export default function ManagerStep1({
     setIsModalOpen(false);
   };
   return (
-    <div className="w-full h-full max-tablet:flex max-tablet:flex-col max-tablet:items-center">
+    <div className="w-full h-auto max-tablet:flex max-tablet:flex-col max-tablet:items-center">
       <div className="">
         <div>
           <TitleText

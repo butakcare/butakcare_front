@@ -20,7 +20,7 @@ export default function SignUpPage() {
   };
 
   const handleSignIn = () => {
-    router.push(`/sign_in`);
+    router.push(`/sign_in/selected`);
   };
   const handleCreateCenterClick = () => {
     router.push("/sign_up/manager/center");

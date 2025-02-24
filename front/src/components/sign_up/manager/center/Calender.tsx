@@ -49,7 +49,7 @@ export default function ManagerStep7({
       <div className="flex">
         <TitleText text1="센터 등급을 선택해주세요." text2="" on={false} />
       </div>
-      <div className="flex flex-row">
+      <div className="hidden sm:block flex-row">
         <div className="text-[30px] leading-[50px] font-bold flex items-center">
           센터 등급을 선택해주세요.
           <div className="flex items-end">
@@ -99,7 +99,7 @@ export default function ManagerStep7({
         </div>
         <div className="h-[54px]" />
         <TitleText text1="운영 기간을 입력해주세요." text2="" on={false} />
-        <div className="flex flex-row">
+        <div className="hidden sm:block flex-row">
           <div className="text-[30px] leading-[50px] font-bold flex items-center">
             운영기간을 입력해주세요.
             <div className="flex items-end">

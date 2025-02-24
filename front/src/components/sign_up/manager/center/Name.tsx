@@ -13,7 +13,7 @@ export default function ManagerStep2({
   return (
     <div>
       <TitleText text1="센터 이름을 입력해주세요." text2="" on={true} />
-      <div className="flex flex-row">
+      <div className="flex flex-row hidden sm:block">
         <div className="text-[30px] leading-[50px] font-bold flex items-center">
           센터 이름을 입력해주세요.
           <div className="flex items-end">

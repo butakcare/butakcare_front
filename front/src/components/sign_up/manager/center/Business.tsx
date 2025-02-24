@@ -37,7 +37,7 @@ export default function ManagerStep3({
   return (
     <div>
       <TitleText text1="사업자 등록 번호를 입력해주세요." text2="" on={true} />
-      <div className="flex flex-row">
+      <div className="hidden sm:block flex-row">
         <div className="text-[30px] leading-[50px] font-bold flex items-center">
           사업자 등록 번호를 입력해주세요.
           <div className="flex items-end">
@@ -60,7 +60,7 @@ export default function ManagerStep3({
           text2=""
           on={true}
         />
-        <div className="flex flex-row">
+        <div className="hidden sm:block flex-row">
           <div className="text-[30px] leading-[50px] font-bold flex items-center">
             센터 사이트 주소를 입력해주세요.
             <div className="flex items-end">

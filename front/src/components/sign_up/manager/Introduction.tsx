@@ -35,7 +35,7 @@ export default function ManagerStep8({
   return (
     <div>
       <TitleText text1="프로필 사진을 등록해주세요." text2="" on={false} />
-      <div className="">
+      <div className="hidden sm:block">
         <div className="flex flex-row">
           <div className="text-[30px] leading-[50px] font-bold flex items-center">
             프로필 사진을 등록해주세요.
@@ -82,7 +82,7 @@ export default function ManagerStep8({
       <div className="h-[49px]" />
 
       <TitleText text1="한줄 소개를 입력해주세요." text2="" on={false} />
-      <div className="">
+      <div className="hidden sm:block">
         <div className="flex flex-row">
           <div className="text-[30px] leading-[50px] font-bold flex items-center">
             한줄 소개를 입력해주세요.
