@@ -22,7 +22,7 @@ export default function ManagerStep5({ onVehicleChange }: ManagerStep5Props) {
     <div>
       <div className="h-[31px]">
         <TitleText text1="목욕 차량을 소유하고 계신가요?" text2="" on={true} />
-        <div className="flex flex-row">
+        <div className="hidden sm:block flex-row">
           <div className="text-[30px] leading-[50px] font-bold flex items-center">
             목욕 차량을 소유하고 계신가요?
             <div className="flex items-end">

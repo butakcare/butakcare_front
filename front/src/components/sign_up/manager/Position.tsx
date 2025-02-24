@@ -27,11 +27,11 @@ export default function ManagerStep1_5({
   };
 
   return (
-    <div className="w-full h-full max-tablet:flex max-tablet:flex-col max-tablet:items-center">
+    <div className="w-full h-auto max-tablet:flex max-tablet:flex-col max-tablet:items-center">
       <div>
         <TitleText text1="센터 직위를" text2="선택해주세요." on={true} />
       </div>
-      <div className="">
+      <div className="hidden sm:block">
         <div className="flex flex-row">
           <div className="text-[30px] leading-[50px] font-bold flex items-center">
             센터 직위를 선택해주세요.

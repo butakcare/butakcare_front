@@ -16,7 +16,7 @@ export default function ManagerStep1_6({
   onPasswordChange,
 }: ManagerStep1Props) {
   return (
-    <div className="w-full h-full max-tablet:flex max-tablet:flex-col max-tablet:items-center">
+    <div className="w-full h-auto max-tablet:flex max-tablet:flex-col max-tablet:items-center">
       <div>
         <TitleText
           text1="로그인에 사용하실"
@@ -24,7 +24,7 @@ export default function ManagerStep1_6({
           on={true}
         />
       </div>
-      <div className="">
+      <div className="hidden sm:block">
         <div className="flex flex-row">
           <div className="text-[30px] leading-[50px] font-bold flex items-center">
             로그인에 사용하실 아이디/비밀번호를 입력해주세요.

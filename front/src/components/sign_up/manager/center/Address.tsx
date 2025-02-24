@@ -61,7 +61,7 @@ export default function GuardianStep6({
   return (
     <div>
       <TitleText text1="주소를 입력해주세요." text2="" on={true} />
-      <div className="flex flex-row">
+      <div className="hidden sm:block flex-row">
         <div className="text-[30px] leading-[50px] font-bold flex items-center">
           센터 주소를 입력해주세요.
           <div className="flex items-end">

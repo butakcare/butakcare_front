@@ -38,7 +38,7 @@ export default function ManagerStep10({
       <div>
         <TitleText text1="관리자 성함을 입력해주세요." text2="" on={true} />
       </div>
-      <div className="">
+      <div className="hidden sm:block">
         <div className="flex flex-row">
           <div className="text-[30px] leading-[50px] font-bold flex items-center">
             관리자 성함을 입력해주세요.
@@ -61,7 +61,7 @@ export default function ManagerStep10({
         <div className="h-[50px]" />
         <TitleText text1="전화번호를 입력해주세요." text2="" on={true} />
         <div className="h-[21px]" />
-        <div className="">
+        <div className="hidden sm:block">
           <div className="flex flex-row pb-[25px]">
             <div className="text-[30px] leading-[50px] font-bold flex items-center">
               전화번호를 입력해주세요.
