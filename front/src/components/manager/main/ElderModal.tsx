@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import ElderConditionModal from "../sign_up/manager/ElderConditionModal";
+import ElderConditionModal from "../../sign_up/manager/ElderConditionModal";
 
 interface ElderModalProps {
   data: {

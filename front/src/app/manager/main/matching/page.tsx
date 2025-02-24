@@ -1,14 +1,14 @@
 "use client";
 
-import Navigation from "@/components/main/matching/Navigation";
+import Navigation from "@/components/manager/main/matching/Navigation";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
-import ElderModal from "@/components/main/matching/ElderModal";
+import ElderModal from "@/components/manager/main/matching/ElderModal";
 import Check from "@/../public/assets/icons/icon_green_check.svg";
 import NoCheck from "@/../public/assets/icons/icon_no_check.svg";
-import GuardianProfile from "@/components/main/GuardianProfile";
-import Matching from "@/components/main/matching/Matching";
+import GuardianProfile from "@/components/manager/main/GuardianProfile";
+import Matching from "@/components/manager/main/matching/Matching";
 import axios from "axios";
 
 interface ElderData {
