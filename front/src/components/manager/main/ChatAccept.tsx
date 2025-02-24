@@ -132,7 +132,7 @@ export default function ChatAccept({ elderName, guardianName }: Props) {
             </g>
           </svg>
           <p className="text-[30px] font-[700] text-[191A1C] mt-[10px]">
-            {guardianName}
+            {guardianName ? guardianName : `송재현`}
           </p>
           <p className="text-[24px] font-[600] text-[#A7ABA5]">요양보호사</p>
         </div>

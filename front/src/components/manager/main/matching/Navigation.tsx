@@ -21,7 +21,7 @@ export default function Navigation() {
         {menuItems.map((item, index) => (
           <div
             key={index}
-            className={`w-[178px] h-[49px]  rounded-[10px] pl-[19px] flex items-center cursor-pointer
+            className={`w-[150px] h-[49px]  rounded-[10px] pl-[19px] flex items-center cursor-pointer
                 ${index == 0 ? "mt-[40px]" : ""} text-[#2D8859] bg-[#D7F3D1]
                 `}
           >

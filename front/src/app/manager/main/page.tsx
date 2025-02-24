@@ -6,31 +6,7 @@ import ElderCare from "@/components/manager/main/ElderCare";
 import RequestList from "@/components/manager/main/RequestList";
 import axios from "axios";
 import { useEffect, useState } from "react";
-
-interface ElderData {
-  id: number;
-  name: string;
-  gender: string;
-  birth: string;
-  address: string;
-  address_detail: string;
-  care_details: CareDetails;
-  care_grade: string;
-  center: string | null;
-  days: string[];
-  detail: string;
-  start_hour: number;
-  start_minute: number;
-  end_hour: number;
-  end_minute: number;
-  wage: number | null;
-  weight: number | null;
-  matching_status: string;
-  photo: string | null;
-}
-interface CareDetails {
-  [key: string]: string;
-}
+import { ElderData } from "@/types/ElderData";
 
 interface CareCenter {
   id: number;
@@ -77,7 +53,7 @@ export default function Home() {
 
   return (
     <div className="w-full h-full flex justify-center relative">
-      <div className="h-full">
+      <div className="h-screen">
         <Navigation selected={selected} setSelected={setSelected} />
       </div>
       {selected == 0 ? (
