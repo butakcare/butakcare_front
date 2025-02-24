@@ -1,9 +1,9 @@
 "use client";
 
 import Navigation from "@/components/common/Navigation";
-import Account from "@/components/main/Account";
-import ElderCare from "@/components/main/ElderCare";
-import RequestList from "@/components/main/RequestList";
+import Account from "@/components/manager/main/Account";
+import ElderCare from "@/components/manager/main/ElderCare";
+import RequestList from "@/components/manager/main/RequestList";
 import axios from "axios";
 import { useEffect, useState } from "react";
 

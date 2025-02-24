@@ -35,7 +35,7 @@ export default function ManagerStep1({
             on={true}
           />
         </div>
-        <div className="">
+        <div className="hidden sm:block">
           <div className="flex flex-row">
             <div className="text-[30px] leading-[50px] font-bold flex items-center">
               근무하시는 센터 이름을 입력해주세요.

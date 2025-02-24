@@ -1,12 +1,12 @@
 "use client";
 import { LongBtn, ShortsBtn } from "@/components/common/Button";
 import Header from "@/components/common/TitleHeader";
-import ManagerStep2 from "@/components/sign_up/manager/Step2";
-import ManagerStep3 from "@/components/sign_up/manager/Step3";
-import ManagerStep4 from "@/components/sign_up/manager/Step4";
-import ManagerStep5 from "@/components/sign_up/manager/Step5";
-import ManagerStep6 from "@/components/sign_up/manager/Step6";
-import ManagerStep7 from "@/components/sign_up/manager/Step7";
+import ManagerStep2 from "@/components/sign_up/manager/center/Name";
+import ManagerStep3 from "@/components/sign_up/manager/center/Business";
+import ManagerStep4 from "@/components/sign_up/manager/center/Phone";
+import ManagerStep5 from "@/components/sign_up/manager/center/Vehicle";
+import ManagerStep6 from "@/components/sign_up/manager/center/Address";
+import ManagerStep7 from "@/components/sign_up/manager/center/Calender";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import axios from "axios";
