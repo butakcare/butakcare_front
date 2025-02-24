@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface Props {
   name: string;
@@ -6,9 +7,17 @@ interface Props {
 }
 
 export default function Header({ name, address }: Props) {
+  const router = useRouter();
+
+  const handleWork = () => {
+    router.push("/guardian/work");
+  };
   return (
     <div className="flex items-start bg-[#58C185] w-screen h-[153px] rounded-b-[14px]">
-      <div className="w-[90px] h-[90px] bg-[#FFFFFF] rounded-full flex justify-center items-center ml-[21px] mt-[24px]">
+      <div
+        className="w-[90px] h-[90px] bg-[#FFFFFF] rounded-full flex justify-center items-center ml-[21px] mt-[24px]"
+        onClick={() => handleWork()}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="84"
