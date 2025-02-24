@@ -1,16 +1,20 @@
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface Props {
   selected: number;
 }
 
 export default function Navigation({ selected }: Props) {
+  const router = useRouter();
   const menuItems = ["1. 기본 정보", "2. 근무 정보", "3. 케어 필요 항목"];
 
-  const handleRouter = () => {};
+  const handleRouter = () => {
+    router.push("/manager/main");
+  };
   return (
-    <div className="w-[247px] h-full border-r border-[#909090] flex flex-col justify-between pl-[33px] pt-[34px]">
+    <div className="w-[247px] h-auto border-r border-[#909090] flex flex-col justify-between pl-[33px] pt-[34px]">
       <div className="flex flex-col gap-[16px]">
         <Image
           src="/assets/icons/icon_logo_full.svg"

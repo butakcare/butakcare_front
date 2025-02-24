@@ -39,8 +39,8 @@ export default function ElderSearch({
   };
 
   return (
-    <div className="w-[1033px] h-[73px] flex justify-start mt-[43px]">
-      <div className="flex gap-[15px]">
+    <div className="w-[1033px] h-[106px] flex justify-start mt-[43px] items-center">
+      <div className="flex gap-[15px] items-center">
         {centerData.photo ? (
           centerData.photo
         ) : (

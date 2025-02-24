@@ -52,8 +52,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-full h-full flex justify-center relative">
-      <div className="h-screen">
+    <div className="w-full h-auto flex justify-center relative">
+      <div className="h-auto">
         <Navigation selected={selected} setSelected={setSelected} />
       </div>
       {selected == 0 ? (

@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Account() {
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center gap-[20px]">
+    <div className="w-full h-auto flex flex-col items-center justify-center gap-[20px]">
       <Image
         src="/assets/images/AcceptImg.svg"
         alt="미완성 페이지 사진"

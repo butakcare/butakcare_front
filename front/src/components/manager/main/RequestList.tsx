@@ -35,11 +35,11 @@ export default function RequestList() {
     setText("");
   };
   return (
-    <div className="w-full h-full flex">
+    <div className="w-full h-auto flex">
       <div>
         {elderId == 0 ? (
-          <div className="flex flex-col items-center w-[362px] h-[820px] border-r-[1px] border-[#909090]">
-            <div className="mt-[20px] flex w-[318px] pl-[15px] rounded-[10px] h-[44px] flex items-center border-[1px] border-[#CCCCCC]">
+          <div className="flex flex-col items-center w-[362px] h-auto border-r-[1px] border-[#909090]">
+            <div className="mt-[20px] w-[318px] pl-[15px] rounded-[10px] h-[44px] flex items-center border-[1px] border-[#CCCCCC]">
               <input
                 placeholder="검색하기"
                 type="text"
